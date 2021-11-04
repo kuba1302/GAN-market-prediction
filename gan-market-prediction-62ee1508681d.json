@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "gan-market-prediction",
+  "private_key_id": "62ee1508681d6241b744ddebff11b4ed649d9393",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC3qnbdOdwYYUXZ\ntkWJ13NbxgsPAdqt7RZujQh7ulZJOexJxKvZRht7eTIj3OR6DFos4hpKuOan9c5I\nMxW3sHKEGJNwFScQ+lEkL0ViDkeX2BR+0GKHiPOkRKKm4gJxYMTxUYi7n3qmH7n2\ngxxSYJZi+FTn1O+lYDtsS1/wEkzheI2IUO+sAhsh24OilylHMCSCoMd/GyxkDMah\nIxel8hoKcdtdCFV4goYprvo0vm8bG2n10y6K4o98FN7N4GNSlqzHstr2yVQ0nAQL\nqm1tgUUGqWz3Xg3WxfUGLwDLZ6pDvL2nMJtxxh0JXWXJy2i6tcwafj/8EkaXhTOF\nZFVt6lfZAgMBAAECggEACKcTvX1d1Jo0j7qqEQHg8ehlGfpk4n/CaEflp+qR6RY8\n/wawb+aBIfKGPbFI5EUTtHycb3vBhhUq+DTL56D87CM6QvQEKKUaUIGXm7R/g/RO\nluDbW3ZEwC7pmMIaClxcOuAz+F7diNkCyk3H9kuNmjEH0voxphFgC0yLwwQhsheG\nzmuw9lCYdkuDv4LiZpDdexdawBcXu3iw06yhCa2qvDJTmNscO//0pA8nufwcI09z\nRfu+XBlmPI6npxAfQAk5Ip/ksYUHiKacaHaZkVpBQCYE+jpTqQUd+ZlOJithEQ69\nzpMDIyR+pycDX1tUfN9Ub9KnsBbKLxHZoa5J9ft77wKBgQDv3L/SdNuuhTkHGSbS\nNJYu0b2avxutxXj3Drtbeyze92I/Jx6cpOaHWE0d6fp7Rj/QChAJC1Eo20Qif30S\niibWMotxy3dTX7rTWJ4E/KuNK1239iSufpx3OFrbdbJceE2d9LXWb2Da8N+b40LQ\n/6dXKL/IfBUHdqJohsyrY7AzuwKBgQDEBdHsAUAletlKKfOE2In0CUnWMPuSI/50\nyorU+YCAXHohsEc+GnHHrZ8RzVQhpguE6FHlyosHsbKUHacSlWeoKbGajWPokGE/\nXoQX2fG8In9PqYQryLI3+MFi8VZYvqO+nnh4zDMckH881NsbIleaiJmm0v0uuRLT\nUywcmyAnewKBgC2NQKiZJLcp+cCNWEAHWJYfouBmdr0ziVtx4sbmx4i4dmID7d5V\nuqntbQfHTZhnqOq7Xnw5N/qIWZIrn/cLYYDALJc5yrl8rqBAbhIIYhP3Ll8nUaQJ\ny3EgtLCE05CYEDV1KatFj6FEqVKTgDbstjzpMjLCzcOTFhi/sNLDpczNAoGBAIm9\nWTPP8SYk+7iMX+xySAWt3S9f/fZDypKAnCtpIq2PzdYMSxNNe7QGwSa+NCbsyV1b\n7ehdeXIvoD9J0tNRHqRgn8btIU4S3fKsVH96Cs3bI8Bzakdl4C1KY4FF+hmj4+WW\n7ypaunOQ6YdyPoADkrEo2WcLDRMewyaxY+a57k8vAoGBALvuiWgWFAqbGrMtTlyH\nTQJ6v3hHZDB3tkQdfp820QqysmHTfZcHXUq0Q2OyQVtH8CRqWZgESW3fYLBIw81A\n2byBZWKHWiU7oUjnZz1sH6X/3nXsCsdW/3ChOUznFC/WEC3craZn66F6fw8yLPGF\nZ5B+uTpEWHOq8LndtNWvsLLv\n-----END PRIVATE KEY-----\n",
+  "client_email": "gan-market-prediction@gan-market-prediction.iam.gserviceaccount.com",
+  "client_id": "117306595946785693982",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gan-market-prediction%40gan-market-prediction.iam.gserviceaccount.com"
+}
