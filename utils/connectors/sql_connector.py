@@ -10,8 +10,8 @@ class SqlConnector:
 
     def __init__(self, db_name) -> None:
         self.connection = self.connect_to_cloud_sql(db_name)
-        self.cursor = self.connection.cursor
-        
+        self.cursor = self.connection.cursor()
+
     def connect_to_cloud_sql(self, db_name):
         return psycopg2.connect(
             host = os.environ['PSG_HOST'], 
