@@ -1,24 +1,29 @@
 import pandas as pd
 from psaw import PushshiftAPI
+import praw 
 
+class RedditPsawConnector:
 
-class RedditApiConnector:
-
-    def __init__(self, subreddit='movies'):
+    def __init__(self, subreddit='Games'): 
         self.subreddit = subreddit
         self.api = PushshiftAPI()
 
     def search_comments(self, name, limit=1000):
-        self.name = name
-        # Hardcode filters to keep same columns in dataframes
+        # returned columns 
         filter = ['author', 'date', 'title', 'body', 'score']
 
-        # Connect to api, and get data
+        #cConnect to api, and get data
         comments = self.api.search_comments(
             subreddit = self.subreddit,
-            filter=filter, q=self.name, limit=limit
+            filter=filter, q=name, limit=limit
         )
         # Prepare dataframe
-        df = pd.DataFrame([comment.d_ for comment in comments])
+        return pd.DataFrame([comment.d_ for comment in comments])
+ 
 
-        return df
+
+class RedditPrawConnector: 
+
+    def __init__(self, subreddit='Games') -> None:
+        self.subreddit = subreddit
+        self.client = praw.Reddit()
