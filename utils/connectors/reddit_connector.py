@@ -8,14 +8,15 @@ class RedditPsawConnector:
         self.subreddit = subreddit
         self.api = PushshiftAPI()
 
-    def search_comments(self, name, limit=1000):
+    def search_comments(self, name, after, before, limit=1000):
         # returned columns 
         filter = ['author', 'date', 'title', 'body', 'score']
 
         #cConnect to api, and get data
         comments = self.api.search_comments(
             subreddit = self.subreddit,
-            filter=filter, q=name, limit=limit
+            filter=filter, q=name, limit=limit, 
+            after=after, before=before
         )
         # Prepare dataframe
         return pd.DataFrame([comment.d_ for comment in comments])
