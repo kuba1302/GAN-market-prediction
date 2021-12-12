@@ -23,7 +23,6 @@ class RedditPsawConnector:
         self.save_path = save_path
         self.empty_df = self.prepare_empty_df()
         self.date_pairs = self.prepare_date_pairs(start_date, end_date)
-
         # save empty csv 
         self.save_df_to_csv(df=self.empty_df, mode='w')
 
