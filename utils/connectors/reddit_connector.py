@@ -2,6 +2,7 @@ import pandas as pd
 from psaw import PushshiftAPI
 import praw 
 from datetime import datetime 
+import logging 
 
 class RedditPsawConnector:
 
@@ -17,7 +18,7 @@ class RedditPsawConnector:
 
         self.subreddit = subreddit
         self.api = PushshiftAPI()
-        self.game_names = self.prepare_query(game_names)
+        self.game_names = game_names
         self.ticker = ticker 
         self.limit = limit 
         self.save_path = save_path
@@ -27,15 +28,11 @@ class RedditPsawConnector:
         self.save_df_to_csv(df=self.empty_df, mode='w')
 
     @staticmethod
-    def prepare_query(game_names): 
-        return '|'.join(game_names)
-
-    @staticmethod
     def prepare_empty_df():
         return pd.DataFrame(
             columns= [
                 'author', 'body', 'created_utc', 
-                'score', 'created'
+                'score', 'created', 'game_name'
             ]
         )
 
@@ -68,13 +65,16 @@ class RedditPsawConnector:
             end_year = self.date_pairs[i + 1][0]
             end_month = self.date_pairs[i + 1][1]
 
-            df = self.search_comments(
-                query=self.game_names, 
-                after=int(datetime(start_year, start_month, 10).timestamp()), 
-                before=int(datetime(end_year, end_month, 10).timestamp()), 
-                limit=2000
-            )
-            self.save_df_to_csv(df, mode='a')
+            for game_name in self.game_names: 
+                df = self.search_comments(
+                    query=game_name, 
+                    after=int(datetime(start_year, start_month, 10).timestamp()), 
+                    before=int(datetime(end_year, end_month, 10).timestamp()), 
+                    limit=2000
+                )
+                print(f'Game: {game_name} Date: {start_year}-{start_month} Comments: {len(df)}')
+                df['game_name'] = game_name
+                self.save_df_to_csv(df, mode='a')
 
 
 
