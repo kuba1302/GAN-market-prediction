@@ -75,7 +75,3 @@ class RedditPsawConnector:
                 print(f'Game: {game_name} Date: {start_year}-{start_month} Comments: {len(df)}')
                 df['game_name'] = game_name
                 self.save_df_to_csv(df, mode='a')
-
-
-
-
