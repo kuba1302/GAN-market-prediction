@@ -1,56 +1,22 @@
 import pandas as pd
-import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
-import pickle
-import logging
 import time
-import logging
-from tensorflow.keras.layers import GRU, Flatten, Dense, Conv1D, Dropout, LeakyReLU
-from tensorflow.keras import Sequential
-from sklearn.metrics import mean_squared_error
+from utils.log import prepare_logger
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from pathlib import Path
 import os
 import sys
 
+cuda_path = Path("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
+os.add_dll_directory(str(cuda_path))
+
+import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import GRU, Flatten, Dense, Conv1D, LeakyReLU
 
 LOG_LEVEL = "INFO"
-
-
-def prepare_logger():
-    logger = logging.getLogger()
-    logger.setLevel(level=LOG_LEVEL)
-    formatter = logging.Formatter(
-        "%(asctime)s,%(msecs)d %(levelname)-8s [%(pathname)s:%(lineno)d] %(message)s"
-    )
-    if not logger.handlers:
-        lh = logging.StreamHandler(sys.stdout)
-        lh.setFormatter(formatter)
-        logger.addHandler(lh)
-    return logger
-
-
-logger = prepare_logger()
-load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
-names = ["X_list", "Y_preds_real_list", "Y_whole_real_list"]
-
-
-def load_df_lists(names):
-    data_dict = {}
-    for name in names:
-        with open(load_path / f"{name}.pickle", "rb") as handle:
-            data_dict[name] = pickle.load(handle)
-
-
-data_dict = load_df_lists(names)
-
-with open(load_path / "X_list.pickle", "rb") as test:
-    X_list = pickle.load(test)
-with open(load_path / "Y_preds_real_list.pickle", "rb") as test:
-    Y_preds_real_list = pickle.load(test)
-with open(load_path / "Y_whole_real_list.pickle", "rb") as test:
-    Y_whole_real_list = pickle.load(test)
-
+logger = prepare_logger(LOG_LEVEL)
 
 def generator(input_dim, feature_size, output_dim=1):
     model = Sequential()
@@ -109,7 +75,7 @@ def discriminator(input_shape):
 
 
 class StockTimeGan:
-    def __init__(self, generator, discriminator, learning_rate=0.00016):
+    def __init__(self, generator, discriminator, checkpoint_directory, learning_rate=0.0016):
         self.learning_rate = learning_rate
         self.generator = generator
         self.generator_optimizer = tf.keras.optimizers.Adam(
@@ -119,10 +85,8 @@ class StockTimeGan:
         self.discriminator_optimizer = tf.keras.optimizers.Adam(
             learning_rate=self.learning_rate
         )
-        self.loss = tf.keras.losses.BinaryCrossentropy(from_logits=True)
-        self.checkpoint_directory = str(
-            Path(os.path.abspath("")).parents[0] / "/checkpoints/"
-        )
+        self.loss = tf.keras.losses.BinaryCrossentropy(from_logits=False)
+        self.checkpoint_directory = checkpoint_directory
         self.checkpoint_prefix = str(Path(self.checkpoint_directory) / "ckpt")
         self.checkpoint = tf.train.Checkpoint(
             generator_optimizer=self.generator_optimizer,
@@ -148,8 +112,8 @@ class StockTimeGan:
                 generated_data, [generated_data.shape[0], generated_data.shape[1], 1]
             )
             real_to_pred_y_reshape = tf.reshape(
-                Y_preds_real_list,
-                [Y_preds_real_list.shape[0], Y_preds_real_list.shape[1], 1],
+                real_to_pred_y,
+                [real_to_pred_y.shape[0], real_to_pred_y.shape[1], 1],
             )
             real_whole_y_reshape = tf.reshape(
                 real_whole_y, [real_whole_y.shape[0], real_whole_y.shape[1], 1]
@@ -200,13 +164,13 @@ class StockTimeGan:
             end_time = time.time()
             epoch_time = end_time - start_time
             rmse = np.sqrt(mean_squared_error(real_to_pred_y, generated_data))
-            print(f"Epoch: {i} - RMSE: {rmse} - Epoch time: {epoch_time}")
+            mae = mean_absolute_error(y_true=real_to_pred_y, y_pred=generated_data)
+            logger.info(
+                f"Epoch: {i + 1} - RMSE: {rmse} MAE : {mae} - Epoch time: {epoch_time} - Discriminator Loss: {disc_loss} - Generator Loss: {gen_loss}"
+            )
+            if epochs % 10: 
+                self.checkpoint.save()
+        return train_history          
 
-        return train_history
-
-
-if __name__ == "__main__":
-    generator = generator(X_list.shape[1], X_list.shape[2])
-    discriminator = discriminator((31, Y_preds_real_list.shape[1]))
-    gan = StockTimeGan(generator, discriminator)
-    train_history = gan.train(X_list, Y_preds_real_list, Y_whole_real_list, epochs=10)
+    def predict(self, X, *args, **kwargs): 
+        return self.generator.predict(X, args, kwargs)
