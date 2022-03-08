@@ -169,7 +169,7 @@ class StockTimeGan:
                 f"Epoch: {i + 1} - RMSE: {rmse} MAE : {mae} - Epoch time: {epoch_time} - Discriminator Loss: {disc_loss} - Generator Loss: {gen_loss}"
             )
             if epochs % 10: 
-                self.checkpoint.save()
+                self.checkpoint.save(file_prefix=self.checkpoint_prefix)
         return train_history          
 
     def predict(self, X, *args, **kwargs): 
