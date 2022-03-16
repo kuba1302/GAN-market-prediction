@@ -154,17 +154,17 @@ class StockTimeGan:
 
         for i in range(epochs):
             start_time = time.time()
-            real_to_pred_y, generated_data, disc_loss, gen_loss = self.train_step(
+            realy_y, generated_data, disc_loss, gen_loss = self.train_step(
                 real_x, real_to_pred_y, real_whole_y
             )
-            train_history["gen_loss"].append(gen_loss)
-            train_history["disc_loss"].append(disc_loss)
+            train_history["gen_loss"].append(gen_loss.numpy())
+            train_history["disc_loss"].append(disc_loss.numpy())
             train_history["real_y"].append(real_whole_y)
-            train_history["pred_y"].append(generated_data)
+            train_history["pred_y"].append(generated_data.numpy())
             end_time = time.time()
             epoch_time = end_time - start_time
-            rmse = np.sqrt(mean_squared_error(real_to_pred_y, generated_data))
-            mae = mean_absolute_error(y_true=real_to_pred_y, y_pred=generated_data)
+            rmse = np.sqrt(mean_squared_error(realy_y, generated_data))
+            mae = mean_absolute_error(y_true=realy_y, y_pred=generated_data)
             logger.info(
                 f"Epoch: {i + 1} - RMSE: {rmse} MAE : {mae} - Epoch time: {epoch_time} - Discriminator Loss: {disc_loss} - Generator Loss: {gen_loss}"
             )
