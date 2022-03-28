@@ -6,9 +6,9 @@ import os
 import numpy as np
 
 if __name__ == "__main__":
-    MODEL_VERSION = '0.1'
+    MODEL_VERSION = '0.3'
     load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
-    save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
+    save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "v`ersions"
 
     with open(load_path / "data.pickle", "rb") as test:
         data = pickle.load(test)
@@ -22,5 +22,5 @@ if __name__ == "__main__":
         'test_preds': np.array(test_preds), 
         'actual_values': np.array(data['Y_preds_real_list_test'])
     }
-    with open(save_path / 'model_data_sentiment.pickle', 'wb') as handle:
+    with open(save_path / f'model_{MODEL_VERSION}.pickle', 'wb') as handle:
         pickle.dump(model_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
