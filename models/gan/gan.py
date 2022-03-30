@@ -7,6 +7,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from pathlib import Path
 import os
 import sys
+from tqdm import tqdm
 
 cuda_path = Path("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
 os.add_dll_directory(str(cuda_path))
@@ -45,7 +46,7 @@ def discriminator(input_shape):
             kernel_size=3,
             strides=2,
             padding="same",
-            activation=LeakyReLU(alpha=0.01),
+            activation=LeakyReLU(alpha=0.1),
         )
     )
     model.add(
@@ -54,7 +55,7 @@ def discriminator(input_shape):
             kernel_size=5,
             strides=2,
             padding="same",
-            activation=LeakyReLU(alpha=0.01),
+            activation=LeakyReLU(alpha=0.1),
         )
     )
     model.add(
@@ -63,7 +64,7 @@ def discriminator(input_shape):
             kernel_size=5,
             strides=2,
             padding="same",
-            activation=LeakyReLU(alpha=0.01),
+            activation=LeakyReLU(alpha=0.1),
         )
     )
     model.add(Flatten())
@@ -152,7 +153,7 @@ class StockTimeGan:
         train_history["real_y"] = []
         train_history["pred_y"] = []
 
-        for i in range(epochs):
+        for i in tqdm(range(epochs), desc='GAN TRAINING EPOCHS'):
             start_time = time.time()
             realy_y, generated_data, disc_loss, gen_loss = self.train_step(
                 real_x, real_to_pred_y, real_whole_y
