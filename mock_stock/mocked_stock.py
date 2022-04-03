@@ -3,7 +3,10 @@ from pathlib import Path
 
 
 class MockedStock: 
-
+    """
+    might be usefull later, for now every simulation is performed 
+    in trading_bots/
+    """
     def __init__(self, data_path: Path, ticker: str):
         self.data_path = data_path
         self.ticker = ticker

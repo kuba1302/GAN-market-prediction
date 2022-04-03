@@ -5,7 +5,7 @@ def prepare_logger(log_level):
     logger = logging.getLogger()
     logger.setLevel(level=log_level)
     formatter = logging.Formatter(
-        "%(asctime)s,%(msecs)d %(levelname)-8s [%(pathname)s:%(lineno)d] %(message)s"
+        "%(asctime)s,%(msecs)d %(levelname)-8s %(message)s"
     )
     if not logger.handlers:
         lh = logging.StreamHandler(sys.stdout)
