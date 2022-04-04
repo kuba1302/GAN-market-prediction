@@ -178,3 +178,4 @@ class StockTimeGan:
     
     def save_generator(self, save_path):
         self.generator.save(save_path)
+        

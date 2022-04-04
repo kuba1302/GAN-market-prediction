@@ -39,7 +39,6 @@ class BackTest:
         return keras.models.load_model(load_path)
 
     def load_scalers(self, scalers_path):
-        print(scalers_path)
         with open(scalers_path, "rb") as handle:
             scalers = pickle.load(handle)
         return scalers["X_scaler"], scalers["y_scaler"]
@@ -56,7 +55,7 @@ class BackTest:
             buy_amount -= 1
         if buy_amount >= 0:
             return buy_amount
-        else: 
+        else:
             return 0
 
     def buy(self, amount: int, price: float):
@@ -75,15 +74,15 @@ class BackTest:
         else:
             logger.info("Abort! No assets to sell")
 
-    def base_strategy(self, pred: float, last_price: float):
+    def base_strategy(self, pred: float, last_price: float, cut_off: float):
         price_diff = pred - last_price
-        print(price_diff)
-        if price_diff > last_price * 0.05:
+        logger.info(f'Predicted next price: {pred} - Last price: {last_price} - Diff: {price_diff}')
+        if price_diff > last_price * cut_off:
             buy_amount = self.calculate_asset_amount_by_price(
                 price=last_price, curr_amount=self.currency_count
             )
             self.buy(buy_amount, last_price)
-        elif price_diff < -(last_price * 0.05):
+        elif price_diff < -(last_price * cut_off):
             sell_amout = self.asset_count
             self.sell(sell_amout, last_price)
         else:
@@ -98,9 +97,12 @@ class BackTest:
             raise ValueError(f'Wrong type: {data_type}. It must me "X" or "y"')
 
     def log_balances(self):
-        logger.info(f"Asset amount: {self.asset_count} - Currency: {self.currency_count} - Total Balance {self.calculate_balance()}")
+        logger.info(
+            f"Asset amount: {self.asset_count} - Currency: {self.currency_count}"
+            f"- Total Balance {self.calculate_balance()} - Asset Price: {self.current_asset_price}"
+        )
 
-    def simulate(self, X, y):
+    def simulate(self, X, y, cut_off):
         preds = self.inverse_scale(data=self.predict_price(X), data_type="y")
         y = self.inverse_scale(data=y, data_type="y")
         for pred, y_idx in zip(preds, range(len(y))):
@@ -108,5 +110,5 @@ class BackTest:
                 continue
             previous_close = y[y_idx - 1][0]
             self.current_asset_price = previous_close
-            self.base_strategy(pred=pred[0], last_price=previous_close)
+            self.base_strategy(pred=pred[0], last_price=previous_close, cut_off=cut_off)
             self.log_balances()
