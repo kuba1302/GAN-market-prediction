@@ -175,3 +175,7 @@ class StockTimeGan:
 
     def predict(self, X, *args, **kwargs): 
         return self.generator.predict(X, args, kwargs)
+    
+    def save_generator(self, save_path):
+        self.generator.save(save_path)
+        
