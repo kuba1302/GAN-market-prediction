@@ -1,11 +1,11 @@
-import pandas as pd
 import numpy as np
-import dill
+import os
 import pickle
 from utils.log import prepare_logger
 import logging
 from pathlib import Path
 from tensorflow import keras
+from sklearn.metrics import mean_absolute_error
 
 logger = prepare_logger(logging.INFO)
 
@@ -74,15 +74,19 @@ class BackTest:
         else:
             logger.info("Abort! No assets to sell")
 
-    def base_strategy(self, pred: float, last_price: float, cut_off: float):
+    def base_strategy(
+        self, pred: float, last_price: float, top_cut_off: float, down_cut_off: float
+    ):
         price_diff = pred - last_price
-        logger.info(f'Predicted next price: {pred} - Last price: {last_price} - Diff: {price_diff}')
-        if price_diff > last_price * cut_off:
+        logger.info(
+            f"Predicted next price: {pred} - Last price: {last_price} - Diff: {price_diff}"
+        )
+        if price_diff > last_price * top_cut_off / 100:
             buy_amount = self.calculate_asset_amount_by_price(
                 price=last_price, curr_amount=self.currency_count
             )
             self.buy(buy_amount, last_price)
-        elif price_diff < -(last_price * cut_off):
+        elif price_diff < -(last_price * down_cut_off / 100):
             sell_amout = self.asset_count
             self.sell(sell_amout, last_price)
         else:
@@ -102,7 +106,9 @@ class BackTest:
             f"- Total Balance {self.calculate_balance()} - Asset Price: {self.current_asset_price}"
         )
 
-    def simulate(self, X, y, cut_off):
+    def simulate(
+        self, X: np.array, y: np.array, top_cut_off: float, down_cut_off: float
+    ):
         preds = self.inverse_scale(data=self.predict_price(X), data_type="y")
         y = self.inverse_scale(data=y, data_type="y")
         for pred, y_idx in zip(preds, range(len(y))):
@@ -110,5 +116,11 @@ class BackTest:
                 continue
             previous_close = y[y_idx - 1][0]
             self.current_asset_price = previous_close
-            self.base_strategy(pred=pred[0], last_price=previous_close, cut_off=cut_off)
+            self.base_strategy(
+                pred=pred[0],
+                last_price=previous_close,
+                top_cut_off=top_cut_off,
+                down_cut_off=down_cut_off,
+            )
             self.log_balances()
+        logger.info(f'MAE: {mean_absolute_error(y, preds)}')

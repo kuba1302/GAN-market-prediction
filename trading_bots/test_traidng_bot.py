@@ -22,7 +22,7 @@ if __name__ == "__main__":
     )
 
     bot = BackTest(
-        transaction_cost=0.0001,
+        transaction_cost=0.0007,
         currency_count=1000,
         ticker="EA",
         scalers_path=scalers_path,
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     with open(scaled_path / "data.pickle", "rb") as handle:
         data = pickle.load(handle)
 
-    X = data["X_list_test"]
-    y = data["Y_preds_real_list_test"]
+    X = data["X_list_train"]
+    y = data["Y_preds_real_list_train"]
 
-    bot.simulate(X, y, 0.01)
+    bot.simulate(X, y, 0, 0)
