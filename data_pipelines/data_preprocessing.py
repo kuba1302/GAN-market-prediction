@@ -10,14 +10,15 @@ from utils.quantiles import q_at
 
 # data_path = Path(os.path.abspath("")) / "data"
 # sentiment_path = data_path / "sentiment"
-# save_path = Path(os.path.abspath('')) / 'data' / 'scaled_data' 
+# save_path = Path(os.path.abspath('')) / 'data' / 'scaled_data'
+
 
 class DataPipeline:
     def __init__(
         self,
         ticker: str,
         data_path: Path,
-        save_path: Path, 
+        save_path: Path,
         sentiment_path: Path,
         step_train: int,
         step_predict: int,
@@ -25,12 +26,14 @@ class DataPipeline:
         self.ticker = ticker
         self.step_train = step_train
         self.step_predict = step_predict
+        self.data_path = data_path
+        self.save_path = save_path
+        self.sentiment_path = sentiment_path
         self.min_time = None
         self.max_time = None
-        self.sentiment_df = self.prepare_sentiment_data(sentiment_path=sentiment_path)
 
-    def load_sentiment_data(self, sentiment_path: Path):
-        sentiment_df = pd.read_csv(sentiment_path / f"{self.ticker}.csv").drop(
+    def load_sentiment_data(self):
+        sentiment_df = pd.read_csv(self.sentiment_path / f"{self.ticker}.csv").drop(
             columns=["Unnamed: 0", "Unnamed: 0.1"]
         )
         sentiment_df = sentiment_df[sentiment_df["created_utc"] != "created_utc"]
@@ -43,20 +46,20 @@ class DataPipeline:
         self.max_time = sentiment_df["Date"].max()
         return sentiment_df
 
-    def _load_stock_data(self, data_path, ticker):
-        stock_data = pd.read_csv(data_path / f"{ticker}.csv")
-        stock_data.set_index(pd.DatetimeIndex(stock_data['Date']))
+    def _load_stock_data(self):
+        stock_data = pd.read_csv(self.data_path / f"{self.ticker}.csv")
+        stock_data.set_index(pd.DatetimeIndex(stock_data["Date"]))
         return stock_data
 
-    def prepare_sentiment_data(self, sentiment_path: Path):
+    def prepare_sentiment_data(self):
         AGGREGATIONS = {
             "sentiment": ["count", "mean", "std", "median", q_at(0.25), q_at(0.75)]
         }
-        sentiment_df = self.read_sentiment_data(sentiment_path=sentiment_path)
+        sentiment_df = self.load_sentiment_data()
         sentiment_df["sentiment"] = sentiment_df["sentiment"].astype(float)
         return sentiment_df.groupby("Date").agg(AGGREGATIONS)["sentiment"]
 
-    def _prepare_data(
+    def prepare_data(
         self,
         X: pd.DataFrame,
         X_cols: list,
@@ -102,22 +105,49 @@ class DataPipeline:
         split_idx = round(len(data) * train_percent)
         return data[:split_idx], data[split_idx:]
 
-
     def prepare_final_data(self, sentiment=None):
+        stock_data = self._load_stock_data()
         final_data = (
-            stock_data.loc[(stock_data["Date"] >= min_time) & (stock_data["Date"] < max_time)]
-            .drop(columns=["Dividends", "Stock Splits", "Unnamed: 0"])
+            stock_data.loc[
+                (stock_data["Date"] >= self.min_time)
+                & (stock_data["Date"] < self.max_time)
+            ]
+            .drop(
+                columns=["Dividends", "Stock Splits", "Unnamed: 0"]
+                if "Unnamed: 0" in stock_data
+                else ["Dividends", "Stock Splits"]
+            )
             .dropna(axis="columns")
         )
-        if sentiment is not None: 
-            sentiment_df = self.prepare_sentiment_statistics(sentiment)
-            final_data = (final_data.merge(sentiment_df, how='left', on='Date')
-                                    .set_index(pd.DatetimeIndex(final_data['Date']))
-                                    .drop(columns='Date')
-                                    .interpolate(method='time'))
+        if sentiment is not None:
+            sentiment_df = self.prepare_sentiment_data()
+            final_data = (
+                final_data.merge(sentiment_df, how="left", on="Date")
+                .set_index(pd.DatetimeIndex(final_data["Date"]))
+                .drop(columns="Date")
+                .interpolate(method="time")
+            )
         x_cols = [col for col in final_data.columns if col not in ["Close", "Date"]]
-        scaled_data = self.prepare_data(X=final_data, X_cols=x_cols, save_scaler_path=self.save_path)
-        X_list, Y_preds_real_list, Y_whole_real_list = split_data(
-            scaled_data, STEP_TRAIN, STEP_PREDICT
+        scaled_data = self.prepare_data(
+            X=final_data, X_cols=x_cols, save_scaler_path=self.save_path
+        )
+        X_list, Y_preds_real_list, Y_whole_real_list = self.split_data(
+            scaled_data, self.step_train, self.step_predict
         )
         return X_list, Y_preds_real_list, Y_whole_real_list
+
+    def save_data(self, sentiment=None):
+        X_list, Y_preds_real_list, Y_whole_real_list = self.prepare_final_data(
+            sentiment=sentiment,
+        )
+        df_lists = [X_list, Y_preds_real_list, Y_whole_real_list]
+        names = ["X_list", "Y_preds_real_list", "Y_whole_real_list"]
+        temp = dict(zip(names, df_lists))
+        save_data = {}
+        for name, df_list in temp.items():
+            train, test = self.train_test_split(df_list, 0.75)
+            save_data[f"{name}_train"] = train
+            save_data[f"{name}_test"] = test
+
+        with open(self.save_path / f"data{self.ticker}.pickle", "wb") as handle:
+            pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
