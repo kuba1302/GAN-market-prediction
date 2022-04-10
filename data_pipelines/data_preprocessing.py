@@ -22,6 +22,7 @@ class DataPipeline:
         sentiment_path: Path,
         step_train: int,
         step_predict: int,
+        if_ta = True
     ) -> None:
         self.ticker = ticker
         self.step_train = step_train
@@ -29,8 +30,10 @@ class DataPipeline:
         self.data_path = data_path
         self.save_path = save_path
         self.sentiment_path = sentiment_path
+        self.if_ta = if_ta
         self.min_time = None
         self.max_time = None
+        self.sentiment_df = self.load_sentiment_data()
 
     def load_sentiment_data(self):
         sentiment_df = pd.read_csv(self.sentiment_path / f"{self.ticker}.csv").drop(
@@ -68,15 +71,16 @@ class DataPipeline:
     ):
         X_scaler = MinMaxScaler()
         y_scaler = MinMaxScaler()
+        print(X.loc[:, X_cols])
         X_df = pd.DataFrame(X_scaler.fit_transform(X.loc[:, X_cols]), columns=X_cols)
         y_series = y_scaler.fit_transform(X.loc[:, y_col].values.reshape(-1, 1))
         X_df[y_col] = y_series
         scalers = {"X_scaler": X_scaler, "y_scaler": y_scaler}
-        with open(save_scaler_path / f"scalers{self.ticker}.pickle", "wb") as handle:
+        with open(save_scaler_path / f"scalers_{self.ticker}.pickle", "wb") as handle:
             pickle.dump(scalers, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return X_df
 
-    def _split_data(
+    def split_data(
         self, X: pd.DataFrame, step_train: int, step_predict: int, y_col: str = "Close"
     ):
         data_len = X.shape[0]
@@ -101,12 +105,14 @@ class DataPipeline:
             np.array(Y_whole_real_list),
         )
 
-    def train_test_split(data, train_percent):
+    def train_test_split(self, data, train_percent):
         split_idx = round(len(data) * train_percent)
         return data[:split_idx], data[split_idx:]
 
     def prepare_final_data(self, sentiment=None):
         stock_data = self._load_stock_data()
+        if self.if_ta: 
+            stock_data = self.perform_technical_analysis(stock_data)
         final_data = (
             stock_data.loc[
                 (stock_data["Date"] >= self.min_time)
@@ -120,9 +126,8 @@ class DataPipeline:
             .dropna(axis="columns")
         )
         if sentiment is not None:
-            sentiment_df = self.prepare_sentiment_data()
             final_data = (
-                final_data.merge(sentiment_df, how="left", on="Date")
+                final_data.merge(self.sentiment_df, how="left", on="Date")
                 .set_index(pd.DatetimeIndex(final_data["Date"]))
                 .drop(columns="Date")
                 .interpolate(method="time")
@@ -149,5 +154,45 @@ class DataPipeline:
             save_data[f"{name}_train"] = train
             save_data[f"{name}_test"] = test
 
-        with open(self.save_path / f"data{self.ticker}.pickle", "wb") as handle:
+        with open(self.save_path / f"data_{self.ticker}.pickle", "wb") as handle:
             pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def get_moving_averages(self, X, peroid_list=[5, 10, 20, 50, 100]):
+        df = X.copy()
+        for peroid in peroid_list:
+            df[f"sma_{peroid}"] = df["Close"].rolling(window=peroid).mean()
+            df[f"ema_{peroid}"] = df["Close"].ewm(span=peroid).mean()
+
+            weights = np.arange(1, peroid + 1)
+            df[f"wma_{peroid}"] = (
+                df["Close"]
+                .rolling(window=peroid)
+                .apply(lambda prices: np.dot(prices, weights) / weights.sum(), raw=True)
+            )
+
+            bollinger_up, bollinger_down = self.get_bollinger_bands(df["Close"], peroid)
+            df[f"bb_{peroid}_up"] = bollinger_up
+            df[f"bb_{peroid}_down"] = bollinger_down
+        return df
+
+    @staticmethod
+    def get_bollinger_bands(prices, peroid):
+        sma = prices.rolling(window=peroid).mean()
+        std = prices.rolling(peroid).std()
+        bollinger_up = sma + std * 2
+        bollinger_down = sma - std * 2
+        return bollinger_up, bollinger_down
+
+    @staticmethod
+    def get_macd(prices):
+        exp12 = prices.ewm(span=12, adjust=False).mean()
+        exp26 = prices.ewm(span=26, adjust=False).mean()
+        macd = exp12 - exp26
+        signal_line = macd.ewm(span=9, adjust=False).mean()
+        return macd, signal_line
+
+    def perform_technical_analysis(self, X, peroid_list=[5, 10, 20, 50, 100]):
+        df = X.copy()
+        df = self.get_moving_averages(X, peroid_list)
+        df['macd'], df['signal_line'] = self.get_macd(df['Close'])
+        return df 

@@ -6,11 +6,12 @@ import os
 import numpy as np
 
 if __name__ == "__main__":
-    MODEL_VERSION = "0.6"
+    TICKER = "UBSFY"
+    MODEL_VERSION = "0.1"
     load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
     save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
 
-    with open(load_path / "data.pickle", "rb") as test:
+    with open(load_path / f"data_{TICKER}.pickle", "rb") as test:
         data = pickle.load(test)
     print(
         '---------------------------- '
@@ -26,7 +27,7 @@ if __name__ == "__main__":
         data["X_list_train"],
         data["Y_preds_real_list_train"],
         data["Y_whole_real_list_train"],
-        epochs=500,
+        epochs=1000,
     )
     test_preds = gan.predict(data["X_list_test"])
     model_data = {
@@ -34,6 +35,6 @@ if __name__ == "__main__":
         "test_preds": np.array(test_preds),
         "actual_values": np.array(data["Y_preds_real_list_test"]),
     }
-    gan.save_generator(save_path / f"model_{MODEL_VERSION}_class")
-    with open(save_path / f"model_{MODEL_VERSION}.pickle", "wb") as handle:
+    gan.save_generator(save_path / f"model_{MODEL_VERSION}_{TICKER}class")
+    with open(save_path / f"model_{MODEL_VERSION}_{TICKER}.pickle", "wb") as handle:
         pickle.dump(model_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
