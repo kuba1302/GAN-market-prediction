@@ -22,7 +22,7 @@ class DataPipeline:
         sentiment_path: Path,
         step_train: int,
         step_predict: int,
-        if_ta = True
+        if_ta=True,
     ) -> None:
         self.ticker = ticker
         self.step_train = step_train
@@ -111,7 +111,7 @@ class DataPipeline:
 
     def prepare_final_data(self, sentiment=None):
         stock_data = self._load_stock_data()
-        if self.if_ta: 
+        if self.if_ta:
             stock_data = self.perform_technical_analysis(stock_data)
         final_data = (
             stock_data.loc[
@@ -194,5 +194,5 @@ class DataPipeline:
     def perform_technical_analysis(self, X, peroid_list=[5, 10, 20, 50, 100]):
         df = X.copy()
         df = self.get_moving_averages(X, peroid_list)
-        df['macd'], df['signal_line'] = self.get_macd(df['Close'])
-        return df 
+        df["macd"], df["signal_line"] = self.get_macd(df["Close"])
+        return df

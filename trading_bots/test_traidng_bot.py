@@ -8,17 +8,18 @@ import pandas as pd
 from trade_bot import BackTest
 
 if __name__ == "__main__":
-    MODEL_VERSION = "0.6"
+    TICKER = "UBSFY"
+    MODEL_VERSION = "0.1"
 
     scaled_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
-    scalers_path = scaled_path / "scalers.pickle"
-    data_path = scaled_path / "data.pickle"
+    scalers_path = scaled_path / f"scalers_{TICKER}.pickle"
+    data_path = scaled_path / f"data_{TICKER}.pickle"
     model_path = (
         Path(os.path.abspath("")).parents[0]
         / "models"
         / "gan"
         / "versions"
-        / f"model_{MODEL_VERSION}_class"
+        / f"model_{MODEL_VERSION}_{TICKER}class"
     )
 
     bot = BackTest(
@@ -28,10 +29,10 @@ if __name__ == "__main__":
         scalers_path=scalers_path,
         model_path=model_path,
     )
-    with open(scaled_path / "data.pickle", "rb") as handle:
+    with open(data_path, "rb") as handle:
         data = pickle.load(handle)
 
-    X = data["X_list_train"]
-    y = data["Y_preds_real_list_train"]
+    X = data["X_list_test"]
+    y = data["Y_preds_real_list_test"]
 
-    bot.simulate(X, y, 0, 0)
+    bot.simulate(X=X, y=y, top_cut_off=2, down_cut_off=0, if_short=True)

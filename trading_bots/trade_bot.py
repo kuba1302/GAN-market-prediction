@@ -25,6 +25,8 @@ class BackTest:
         self.current_sum_balance = currency_count
         self.transaction_cost = transaction_cost
         self.ticker = ticker
+        self.shorted_assets_amount = 0
+        self.short_start_price = 0
         self.model = self.load_model(model_path)
         self.X_scaler, self.y_scaler = self.load_scalers(scalers_path)
         self.current_asset_price = None
@@ -33,6 +35,7 @@ class BackTest:
         return (
             f"Trade Bot - Ticker: {self.ticker} - Currency Balance: {self.current_sum_balance} "
             f"Asset Balance: {self.asset_count} - Total summed Balance: {self.current_sum_balance}"
+            f"Shorted assets: {self.short_start_price}"
         )
 
     def load_model(self, load_path):
@@ -74,10 +77,28 @@ class BackTest:
         else:
             logger.info("Abort! No assets to sell")
 
+    def short(self, price): 
+        short_amount = self.calculate_asset_amount_by_price(
+                price=price, curr_amount=self.currency_count
+            )
+        self.shorted_assets_amount = short_amount
+        self.short_start_price = price 
+        logger.info(f"Short! - Amount: {short_amount} - Short start price {self.shorted_assets_amount}")
+
+    def rebuy_short(self, price):
+        if self.shorted_assets_amount != 0:
+            short_result = (self.short_start_price - price) * self.shorted_assets_amount - self.transaction_cost
+            self.currency_count += short_result
+            logger.info(f"Realising short! - Result: {short_result} - Start price: {self.short_start_price} - End price: {price}")
+            self.short_start_price = 0
+            self.shorted_assets_amount = 0
+
     def base_strategy(
-        self, pred: float, last_price: float, top_cut_off: float, down_cut_off: float
+        self, pred: float, last_price: float, top_cut_off: float, down_cut_off: float, if_short: bool
     ):
         price_diff = pred - last_price
+        if if_short:
+            self.rebuy_short(last_price)
         logger.info(
             f"Predicted next price: {pred} - Last price: {last_price} - Diff: {price_diff}"
         )
@@ -89,6 +110,8 @@ class BackTest:
         elif price_diff < -(last_price * down_cut_off / 100):
             sell_amout = self.asset_count
             self.sell(sell_amout, last_price)
+            if if_short:
+                self.short(price=last_price)
         else:
             logger.info("Price diffrence was not enough. Skipping trade")
 
@@ -107,7 +130,7 @@ class BackTest:
         )
 
     def simulate(
-        self, X: np.array, y: np.array, top_cut_off: float, down_cut_off: float
+        self, X: np.array, y: np.array, top_cut_off: float, down_cut_off: float, if_short: bool
     ):
         preds = self.inverse_scale(data=self.predict_price(X), data_type="y")
         y = self.inverse_scale(data=y, data_type="y")
@@ -121,6 +144,7 @@ class BackTest:
                 last_price=previous_close,
                 top_cut_off=top_cut_off,
                 down_cut_off=down_cut_off,
+                if_short=if_short
             )
             self.log_balances()
         logger.info(f'MAE: {mean_absolute_error(y, preds)}')

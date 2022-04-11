@@ -1,5 +1,4 @@
 import pickle
-import dill
 from models.gan.gan import generator, discriminator, StockTimeGan
 from pathlib import Path
 import os
