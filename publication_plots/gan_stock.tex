@@ -157,4 +157,10 @@ Bollinger Bands consist of three bands. The middle one is a moving average. High
 
 \subsubsection{Bollinger Bands}
 Moving Average Convergence Divergence (MACD) consists of two lines. The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
+
+
+\subsection{Data Scaling}
+Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
+\[ x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \]
+
 \end{document}
