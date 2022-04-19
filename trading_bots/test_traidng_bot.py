@@ -9,7 +9,7 @@ from trade_bot import BackTest
 
 if __name__ == "__main__":
     TICKER = "UBSFY"
-    MODEL_VERSION = "0.1"
+    MODEL_VERSION = "0.2"
 
     scaled_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
     scalers_path = scaled_path / f"scalers_{TICKER}.pickle"
