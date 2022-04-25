@@ -53,7 +53,7 @@
 
 %%% The "real" document content comes below...
 
-\title{Game industry companies stock price prediction using TimeGAN and BERT}
+\title{Game industry companies stock price prediction using GAN and BERT}
 \author{Jakub Wujec}
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
@@ -119,7 +119,7 @@ Volume & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \
 \clearpage
 
 \subsection{Text Data}
-Due to the inclusion of sentiment analysis in our study, the source of textual data sourcing had to be chosen. Due to the fact that we have chosen in the study only the companies from the growth industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps us to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. For our study, we chose the r/Games subreddit. This is the largest forum on this site dealing with the subject of games. There are more than 3.1 million users on it. Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned above 
+Due to the inclusion of sentiment analysis in our study, the source of textual data sourcing had to be chosen. Due to the fact that we have chosen in the study only the companies from the growth industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps us to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. For our study, we chose the r/Games subreddit. This is the largest forum on this site dealing with the subject of games. There are more than 3.1 million users on it. Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned below 
 
 \begin{table}[hbt!]
 \centering
@@ -163,4 +163,35 @@ Moving Average Convergence Divergence (MACD) consists of two lines. The core of 
 Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
 \[ x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \]
 
+\subsection{Sentiment Analysis}
+Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are very many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
+
+\subsection{BERT (Bi-Directional Encoder Representations from Transformers)}
+BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
+
+\section{Models}
+
+\subsection{Basic Recurrent Neural Network}
+Recurrent neural networks (RNN) is an extended version of artificial neural networks. Its main advantage is having internal memory which allows it to process sequences. Hidden state allows previous outputs to be used as input for further parts of the sequence. This ability to remember previous states makes RNN suitable for time series forecasting. 
+
+\subsection{Gated Recurrent Unit}
+Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
+It's architecture has been proposed by K.Cho in 2014 \cite{gru3}.
+
+
+\begin{thebibliography}{9}
+\bibitem{gru1}
+J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
+\bibitem{gru2}
+P. Dey et al., Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
+\bibitem{gru3} 
+K. Cho et al., On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
+
+
+
+
+
+
+
+\end{thebibliography}
 \end{document}
