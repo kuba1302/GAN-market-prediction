@@ -143,7 +143,7 @@ Due to the inclusion of sentiment analysis in our study, the source of textual d
 12 &      Dead Space &     Grand Theft Auto &                &                  \\
 13 &             &            Max Payne &                &                  \\
 14 &             &  Red Dead Redemption &                &                  \\
-15 &             &                  RRD &                &                  \\
+15 &             &                  RDR &                &                  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -164,7 +164,7 @@ Due to the use of neural network based architectures in the study, rescaling of 
 \[ x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \]
 
 \subsection{Sentiment Analysis}
-Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are very many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
+Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
 
 \subsection{BERT (Bi-Directional Encoder Representations from Transformers)}
 BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
@@ -176,8 +176,10 @@ Recurrent neural networks (RNN) is an extended version of artificial neural netw
 
 \subsection{Gated Recurrent Unit}
 Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
-It's architecture has been proposed by K.Cho in 2014 \cite{gru3}.
+It's architecture has been proposed by K.Cho in 2014 \cite{gru3}. Its name comes from gating mechanisms which allow the perceptron to choose which information should be saved or forgotten. It is similar to long Long short-term memory networks, yet it lacks an output gate. This difference makes GRU less computationally expensive while maintaining similar or even better performance on smaller datasets. 
 
+\subsection{Convolutional neural network}
+Convolutional neural network is another class of artificial neural networks used in our proposed GAN model. It is widely used in many different fields, including computer vision, speech processing, and text processing \cite{cnn1}. One of its main advantages is the ability to identify important features without previous indications. It takes its name from mathematical linear operations called convolution \cite{cnn2}. It has been chosen for our study due to its good differentiating capabilities.
 
 \begin{thebibliography}{9}
 \bibitem{gru1}
@@ -186,8 +188,10 @@ J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurren
 P. Dey et al., Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
 \bibitem{gru3} 
 K. Cho et al., On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
-
-
+\bibitem{cnn1}
+L. Alzubaidi et al, Review of deep learning: concepts, CNN architectures, challenges, applications, future directions, 2021, 14
+\bibitem{cnn2}
+R. Yamashita, Convolutional neural networks: an overview and application in radiology, 2018, 612
 
 
 
