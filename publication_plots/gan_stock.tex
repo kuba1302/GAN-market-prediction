@@ -61,6 +61,58 @@
 \begin{document}
 \maketitle
 
+
+\section{Abstract}
+Investing in the stock market has long been a popular topic. In recent years, however, it has become more intense. Investment funds and corporations are outdoing themselves in coming up with more optimal algorithms to provide them with a trustworthy investment. Moreover, due to easier access to stock exchanges on the Internet, also private persons and smaller institutions are more and more interested in algo-trading. It is not without significance here that in many countries the inflation rate is the highest in years. People are looking for a way and place to store capital and to invest. In this article we propose the use of the GAN model to predict stock market behavior and an investment strategy using the results of the model. We will be helped by Technical Analysis and Sentiment Analysis serving as explanatory variables for our model. Our study was conducted on four companies in the game industry. This industry was chosen by us because of the potential impact of a company's customer reviews on its valuation. We investigate this by analyzing the sentiment of selected comments containing pre-prepared keywords. The sentiment is then calculated using the NLP model created by Google - BERT. GAN then tries to predict the future valuation of a given company using the variables mentioned above. This valuation is then used to provide buy or sell signals.  
+
+\section{Introduction}
+In recent years, the stock market has become a place of fierce competition for the best model to predict future prices and, consequently, to make money. 
+A not insignificant influence on this has been the facilitation of access to computing power, allowing the seamless use of algorithms such as neural networks, without worrying about hardware limitations. Moreover, a great number of exchanges make their APIs available, thus enabling real-time algo-trading. All of this has led to a great increase in recent research on the use of new models for stock market price prediction.  \\
+
+In our study, we examine the capabilities of the Generative Adversarial Networks introduced in 2014 by J. Goodfellow \cite{gan1}. They were initially intended to generate synthetic images. However, later research has shown that they can be successfully used to generate future stock market valuations. We use yahoo finance to download stock market data. From these we then select the indicators used to predict the explanatory variable, which in our case is the closing price of a given candlestick. This data is also used to calculate technical analysis indicators. These are simple moving average (SMA), exponential moving average (EMA), weighted moving average (WMA), bollinger bands (BB) and moving average convergence divergence (MACD). \\
+
+Sentiment is one way of gauging people's feelings about a company or its products. It is even more important in the game industry, which we analyse in our work, because the opinion of players expressed by posts on forums and the decision to buy a particular game very significantly affects the finance results of the company. To download text data, we will use the Reddit portal - one of the largest Internet forums of this kind. It also has subforums that allow aggregation of information by topic. This will allow us to retrieve comments on selected keywords from a site dedicated only to games. These keywords will be the names of companies and their most popular games. \\
+
+Google's BERT model will be used to analyse sentiment. It is a model pre-trained on millions of texts and considered a state-of-the-art model in the field of NLP. 
+We then use stock market data, technical analysis indicators and sentiment analysis to try to predict the closing price of a given company the next day. For the prediction of one day we use explanatory variables from the previous 30 days. With the model, we tried to prepare an investment strategy that allows to make buying and selling decisions. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. 
+
+
+\section{Theoretical Background}
+
+\subsection{Technical Analysis}
+\subsubsection{Moving Averages}
+Several types of moving averages are used. The first and simplest of them is a simple moving average (SMA). It takes into account in the same degree all observations in a given time window. For obvious reasons, one may assume that closer dates may have more significant influence on future price. Therefore, in addition to the SMA, Weighted Moving Average (WMA) and Exponential Moving Average were used. The WMA solves the aforementioned problem by giving more weight to more recent data. EMA works in a similar way, but the price change is not consistent but exponential.
+
+\subsubsection{Bollinger Bands}
+Bollinger Bands consist of three bands. The middle one is a moving average. Higher and lower bands are deviated from the middle one by 2 standard deviations up and down respectively. 
+
+\subsubsection{Bollinger Bands}
+Moving Average Convergence Divergence (MACD) consists of two lines. The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
+
+
+\subsection{Data Scaling}
+Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
+\[ x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \]
+
+\subsection{Sentiment Analysis}
+Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
+
+\subsection{BERT (Bi-Directional Encoder Representations from Transformers)}
+BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
+
+\subsection{Basic Recurrent Neural Network}
+Recurrent neural networks (RNN) is an extended version of artificial neural networks. Its main advantage is having internal memory which allows it to process sequences. Hidden state allows previous outputs to be used as input for further parts of the sequence. This ability to remember previous states makes RNN suitable for time series forecasting. 
+
+\subsection{Gated Recurrent Unit}
+Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
+It's architecture has been proposed by K.Cho in 2014 \cite{gru3}. Its name comes from gating mechanisms which allow the perceptron to choose which information should be saved or forgotten. It is similar to long Long short-term memory networks, yet it lacks an output gate. This difference makes GRU less computationally expensive while maintaining similar or even better performance on smaller datasets. 
+
+\subsection{Convolutional neural network}
+Convolutional neural network is another class of artificial neural networks used in our proposed GAN model. It is widely used in many different fields, including computer vision, speech processing, and text processing \cite{cnn1}. One of its main advantages is the ability to identify important features without previous indications. It takes its name from mathematical linear operations called convolution \cite{cnn2}. It has been chosen for our study due to its good differentiating capabilities.
+
+\subsection{Generative adversarial network}
+Generative Adversarial networks are a family of neural networks first proposed by J. Godfellow in 2014 \cite{gan1}. The main field in which they are used is computer vision, but since their inception, various modifications of them have been tested in different fields. They are currently being tested in time series prediction as well. J. Yoon et al proposed timeGAN for generating synthetic time series  \cite{time-gan},  P. Sonkiya et al proposed S-GAN which is a predictive model \cite{s-gan}. GAN consists of two neural networks competing against each other in a zero-sum game. The generator tries to generate data as similar to the real data as possible, and the discriminator tries to recognize which data is real and which is generated. In our system, due to its ability to deal with time series, the GRU network was chosen as the generator. CNN network was chosen as the discriminator due to its differentiating capabilities. 
+
 \section{Data}
 \subsection{Stock Data}
 In our analysis we decided to analyze the algorithm on 4 large companies from the gaming industry. This sector was chosen due to the fact that the study takes into account the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on valuations of a given company in the gaming industry. As many as 4 companies were chosen for the analysis - Electronic Arts, Ubisoft, Take-Two Interactive Software, Activision Blizzard, called in the later part of the paper by their stock ticker: EA, UBSFY, TTWO, ATVI.  The selection of more than one company was influenced by making sure that the algorithm was reproducible and universal. Furthermore, attempts were made to use the model learned on one company's data on another company's test data. These companies are among the leaders in the growth industry. The choice of only U.S. companies was due to a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals during replacement, limitations of Reddit's API (Application Programming Interface), and limitations of computing power, the analysis was conducted over a nearly three-year period: from 01/01/2019 to 31/10/2021. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. 
@@ -148,54 +200,25 @@ Due to the inclusion of sentiment analysis in our study, the source of textual d
 \end{tabular}
 \end{table}
 
-\subsection{Technical Analysis}
-\subsubsection{Moving Averages}
-Several types of moving averages are used. The first and simplest of them is a simple moving average (SMA). It takes into account in the same degree all observations in a given time window. For obvious reasons, one may assume that closer dates may have more significant influence on future price. Therefore, in addition to the SMA, Weighted Moving Average (WMA) and Exponential Moving Average were used. The WMA solves the aforementioned problem by giving more weight to more recent data. EMA works in a similar way, but the price change is not consistent but exponential.
-
-\subsubsection{Bollinger Bands}
-Bollinger Bands consist of three bands. The middle one is a moving average. Higher and lower bands are deviated from the middle one by 2 standard deviations up and down respectively. 
-
-\subsubsection{Bollinger Bands}
-Moving Average Convergence Divergence (MACD) consists of two lines. The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
-
-
-\subsection{Data Scaling}
-Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
-\[ x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \]
-
-\subsection{Sentiment Analysis}
-Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
-
-\subsection{BERT (Bi-Directional Encoder Representations from Transformers)}
-BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
-
-\section{Models}
-
-\subsection{Basic Recurrent Neural Network}
-Recurrent neural networks (RNN) is an extended version of artificial neural networks. Its main advantage is having internal memory which allows it to process sequences. Hidden state allows previous outputs to be used as input for further parts of the sequence. This ability to remember previous states makes RNN suitable for time series forecasting. 
-
-\subsection{Gated Recurrent Unit}
-Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
-It's architecture has been proposed by K.Cho in 2014 \cite{gru3}. Its name comes from gating mechanisms which allow the perceptron to choose which information should be saved or forgotten. It is similar to long Long short-term memory networks, yet it lacks an output gate. This difference makes GRU less computationally expensive while maintaining similar or even better performance on smaller datasets. 
-
-\subsection{Convolutional neural network}
-Convolutional neural network is another class of artificial neural networks used in our proposed GAN model. It is widely used in many different fields, including computer vision, speech processing, and text processing \cite{cnn1}. One of its main advantages is the ability to identify important features without previous indications. It takes its name from mathematical linear operations called convolution \cite{cnn2}. It has been chosen for our study due to its good differentiating capabilities.
 
 \begin{thebibliography}{9}
 \bibitem{gru1}
 J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
 \bibitem{gru2}
-P. Dey et al., Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
+P. Dey et al, Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
 \bibitem{gru3} 
-K. Cho et al., On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
+K. Cho et al, On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
 \bibitem{cnn1}
 L. Alzubaidi et al, Review of deep learning: concepts, CNN architectures, challenges, applications, future directions, 2021, 14
 \bibitem{cnn2}
 R. Yamashita, Convolutional neural networks: an overview and application in radiology, 2018, 612
-
-
-
-
+\bibitem{gan1}
+J. Goodfellow et al, Generative Adversarial Nets, 2014
+\bibitem{time-gan}
+J. Yoon, D. Jarret, M. Schaar, Time-series Generative Adversarial Networks, 2019
+\bibitem{s-gan}
+P. Sonkiya, V. Bajpai, A. Bansal, Stock price prediction using BERT and GAN, 2021
+\bibitem{gan-stock}A. Kumar et al, Generative Adversarial Network (GAN) and Enhanced Root Mean Square Error (ERMSE): Deep Learning for Stock Price Movement Prediction
 
 \end{thebibliography}
 \end{document}
