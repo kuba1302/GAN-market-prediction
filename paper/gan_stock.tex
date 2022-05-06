@@ -79,12 +79,14 @@ Sentiment is one way of gauging people's feelings about a company or its product
 Google's BERT model will be used to analyse sentiment. It is a model pre-trained on millions of texts and considered a state-of-the-art model in the field of NLP. 
 We then use stock market data, technical analysis indicators and sentiment analysis to try to predict the closing price of a given company the next day. For the prediction of one day we use explanatory variables from the previous 30 days. With the model, we tried to prepare an investment strategy that allows to make buying and selling decisions. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. 
 
+\subsection{Hypothesis}
+
 \section{Related Work}
 
 
 \section{Data}
 \subsection{Stock Data}
-In our analysis we decided to analyze the algorithm on 4 large companies from the gaming industry. This sector was chosen due to the fact that the study takes into account the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on valuations of a given company in the gaming industry. As many as 4 companies were chosen for the analysis - Electronic Arts, Ubisoft, Take-Two Interactive Software, Activision Blizzard, called in the later part of the paper by their stock ticker: EA, UBSFY, TTWO, ATVI.  The selection of more than one company was influenced by making sure that the algorithm was reproducible and universal. Furthermore, attempts were made to use the model learned on one company's data on another company's test data. These companies are among the leaders in the growth industry. The choice of only U.S. companies was due to a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals during replacement, limitations of Reddit's API (Application Programming Interface), and limitations of computing power, the analysis was conducted over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. 
+\quad In our analysis we decided to analyze the algorithm on 4 large companies from the gaming industry. This sector was chosen due to the fact that the study takes into account the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on valuations of a given company in the gaming industry. As many as 4 companies were chosen for the analysis - Electronic Arts, Ubisoft, Take-Two Interactive Software, Activision Blizzard, called in the later part of the paper by their stock ticker: EA, UBSFY, TTWO, ATVI.  The selection of more than one company was influenced by making sure that the algorithm was reproducible and universal. Furthermore, attempts were made to use the model learned on one company's data on another company's test data. These companies are among the leaders in the growth industry. The choice of only U.S. companies was due to a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals during replacement, limitations of Reddit's API (Application Programming Interface), and limitations of computing power, the analysis was conducted over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. 
 
 \begin{table}[hbt!]
 \centering
@@ -140,7 +142,7 @@ Volume & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \
 \clearpage
 
 \subsection{Text Data}
-Due to the inclusion of sentiment analysis in our study, the source of textual data sourcing had to be chosen. Due to the fact that we have chosen in the study only the companies from the growth industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps us to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. For our study, we chose the r/Games subreddit. This is the largest forum on this site dealing with the subject of games. There are more than 3.1 million users on it. Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned below 
+\quad Due to the inclusion of sentiment analysis in our study, the source of textual data sourcing had to be chosen. Due to the fact that we have chosen in the study only the companies from the growth industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps us to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. For our study, we chose the r/Games subreddit. This is the largest forum on this site dealing with the subject of games. There are more than 3.1 million users on it. Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned below 
 
 \begin{table}[hbt!]
 \centering
@@ -173,27 +175,27 @@ Due to the inclusion of sentiment analysis in our study, the source of textual d
 
 \subsection{Technical Analysis}
 \subsubsection{Moving Averages}
-Several types of moving averages are used. The first and simplest of them is a simple moving average (SMA). It takes into account in the same degree all observations in a given time window. For obvious reasons, one may assume that closer dates may have more significant influence on future price. Therefore, in addition to the SMA, Weighted Moving Average (WMA) and Exponential Moving Average were used. The WMA solves the aforementioned problem by giving more weight to more recent data. EMA works in a similar way, but the price change is not consistent but exponential.
+\quad Several types of moving averages are used. The first and simplest of them is a simple moving average (SMA). It takes into account in the same degree all observations in a given time window. For obvious reasons, one may assume that closer dates may have more significant influence on future price. Therefore, in addition to the SMA, Weighted Moving Average (WMA) and Exponential Moving Average were used. The WMA solves the aforementioned problem by giving more weight to more recent data. EMA works in a similar way, but the price change is not consistent but exponential.
 
 \subsubsection{Bollinger Bands}
-Bollinger Bands consist of three bands. The middle one is a moving average. Higher and lower bands are deviated from the middle one by 2 standard deviations up and down respectively. 
+\quad Bollinger Bands consist of three bands. The middle one is a moving average. Higher and lower bands are deviated from the middle one by 2 standard deviations up and down respectively. 
 
 \subsubsection{Bollinger Bands}
-Moving Average Convergence Divergence (MACD) consists of two lines. The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
+\quad Moving Average Convergence Divergence (MACD) consists of two lines. The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
 
 
 \subsection{Data Scaling}
-Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
+\quad Due to the use of neural network based architectures in the study, rescaling of the data was required. For this purpose, min-max normalization was used. The equation for the rescaled value is: 
 \begin{equation} x\textsubscript{scaled} = \frac{x - min(x)}{max(x) - min(x)} \end{equation}
 
 \subsection{Sentiment Analysis}
-Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
+\quad Sentiment analysis is a process of extracting users' feelings and emotions. It is a part of Natural Language Processing. It boils down to trying to determine with a given probability whether a given statement was positive, negative or neutral. Then such predictions are converted into numerical data. There are many different types of models for sentiment analysis, but the vast majority of them are based on machine learning. In our study, the BERT (Bi-Directional Encoder Representations from Transformers) model created by Google researchers was used. 
 
 \subsection{BERT (Bi-Directional Encoder Representations from Transformers)}
-BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
+\quad BERT is a state-of-the-art NLP model. One of its biggest advantages is taking whole sentences as an input in contrast to traditional NLP models that take one word a time. One of BERT's biggest advantages is that it is a semi-supervised model. It is pre-trained on very large sets of non labeled data, learning to fill gaps in the text. Then this model can be trained for any task just by adding one extra layer. Moreover, one can find many pre-trained models ready for download on the internet. This makes it possible for ordinary users without astronomical computational capabilities to use such a powerful model for their tasks by training it only on small amounts of labeled data. 
 
 \subsection{Sentiment Data Transformation}
-Due to the occurrence of many comments concerning a single company on a given day, it was necessary to group them. All comments containing a key word related to a given company were combined into one matrix. Their sentiment was then calculated. This data was aggregated by day of creation into the following vector for each day: 
+\quad Due to the occurrence of many comments concerning a single company on a given day, it was necessary to group them. All comments containing a key word related to a given company were combined into one matrix. Their sentiment was then calculated. This data was aggregated by day of creation into the following vector for each day: 
 \begin{center}   Sentiment vector for day \emph{i}:\end{center}
 \begin{equation} [n, \mu, \sigma, med, Q_1, Q_3] \end{equation}
 where:
@@ -206,17 +208,17 @@ Q_3     &  third of all values related to chosen company on day \emph{i} \\
 \end{conditions}
 
 \subsection{Basic Recurrent Neural Network}
-Recurrent neural networks (RNN) is an extended version of artificial neural networks. Its main advantage is having internal memory which allows it to process sequences. Hidden state allows previous outputs to be used as input for further parts of the sequence. This ability to remember previous states makes RNN suitable for time series forecasting. 
+\quad Recurrent neural networks (RNN) is an extended version of artificial neural networks. Its main advantage is having internal memory which allows it to process sequences. Hidden state allows previous outputs to be used as input for further parts of the sequence. This ability to remember previous states makes RNN suitable for time series forecasting. 
 
 \subsection{Gated Recurrent Unit}
-Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
+\quad Gated Recurrent Unit is an extended version of Recurrent Neural Networks which adress RNN vanishing gradient problem \cite{gru2}.
 It's architecture has been proposed by K.Cho in 2014 \cite{gru3}. Its name comes from gating mechanisms which allow the perceptron to choose which information should be saved or forgotten. It is similar to long Long short-term memory networks, yet it lacks an output gate. This difference makes GRU less computationally expensive while maintaining similar or even better performance on smaller datasets. 
 
 \subsection{Convolutional neural network}
-Convolutional neural network is another class of artificial neural networks used in our proposed GAN model. It is widely used in many different fields, including computer vision, speech processing, and text processing \cite{cnn1}. One of its main advantages is the ability to identify important features without previous indications. It takes its name from mathematical linear operations called convolution \cite{cnn2}. It has been chosen for our study due to its good differentiating capabilities.
+\quad Convolutional neural network is another class of artificial neural networks used in our proposed GAN model. It is widely used in many different fields, including computer vision, speech processing, and text processing \cite{cnn1}. One of its main advantages is the ability to identify important features without previous indications. It takes its name from mathematical linear operations called convolution \cite{cnn2}. It has been chosen for our study due to its good differentiating capabilities.
 
 \subsection{Generative adversarial network}
-Generative Adversarial networks are a family of neural networks first proposed by J. Godfellow in 2014 \cite{gan1}. The main field in which they are used is computer vision, but since their inception, various modifications of them have been tested in different fields. They are currently being tested in time series prediction as well. J. Yoon et al proposed timeGAN for generating synthetic time series  \cite{time-gan},  P. Sonkiya et al proposed S-GAN which is a predictive model \cite{s-gan}. GAN consists of two neural networks competing against each other in a zero-sum game. The generator tries to generate data as similar to the real data as possible, and the discriminator tries to recognize which data is real and which is generated. In other words, the generator tries to minimise the difference between the true and synthetic distributions, while the discriminator tries to maximise this difference. This can be represented by the following min-max function: 
+\quad Generative Adversarial networks are a family of neural networks first proposed by J. Godfellow in 2014 \cite{gan1}. The main field in which they are used is computer vision, but since their inception, various modifications of them have been tested in different fields. They are currently being tested in time series prediction as well. J. Yoon et al proposed timeGAN for generating synthetic time series  \cite{time-gan},  P. Sonkiya et al proposed S-GAN which is a predictive model \cite{s-gan}. GAN consists of two neural networks competing against each other in a zero-sum game. The generator tries to generate data as similar to the real data as possible, and the discriminator tries to recognize which data is real and which is generated. In other words, the generator tries to minimise the difference between the true and synthetic distributions, while the discriminator tries to maximise this difference. This can be represented by the following min-max function: 
 
 
 \begin{center}   GAN min-max function: \end{center}
@@ -224,7 +226,7 @@ Generative Adversarial networks are a family of neural networks first proposed b
 \mathbb{E}_{x\sim p_{data}(x)}[\log D(x)]
 + \mathbb{E}_{z\sim p_z(z)}[\log(1 - D(G(z)))] \end{equation}
 \\
-In classical GAN models, the input to the G generator would be a latent vector derived from N(0, 1). In the model we use, this is replaced by a vector consisting of both the sentiment vector \cite{gan-stock}, data from the stock market and technical analysis indicators for early convergence \cite{gan-stock2}. Its task is to generate a vector G(x) as similar as possible to the original distribution.In our system, due to its ability to deal with time series, the GRU network was chosen as the generator. Our proposed generator consists of three GRU layers containing 1024, 512 and 256 neurons, respectively. Each of them has a recurrent dropout of 0.2. These are followed by three multilayer perceptron (MLP) layers containing 128, 64 and 1 neuron, sequentially \cite{gan-stock}\cite{gan-stock2}. 
+\quad In classical GAN models, the input to the G generator would be a latent vector derived from N(0, 1). In the model we use, this is replaced by a vector consisting of both the sentiment vector \cite{gan-stock}, data from the stock market and technical analysis indicators for early convergence \cite{gan-stock2}. Its task is to generate a vector G(x) as similar as possible to the original distribution.In our system, due to its ability to deal with time series, the GRU network was chosen as the generator. Our proposed generator consists of three GRU layers containing 1024, 512 and 256 neurons, respectively. Each of them has a recurrent dropout of 0.2. These are followed by three multilayer perceptron (MLP) layers containing 128, 64 and 1 neuron, sequentially \cite{gan-stock}\cite{gan-stock2}. 
 The generator loss function is shown as follows: 
 
 \begin{center}   Generator Loss Function:  \end{center}
@@ -232,7 +234,7 @@ The generator loss function is shown as follows:
 -\frac{1}{m} \sum_{i=1}^{m} \log \left(D\left(G\left(x^{i}\right)\right)\right)
 \end{equation}
 \\
-The discriminator in our model is a network composed of a 1-dimensional Convolutional Neural Network. The network was chosen as the discriminator due to its differentiating capabilities. 
+\quad The discriminator in our model is a network composed of a 1-dimensional Convolutional Neural Network. The network was chosen as the discriminator due to its differentiating capabilities. 
  Its task is to discriminate between synthetic and real data. It assigns 1 to the values coming from the true distribution and 0 to the false one. It consists of three convolutional layers. The first contains 32 units and has a kernel size of 3. The second contains 64 units and has a kernel size of 5. The third contains 128 units and has a kernel size of 5. Each has strides of 2 and a Leaky ReaLU activation function with an alpha parameter of 0.1. Then, there is a flatten layer which flattens the input. It is followed by three multilayer perceptron (MLP) layers containing 220, 220 and 1 units, sequentially \cite{gan-stock}\cite{gan-stock2}. 
 The discriminator loss function is shown as follows: 
 \begin{center}  Discriminator Loss Function: \end{center}
@@ -243,7 +245,7 @@ The discriminator loss function is shown as follows:
 The optimizer used for both Generator and Discriminator was ADAM and the learning rate was set to 0.0016.
 
 \subsection{Evaluation of the model}
-Evaluation of the model is going to be done using two metrics:  \\ 
+\quad Evaluation of the model is going to be done using two metrics:  \\ 
 
 \begin{center}   Root Mean Square Error (RMSE):  \end{center}
 \begin{equation}  RMSE = \sqrt{(\frac{1}{n})\sum_{i=1}^{n}(y_{i} - x_{i})^{2}} \end{equation}
@@ -263,6 +265,9 @@ where:
  n &  number of observation
 \end{conditions}
 \section{Results of the model}
+\quad The model was trained using the Python language and its frameworks - tensorflow \cite{tensorflow}  and keras \cite{keras}\cite{keras-1}. The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16GB of ram. The workout was performed together with the use of CUDA cores. Each workout was run with an epoch parameter of 1000 and a hyper parameter optimisation was also performed. However, due to the limitation of computing power, it could not be extensive. The behaviour of the network after removing the MLP layers from both the generator and the discriminator was checked. This did not give the desired results, therefore in the further part of the study the parameters proposed by P. Sonkiya et al. were used. The behaviour of the model with different types of input data for the generator was also checked. Both the vector containing sentiment statistics and technical analysis indicators were removed. By far the best model was found to be the one without sentiment and with technical analysis. One reason why the use of sentiment may not be correct is the noise and data pollution from reddit. However, this topic needs further exploration with more computational resources. For each of the selected four companies 
+a separate model has been trained for each of the four selected companies. 
+
 \begin{table}
 \centering
 \caption{Error metrics for chosen companies with mean close price for comparison}
@@ -306,6 +311,66 @@ close price mean &  68.32515 &  117.444919 &  143.425251 &  15.339725 \\
 \end{adjustbox}
 \end{figure}
 
+\section{Investment Strategy}
+\quad An investment strategy based on the model predictions was also developed in our study. Different versions of it were tested and then the best one was selected for each company. This strategy makes several important assumptions: 
+on a given day t we are able to buy at the very end of the day an asset at a price close
+at the start of our experiment we have 1000 dollars
+it is possible to enter a short trade on the asset. \\ 
+The diffrence of prices was calculated during following formula:
+
+\begin{equation}  diff_{t+1} = \hat{y}_{t+1} - y_{t1} \end{equation}
+where:
+\begin{conditions}
+diff_{t+1} & calculated diffrence \\ 
+ \hat{y}_{t+1}     &   predicted price of asset in next day\\
+ y_{t}     &  actual price of asset in current day\\   
+\end{conditions}
+
+ \begin{flushleft} \quad Then, the buy/selll/hold signal is chosen using following equation: \end{flushleft} 
+\begin{equation}
+signal =  \left\{\begin{array}{ll} buy & diff_{t+1} >  y_{t} \cdot  \alpha_{buy} \div 100 \\ sell & diff_{t+1} <  -(y_{t} \cdot  \alpha_{sell} \div 100)\\  hold & otherwise \end{array}\right.
+\end{equation}
+where:
+\begin{conditions}
+diff_{t+1} & calculated diffrence \\ 
+\alpha_{buy}     &  alpha parameter for buy signal \\   
+\alpha_{sell}     &  alpha parameter for sell signal\\   
+\end{conditions}
+
+\begin{table}[hbt!]
+\centering
+\caption{Signal hyper parameters}
+\begin{tabular}{lrrl}
+\toprule
+  top\_cut\_off &  down\_cut\_off & if\_short \\
+\midrule
+        0.0 &           0.0 &     True \\
+         0.2 &           0.2 &    False \\
+         0.4 &           0.4  \\
+         0.6 &           0.6  \\
+          0.8 &           0.8  \\
+          1.0 &           1.0  \\
+          1.2 &           1.2  \\
+          1.4 &           1.4  \\
+          1.6 &           1.6  \\
+          1.8 &           1.8  \\
+         2.0 &           2.0  \\
+          2.2 &           2.2  \\
+          2.4 &           2.4  \\
+          2.6 &           2.6  \\
+          2.8 &           2.8  \\
+          3.0 &           3.0  \\
+          3.2 &           3.2  \\
+          3.4 &           3.4  \\
+          3.6 &           3.6  \\
+          3.8 &           3.8  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
 \begin{thebibliography}{9}
 \bibitem{gru1}
 J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
@@ -327,7 +392,12 @@ P. Sonkiya, V. Bajpai, A. Bansal, Stock price prediction using BERT and GAN, 202
 A. Kumar et al, Generative Adversarial Network (GAN) and Enhanced Root Mean Square Error (ERMSE): Deep Learning for Stock Price Movement Prediction, 2021
 \bibitem{gan-stock2}
 H. Lin et al, Stock price prediction using Generative Adversarial Networks, 2021 
-
+\bibitem{tensorflow}
+M. Abadi et al, Tensorflow: A system for large-scale machine learning, 2016
+\bibitem{keras}
+F Chollet et al, Keras, 2015
+\bibitem{keras-2}
+A. Gulli,  Deep learning with Keras, 2017
 
 \end{thebibliography}
 \end{document}
