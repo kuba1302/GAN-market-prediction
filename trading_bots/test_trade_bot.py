@@ -9,7 +9,7 @@ from trade_bot import BackTest
 
 if __name__ == "__main__":
     TICKER = "UBSFY"
-    MODEL_VERSION = "0.2"
+    MODEL_VERSION = "0.1"
 
     scaled_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
     scalers_path = scaled_path / f"scalers_{TICKER}.pickle"
@@ -28,6 +28,7 @@ if __name__ == "__main__":
         ticker="EA",
         scalers_path=scalers_path,
         model_path=model_path,
+        verbose=False
     )
     with open(data_path, "rb") as handle:
         data = pickle.load(handle)

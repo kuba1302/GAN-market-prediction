@@ -9,7 +9,6 @@ from sklearn.metrics import mean_absolute_error
 
 logger = prepare_logger(logging.INFO)
 
-
 class BackTest:
     def __init__(
         self,
@@ -19,6 +18,7 @@ class BackTest:
         scalers_path: Path,
         model_path: Path,
         asset_count: int = 0,
+        verbose: bool = True
     ):
         self.currency_count = currency_count
         self.asset_count = asset_count
@@ -30,7 +30,10 @@ class BackTest:
         self.model = self.load_model(model_path)
         self.X_scaler, self.y_scaler = self.load_scalers(scalers_path)
         self.current_asset_price = None
-
+        self.initial_curr_count = currency_count
+        if not verbose: 
+            logger.setLevel(logging.WARNING)
+            
     def __repr__(self):
         return (
             f"Trade Bot - Ticker: {self.ticker} - Currency Balance: {self.current_sum_balance} "
@@ -148,3 +151,7 @@ class BackTest:
             )
             self.log_balances()
         logger.info(f'MAE: {mean_absolute_error(y, preds)}')
+        end_balance = self.calculate_balance()
+        self.currency_count = self.initial_curr_count
+        self.asset_count = 0
+        return end_balance
