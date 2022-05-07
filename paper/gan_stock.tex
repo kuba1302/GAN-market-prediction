@@ -31,6 +31,8 @@
 \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 % These packages are all incorporated in the memoir class to one degree or another...
 
+\usepackage{float}
+
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
 \pagestyle{fancy} % options: empty , plain , fancy
@@ -64,8 +66,7 @@
 \maketitle
 
 
-\begin{abstract}
-Investing in the stock market has long been a popular topic. In recent years, however, it has become more intense. Investment funds and corporations are outdoing themselves in coming up with more optimal algorithms to provide them with a trustworthy investment. Moreover, due to easier access to stock exchanges on the Internet, also private persons and smaller institutions are more and more interested in algo-trading. It is not without significance here that in many countries the inflation rate is the highest in years. People are looking for a way and place to store capital and to invest. In this article we propose the use of the GAN model to predict stock market behavior and an investment strategy using the results of the model. We will be helped by Technical Analysis and Sentiment Analysis serving as explanatory variables for our model. Our study was conducted on four companies in the game industry. This industry was chosen by us because of the potential impact of a company's customer reviews on its valuation. We investigate this by analyzing the sentiment of selected comments containing pre-prepared keywords. The sentiment is then calculated using the NLP model created by Google - BERT. GAN then tries to predict the future valuation of a given company using the variables mentioned above. This valuation is then used to provide buy or sell signals.  
+\begin{abstract} In this article we propose the use of the GAN model to predict stock market behavior and an investment strategy using the results of the model. We will be helped by Technical Analysis and Sentiment Analysis serving as explanatory variables for our model. Our study was conducted on four companies in the game industry. This industry was chosen by us because of the potential impact of a company's customer reviews on its valuation. We investigate this by analyzing the sentiment of selected comments containing pre-prepared keywords. The sentiment is then calculated using the NLP model created by Google - BERT. GAN then tries to predict the future valuation of a given company using the variables mentioned above. This valuation is then used to provide buy or sell signals.  
 \end{abstract}
 
 \section{Introduction}
@@ -77,9 +78,16 @@ In our study, we examine the capabilities of the Generative Adversarial Networks
 Sentiment is one way of gauging people's feelings about a company or its products. It is even more important in the game industry, which we analyse in our work, because the opinion of players expressed by posts on forums and the decision to buy a particular game very significantly affects the finance results of the company. To download text data, we will use the Reddit portal - one of the largest Internet forums of this kind. It also has subforums that allow aggregation of information by topic. This will allow us to retrieve comments on selected keywords from a site dedicated only to games. These keywords will be the names of companies and their most popular games. \\
 
 Google's BERT model will be used to analyse sentiment. It is a model pre-trained on millions of texts and considered a state-of-the-art model in the field of NLP. 
-We then use stock market data, technical analysis indicators and sentiment analysis to try to predict the closing price of a given company the next day. For the prediction of one day we use explanatory variables from the previous 30 days. With the model, we tried to prepare an investment strategy that allows to make buying and selling decisions. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. 
+We then use stock market data, technical analysis indicators and sentiment analysis to try to predict the closing price of a given company the next day. For the prediction of one day we use explanatory variables from the previous 30 days. With the model, we tried to prepare an investment strategy that allows to make buying and selling decisions. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. \\
 
-\subsection{Hypothesis}
+The following hypotheses were verified during our study: 
+
+ \begin{flushleft}\textbf{Hypothesis 1 (H1)} \textit{Using data from sentiment analysis positively influences the behaviour of the model }  \end{flushleft}
+ \begin{flushleft}\textbf{Hypothesis 2 (H2)} \textit{The use of data from technical analysis positively influences the behaviour of the model } \end{flushleft}
+ \begin{flushleft}\textbf{Hypothesis 3 (H3)} \textit{The investment strategy developed by us based on the model predictions is able to outperform the Buy\&Hold strategy } \end{flushleft}
+ \begin{flushleft}\textbf{Hypothesis 4 (H4)} \textit{The model architecture can be successfully applied to more than one company} \end{flushleft}
+ \begin{flushleft}\textbf{Hypothesis 5 (H5)} \textit{Adding the possibility of short selling to the investment strategy increases the profitability of our system} \end{flushleft}
+
 
 \section{Related Work}
 
@@ -170,6 +178,10 @@ Volume & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \
 \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{Train test split}
+\quad To avoid overfitting and evaluate models and investment strategies on data that was not used during training, we decided to split our dataset into train dataset and test dataset. 75 \% percent of the dataset has been assigned to train dataset, while the remaining 25 \% to test dataset. Training set was used to train the GAN model and to choose the best parameters for investment strategy. Then, a test dataset was used to check our findings on data that hasn't been seen by our system before.
+
 
 \section{Theoretical Background}
 
@@ -268,55 +280,79 @@ where:
 \quad The model was trained using the Python language and its frameworks - tensorflow \cite{tensorflow}  and keras \cite{keras}\cite{keras-1}. The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16GB of ram. The workout was performed together with the use of CUDA cores. Each workout was run with an epoch parameter of 1000 and a hyper parameter optimisation was also performed. However, due to the limitation of computing power, it could not be extensive. The behaviour of the network after removing the MLP layers from both the generator and the discriminator was checked. This did not give the desired results, therefore in the further part of the study the parameters proposed by P. Sonkiya et al. were used. The behaviour of the model with different types of input data for the generator was also checked. Both the vector containing sentiment statistics and technical analysis indicators were removed. By far the best model was found to be the one without sentiment and with technical analysis. One reason why the use of sentiment may not be correct is the noise and data pollution from reddit. However, this topic needs further exploration with more computational resources. For each of the selected four companies 
 a separate model has been trained for each of the four selected companies. 
 
-\begin{table}
+\begin{table}[H]
 \centering
-\caption{Error metrics for chosen companies with mean close price for comparison}
+\caption{Error metrics for chosen companies}
 \begin{tabular}{lrrrr}
 \toprule
-{} &      ATVI &          EA &        TTWO &      UBSFY \\
+{} &       ATVI &          EA &        TTWO &      UBSFY \\
 \midrule
-MAE              &   1.35850 &    1.342700 &    3.540500 &   0.257800 \\
-RMSE             &   1.88670 &    1.895600 &    4.506900 &   0.337600 \\
-\midrule
-close price mean &  68.32515 &  117.444919 &  143.425251 &  15.339725 \\
+MAE              &   1.358500 &    1.342700 &    3.540500 &   0.257800 \\
+RMSE             &   1.886700 &    1.895600 &    4.506900 &   0.337600 \\
+Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 
 
-\begin{figure}
+
+\begin{figure}[H]
 \begin{adjustbox}{width=1.3\textwidth,center}
 \input{ATVI_prices.pgf}
 \end{adjustbox}
 \end{figure}
 
+\begin{figure}[H]
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{ATVI_loss.pgf}
+\end{adjustbox}
+\end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \begin{adjustbox}{width=1.3\textwidth,center}
 \input{EA_prices.pgf}
 \end{adjustbox}
 \end{figure}
 
+\begin{figure}[H]
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{EA_loss.pgf}
+\end{adjustbox}
+\end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \begin{adjustbox}{width=1.3\textwidth,center}
 \input{TTWO_prices.pgf}
 \end{adjustbox}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{TTWO_loss.pgf}
+\end{adjustbox}
+\end{figure}
+
+\begin{figure}[H]
 \begin{adjustbox}{width=1.3\textwidth,center}
 \input{UBSFY_prices.pgf}
 \end{adjustbox}
 \end{figure}
 
+\begin{figure}[H]
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{UBSFY_loss.pgf}
+\end{adjustbox}
+\end{figure}
+
+
 \section{Investment Strategy}
 \quad An investment strategy based on the model predictions was also developed in our study. Different versions of it were tested and then the best one was selected for each company. This strategy makes several important assumptions: 
-on a given day t we are able to buy at the very end of the day an asset at a price close
-at the start of our experiment we have 1000 dollars
-it is possible to enter a short trade on the asset. \\ 
-The diffrence of prices was calculated during following formula:
+ \begin{flushleft}\textit{- on a given day t we are able to buy at the very end of the day an asset at close price} \end{flushleft}
+ \begin{flushleft}\textit{- at the start of our experiment we have 1000 dollars}  \end{flushleft}
+ \begin{flushleft}\textit{- it is possible to enter a short trade on the asset.} \end{flushleft}
+\begin{flushleft}\textit{- we use all our cash resources for each trade } \end{flushleft}
+\quad The diffrence of prices was calculated during following formula:
 
 \begin{equation}  diff_{t+1} = \hat{y}_{t+1} - y_{t1} \end{equation}
 where:
@@ -326,7 +362,7 @@ diff_{t+1} & calculated diffrence \\
  y_{t}     &  actual price of asset in current day\\   
 \end{conditions}
 
- \begin{flushleft} \quad Then, the buy/selll/hold signal is chosen using following equation: \end{flushleft} 
+ \begin{flushleft} Then, the buy/selll/hold signal is chosen using following equation: \end{flushleft} 
 \begin{equation}
 signal =  \left\{\begin{array}{ll} buy & diff_{t+1} >  y_{t} \cdot  \alpha_{buy} \div 100 \\ sell & diff_{t+1} <  -(y_{t} \cdot  \alpha_{sell} \div 100)\\  hold & otherwise \end{array}\right.
 \end{equation}
@@ -337,7 +373,10 @@ diff_{t+1} & calculated diffrence \\
 \alpha_{sell}     &  alpha parameter for sell signal\\   
 \end{conditions}
 
-\begin{table}[hbt!]
+The parameter can be interpreted here as a cut off point, that requieres the prediction of the price to be  bigger then the last price. It is made to assure, that our system makes transaction only when the model is very confident about price change. 
+If that wasn't  taken into consideration, transaction costs would have made it unprofitable. 
+
+\begin{table}[H]
 \centering
 \caption{Signal hyper parameters}
 \begin{tabular}{lrrl}
