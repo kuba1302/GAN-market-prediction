@@ -8,7 +8,7 @@ import pandas as pd
 from trade_bot import BackTest
 
 if __name__ == "__main__":
-    TICKER = "UBSFY"
+    TICKER = "ATVI"
     MODEL_VERSION = "0.1"
 
     scaled_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
@@ -25,10 +25,11 @@ if __name__ == "__main__":
     bot = BackTest(
         transaction_cost=0.0007,
         currency_count=1000,
-        ticker="EA",
+        ticker=TICKER,
         scalers_path=scalers_path,
         model_path=model_path,
-        verbose=False
+        verbose=True,
+        save_plot=True,
     )
     with open(data_path, "rb") as handle:
         data = pickle.load(handle)
@@ -36,4 +37,13 @@ if __name__ == "__main__":
     X = data["X_list_test"]
     y = data["Y_preds_real_list_test"]
 
-    bot.simulate(X=X, y=y, top_cut_off=2, down_cut_off=0, if_short=True)
+    bot.simulate_2(
+        X=X,
+        y=y,
+        top_cut_off=0,
+        down_cut_off=2.2,
+        if_short=True,
+        top_cut_off_2=2,
+        down_cut_off_2=0,
+        if_short_2=True,
+    )
