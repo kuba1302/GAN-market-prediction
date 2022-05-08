@@ -71,7 +71,6 @@ class DataPipeline:
     ):
         X_scaler = MinMaxScaler()
         y_scaler = MinMaxScaler()
-        print(X.loc[:, X_cols])
         X_df = pd.DataFrame(X_scaler.fit_transform(X.loc[:, X_cols]), columns=X_cols)
         y_series = y_scaler.fit_transform(X.loc[:, y_col].values.reshape(-1, 1))
         X_df[y_col] = y_series

@@ -5,8 +5,22 @@ from utils.log import prepare_logger
 import logging
 from pathlib import Path
 from tensorflow import keras
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error
+import pandas as pd
 
+mpl.use("pgf")
+plt.rcParams.update(
+    {
+        "pgf.texsystem": "pdflatex",
+        "font.family": "serif",
+        "text.usetex": True,
+        "pgf.rcfonts": False,
+        "figure.figsize": (30, 10),
+        "figure.dpi": 600,
+    }
+)
 logger = prepare_logger(logging.INFO)
 
 
@@ -19,6 +33,12 @@ class BackTest:
         scalers_path: Path,
         model_path: Path,
         asset_count: int = 0,
+        verbose: bool = True,
+        test_dates_path: Path = Path(os.path.abspath("")).parents[0]
+        / "data"
+        / "test_dates.csv",
+        save_fig_path: Path = Path(os.path.abspath("")).parents[0] / "paper",
+        save_plot: bool = False,
     ):
         self.currency_count = currency_count
         self.asset_count = asset_count
@@ -30,6 +50,15 @@ class BackTest:
         self.model = self.load_model(model_path)
         self.X_scaler, self.y_scaler = self.load_scalers(scalers_path)
         self.current_asset_price = None
+        self.initial_curr_count = currency_count
+        self.test_dates = self.load_test_dates(test_dates_path)
+        self.total_balance_history = self.get_initial_balance_history()
+        self.total_balance_history_2 = self.get_initial_balance_history()
+        self.save_fig_path = save_fig_path
+        self.save_plot = save_plot
+
+        if not verbose:
+            logger.setLevel(logging.WARNING)
 
     def __repr__(self):
         return (
@@ -46,11 +75,26 @@ class BackTest:
             scalers = pickle.load(handle)
         return scalers["X_scaler"], scalers["y_scaler"]
 
+    def load_test_dates(self, test_dates_path):
+        dates_df = pd.read_csv(test_dates_path)
+        return pd.to_datetime(dates_df["dates"]).values
+
     def calculate_balance(self):
         return self.currency_count + self.asset_count * self.current_asset_price
 
     def predict_price(self, X):
         return self.model.predict(X)
+
+    def get_initial_balance_history(self):
+        return [self.initial_curr_count]
+
+    def append_curr_balance_to_history(self, i):
+        if i == 1:
+            self.total_balance_history.append(self.calculate_balance())
+        elif i == 2:
+            self.total_balance_history_2.append(self.calculate_balance())
+        else: 
+            raise ValueError('Wrong i value!')
 
     def calculate_asset_amount_by_price(self, price: float, curr_amount: float):
         buy_amount = round(curr_amount / price)
@@ -77,24 +121,43 @@ class BackTest:
         else:
             logger.info("Abort! No assets to sell")
 
-    def short(self, price): 
+    def short(self, price):
         short_amount = self.calculate_asset_amount_by_price(
-                price=price, curr_amount=self.currency_count
-            )
+            price=price, curr_amount=self.currency_count
+        )
         self.shorted_assets_amount = short_amount
-        self.short_start_price = price 
-        logger.info(f"Short! - Amount: {short_amount} - Short start price {self.shorted_assets_amount}")
+        self.short_start_price = price
+        logger.info(
+            f"Short! - Amount: {short_amount} - Short start price {self.shorted_assets_amount}"
+        )
 
     def rebuy_short(self, price):
         if self.shorted_assets_amount != 0:
-            short_result = (self.short_start_price - price) * self.shorted_assets_amount - self.transaction_cost
+            short_result = (
+                self.short_start_price - price
+            ) * self.shorted_assets_amount - self.transaction_cost
             self.currency_count += short_result
-            logger.info(f"Realising short! - Result: {short_result} - Start price: {self.short_start_price} - End price: {price}")
+            logger.info(
+                f"Realising short! - Result: {short_result} - Start price: {self.short_start_price} - End price: {price}"
+            )
             self.short_start_price = 0
             self.shorted_assets_amount = 0
 
+    def buy_and_hold(self, y):
+        prices = [price[0] for price in y]
+        amount = self.calculate_asset_amount_by_price(
+            price=prices[0], curr_amount=self.initial_curr_count
+        )
+        left_cash = self.initial_curr_count - (prices[0] * amount)
+        return [(price * amount) + left_cash for price in prices]
+
     def base_strategy(
-        self, pred: float, last_price: float, top_cut_off: float, down_cut_off: float, if_short: bool
+        self,
+        pred: float,
+        last_price: float,
+        top_cut_off: float,
+        down_cut_off: float,
+        if_short: bool,
     ):
         price_diff = pred - last_price
         if if_short:
@@ -130,7 +193,13 @@ class BackTest:
         )
 
     def simulate(
-        self, X: np.array, y: np.array, top_cut_off: float, down_cut_off: float, if_short: bool
+        self,
+        X: np.array,
+        y: np.array,
+        top_cut_off: float,
+        down_cut_off: float,
+        if_short: bool, 
+        i: int
     ):
         preds = self.inverse_scale(data=self.predict_price(X), data_type="y")
         y = self.inverse_scale(data=y, data_type="y")
@@ -144,7 +213,84 @@ class BackTest:
                 last_price=previous_close,
                 top_cut_off=top_cut_off,
                 down_cut_off=down_cut_off,
-                if_short=if_short
+                if_short=if_short,
             )
             self.log_balances()
-        logger.info(f'MAE: {mean_absolute_error(y, preds)}')
+            self.append_curr_balance_to_history(i)
+
+        logger.info(f"MAE: {mean_absolute_error(y, preds)}")
+        self.current_asset_price = y[len(y) - 1][0]
+        self.append_curr_balance_to_history(i)
+        end_balance = self.calculate_balance()
+        self.currency_count = self.initial_curr_count
+        self.asset_count = 0
+        logger.info(f"B&H Strategy result: {self.buy_and_hold(y)[-1]}")
+        if i == 1 : 
+            logger.info(f"Our Strategy result: {self.total_balance_history[-1]}")
+        elif i == 2:
+            logger.info(f"Our Strategy result: {self.total_balance_history_2[-1]}")
+        return end_balance
+
+    def simulate_2(
+        self,
+        X: np.array,
+        y: np.array,
+        top_cut_off: float,
+        down_cut_off: float,
+        if_short: bool,
+        top_cut_off_2: float,
+        down_cut_off_2: float,
+        if_short_2: bool,
+    ):
+        end_balance_1 = self.simulate(
+            X=X,
+            y=y,
+            top_cut_off=top_cut_off,
+            down_cut_off=down_cut_off,
+            if_short=if_short,
+            i=1
+        )
+        end_balance_2 = self.simulate(
+            X=X,
+            y=y,
+            top_cut_off=top_cut_off_2,
+            down_cut_off=down_cut_off_2,
+            if_short=if_short_2,
+            i=2
+        )
+        if self.save_plot:
+            self.plot_results(y=y)
+        logger.info(f"END BALANCE1: {end_balance_1} - END BALANCE2: {end_balance_2}")
+        return end_balance_1, end_balance_2, self.buy_and_hold(y)[-1]
+
+    def plot_results(self, y):
+        logger.info("Saving plot - start")
+        plt.plot(
+            self.test_dates,
+            self.total_balance_history,
+            color="blue",
+            label="Proposed strategy with parameters found in training set hyperparameter optymalization",
+        )
+        plt.plot(
+            self.test_dates,
+            self.total_balance_history_2,
+            color="green",
+            label="Proposed strategy with arbitrary chosen parameters",
+        )
+        plt.plot(
+            self.test_dates,
+            self.buy_and_hold(y),
+            color="red",
+            label="Buy and Hold",
+        )
+        plt.title(
+            f"{self.ticker} proposed strategy with diffrent parameters vs Buy and Hold",
+            size=30,
+        )
+        plt.xlabel("Date", size=25)
+        plt.ylabel("Total Balance in USD", size=25)
+        plt.xticks(fontsize=20)
+        plt.yticks(fontsize=20)
+        plt.legend(fontsize=25)
+        plt.savefig(self.save_fig_path / f"{self.ticker}_strategy.pgf")
+        logger.info("Saving plot - finished")
