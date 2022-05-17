@@ -68,12 +68,12 @@
 \maketitle
 
 
-\begin{abstract} In this article we propose the use of the GAN model to predict stock market behavior. Using that predictions we have developed an investment strategy using the results of the model. We will use Technical Analysis and Sentiment Analysis as explanatory variables for our model. Our study was conducted on four companies in the game industry. This industry was chosen by us because of the potential impact of a company's customer reviews on its valuation. We investigate this by analyzing the sentiment of selected comments containing pre-prepared keywords. The sentiment is then calculated using the NLP model created by Google - BERT. GAN then tries to predict the future valuation of a given company using the variables mentioned above. This valuation is then used to provide buy or sell signals.  
+\begin{abstract} In this article we propose the use of the Generative adversarial networks (GAN) model to predict stock market behavior. We have also developed an investment strategy that uses the results of the model. We will use Technical Analysis and Sentiment Analysis as explanatory variables for our model. Our study was conducted on four companies in the game industry. This industry was chosen by us because of the potential impact of a company's customer reviews on its valuation. We investigate this by analyzing the sentiment of selected comments containing pre-prepared keywords. The sentiment is then calculated using the NLP model created by Google - BERT. GAN then tries to predict the future valuation of a given company using the variables mentioned above. This valuation is then used to provide buy or sell signals.  
 \end{abstract}
 
 \section{Introduction}
-In recent years, the stock market has become a place of fierce competition for the best model to predict future prices and consequently, to make money. 
-A not insignificant influence on this has been the facilitation of access to computing power, allowing the use of algorithms such as neural networks, without worrying about hardware limitations. Moreover, a great number of exchanges make their APIs available, thus enabling real-time algo-trading. All of this has led to a great increase in recent research on the use of new models for stock market price prediction.  \\
+In recent years, the stock market has become a place of fierce competition for the best model to predict future prices and consequently, to make money \cite{ml-in-stock}. 
+Significant influence on this has the facilitation of access to computing power, allowing the use of algorithms such as neural networks, without worrying about hardware limitations \cite{ml-compute}. Moreover, a great number of stock exchanges make their APIs available, thus enabling real-time algo-trading. All of this has led to a great increase in recent research on the use of new machine learning models for stock market price prediction \cite{ml-studies}.  \\
 
 In our study, we examine the capabilities of the Generative Adversarial Networks introduced in 2014 by J. Goodfellow \cite{gan1}. They were initially intended to generate synthetic images. However, later research has shown that they can be successfully used to generate future stock market valuations. We use yahoo finance to download stock market data. From these we then select the indicators used to predict the explanatory variable, which in our case is the closing price of a given candlestick. This data is also used to calculate technical analysis indicators. These are simple moving average (SMA), exponential moving average (EMA), weighted moving average (WMA), bollinger bands (BB) and moving average convergence divergence (MACD). \\
 
@@ -84,7 +84,7 @@ We then use stock market data, technical analysis indicators and sentiment analy
 
 The following hypotheses were verified during our study: 
 
- \begin{flushleft}\textbf{Hypothesis 1 (H1)} \textit{Using data from sentiment analysis positively influences the behaviour of the model }  \end{flushleft}
+ \begin{flushleft}\textbf{Hypothesis 1 (H1)} \textit{Using data from sentiment analysis incrase model predictions quality measured by MAE the behaviour of the model }  \end{flushleft}
  \begin{flushleft}\textbf{Hypothesis 2 (H2)} \textit{The use of technical analysis indicators positively influences the behaviour of the model } \end{flushleft}
  \begin{flushleft}\textbf{Hypothesis 3 (H3)} \textit{The investment strategy developed by us based on the model predictions is able to outperform the Buy\&Hold strategy } \end{flushleft}
  \begin{flushleft}\textbf{Hypothesis 4 (H4)} \textit{The model architecture can be successfully applied to more than one company} \end{flushleft}
@@ -94,7 +94,7 @@ The following hypotheses were verified during our study:
 \section{Related Work}
 Sonkiya et al \cite{s-gan} used S-GAN with sentiment analysis of financial news as an input for generator. The finBERT model, trained on financial data, was used for sentiment analysis. They managed to create a model that wins against traditional approaches such as ARIMA, LSTM and GRU. Kumar et al  \cite{gan-stock} used phase-space reconstruction (PSR) and GAN and compared it to LSTM approach with PSR. They have tested multiple time window sizes and epochs and managed to reduce the training time of the system compared to traditional approaches while maintaining satisfactory results.
 
-Staffini \cite{gan-cnn} proposed a DCGAN architecture with CNN-BiLSTM discriminator and CNN generator. Then, the models were compared with traditional approaches such as ARIMAX-SVR, Random Forest, LSTM on 10 different stock market instruments. Both in single-step and in the multi-step prediction, proposed DCGAN outperformed typical approaches. Zhang et al \cite{gan-zhang} proposed GAN with LSTM as generator and MLP as discriminator. They have used pure financial data from yahoo finance as generator input. Then, proposed model have been compared with ANN, SVR and LSTM. In this case, GAN was also found to be superior to the traditional approach. 
+Staffini \cite{gan-cnn} proposed a DCGAN architecture with CNN-BiLSTM discriminator and CNN generator. The models were compared with traditional approaches such as ARIMAX-SVR, Random Forest, LSTM on 10 different stock market instruments. Both in single-step and in the multi-step prediction, proposed DCGAN outperformed typical approaches. Zhang et al \cite{gan-zhang} proposed GAN with LSTM as generator and MLP as discriminator. They have used pure financial data from yahoo finance as generator input. Then, proposed model have been compared with ANN, SVR and LSTM. In this case, GAN was also found to be superior to the traditional approach. 
 
 Jiang \cite{gan-Jjang} has proposed a novel GAN architecture. It is called SF-GAN and consist of 
 State Frequency Memory Neural Network (SFM) as a generator and CNN as a discriminator. 
@@ -104,55 +104,55 @@ He was able to achieve a significant improvement in the trend prediction of a fi
 
 \section{Data and Methodology}
 \subsection{Stock Data}
-In our analysis we decided to analyze the algorithm on 4 large companies from the gaming industry. This sector was chosen due to the fact that the study takes into account the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on valuations of a given company in the gaming industry. As many as 4 companies were chosen for the analysis - Electronic Arts, Ubisoft, Take-Two Interactive Software, Activision Blizzard, called in the later part of the paper by their stock ticker: EA, UBSFY, TTWO, ATVI.  The selection of more than one company was influenced by making sure that the algorithm was reproducible and universal. These companies are among the leaders in the gaming industry. The choice of only U.S. companies was due to a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals, limitations of Reddit's API (Application Programming Interface), and limitations of computing power, the analysis was conducted only over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. 
+In our analysis we decided to train the algorithm on stocks of 4 large companies from the gaming industry: Electronic Arts, Ubisoft, Take-Two Interactive Software, Activision Blizzard, called in the later part of the paper by their stock ticker: EA, UBSFY, TTWO, ATVI This sector was chosen due to the fact that the study takes into account the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on valuations of a given company in the gaming industry.  The selection of more than one company was influenced by making sure that the algorithm was reproducible and universal. These companies are among the leaders in the gaming industry. The choice of only U.S. companies was due to a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals, limitations of Reddit's API (Application Programming Interface), and limitations of computing power, the analysis was conducted only over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. 
 
 \begin{table}[hbt!]
 \centering
 \caption{Descriptive statistics for chosen companies}
 \begin{tabular}{llrrrr}
 \toprule
-       & Company &          ATVI &            EA &          TTWO &         UBSFY \\
+       & Company &          ATVI &           EA &         TTWO &        UBSFY \\
 \midrule
-Open & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \\
-       & mean &  6.837792e+01 &  1.174786e+02 &  1.434314e+02 &  1.535412e+01 \\
-       & std &  1.811106e+01 &  2.062370e+01 &  3.220382e+01 &  2.450012e+00 \\
-       & min &  3.956548e+01 &  7.472812e+01 &  8.471000e+01 &  9.050000e+00 \\
-       & 25\% &  5.210339e+01 &  9.717636e+01 &  1.172500e+02 &  1.393000e+01 \\
-       & 50\% &  6.857000e+01 &  1.193464e+02 &  1.383700e+02 &  1.548000e+01 \\
-       & 75\% &  8.241098e+01 &  1.385884e+02 &  1.711000e+02 &  1.681500e+01 \\
-       & max &  1.033197e+02 &  1.485431e+02 &  2.104765e+02 &  2.089000e+01 \\
-High & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \\
-       & mean &  6.922366e+01 &  1.189510e+02 &  1.453735e+02 &  1.546871e+01 \\
-       & std &  1.817212e+01 &  2.062690e+01 &  3.241062e+01 &  2.460111e+00 \\
-       & min &  4.119361e+01 &  7.691432e+01 &  8.757000e+01 &  9.270000e+00 \\
-       & 25\% &  5.284490e+01 &  9.860734e+01 &  1.190800e+02 &  1.396000e+01 \\
-       & 50\% &  7.004000e+01 &  1.206978e+02 &  1.407800e+02 &  1.564000e+01 \\
-       & 75\% &  8.327678e+01 &  1.402643e+02 &  1.728500e+02 &  1.694000e+01 \\
-       & max &  1.040263e+02 &  1.495559e+02 &  2.149100e+02 &  2.134000e+01 \\
-Low & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \\
-       & mean &  6.738189e+01 &  1.158599e+02 &  1.413383e+02 &  1.521634e+01 \\
-       & std &  1.794660e+01 &  2.052602e+01 &  3.182764e+01 &  2.440169e+00 \\
-       & min &  3.908489e+01 &  7.344622e+01 &  8.441000e+01 &  9.050000e+00 \\
-       & 25\% &  5.142120e+01 &  9.571559e+01 &  1.158500e+02 &  1.374000e+01 \\
-       & 50\% &  6.707523e+01 &  1.170509e+02 &  1.363400e+02 &  1.538000e+01 \\
-       & 75\% &  8.128642e+01 &  1.370253e+02 &  1.689600e+02 &  1.667000e+01 \\
-       & max &  1.020559e+02 &  1.457801e+02 &  2.094350e+02 &  2.067000e+01 \\
-Close & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \\
-       & mean &  6.832515e+01 &  1.174449e+02 &  1.434253e+02 &  1.533973e+01 \\
-       & std &  1.802681e+01 &  2.056176e+01 &  3.208114e+01 &  2.456598e+00 \\
-       & min &  3.933990e+01 &  7.425114e+01 &  8.463000e+01 &  9.140000e+00 \\
-       & 25\% &  5.210339e+01 &  9.698756e+01 &  1.176000e+02 &  1.384010e+01 \\
-       & 50\% &  6.947362e+01 &  1.190582e+02 &  1.381900e+02 &  1.551000e+01 \\
-       & 75\% &  8.230000e+01 &  1.384656e+02 &  1.706700e+02 &  1.682000e+01 \\
-       & max &  1.033098e+02 &  1.482325e+02 &  2.133400e+02 &  2.124000e+01 \\
-Volume & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \\
-       & mean &  7.852192e+06 &  3.352595e+06 &  1.682517e+06 &  1.603439e+05 \\
-       & std &  4.732384e+06 &  2.796399e+06 &  1.258285e+06 &  3.360945e+05 \\
-       & min &  1.562888e+06 &  6.060640e+05 &  2.116420e+05 &  1.188800e+04 \\
-       & 25\% &  5.243074e+06 &  2.068342e+06 &  1.023114e+06 &  3.837000e+04 \\
-       & 50\% &  6.692846e+06 &  2.723601e+06 &  1.351017e+06 &  5.767100e+04 \\
-       & 75\% &  8.966312e+06 &  3.757614e+06 &  1.913890e+06 &  1.117520e+05 \\
-       & max &  5.170888e+07 &  3.870450e+07 &  1.894501e+07 &  3.997347e+06 \\
+Open & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
+       & mean &       83.8875 &     139.3584 &     170.9768 &      12.8549 \\
+       & std &       11.4400 &       5.3196 &      10.6307 &       1.8079 \\
+       & min &       56.9778 &     120.4896 &     145.9100 &       9.0500 \\
+       & 25\% &       77.6000 &     137.5287 &     163.1550 &      11.1675 \\
+       & 50\% &       83.5100 &     140.7925 &     171.3150 &      12.9601 \\
+       & 75\% &       93.5850 &     142.8999 &     178.8850 &      14.2100 \\
+       & max &       98.8600 &     148.5431 &     192.2600 &      16.0996 \\
+High & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
+       & mean &       84.7118 &     140.8630 &     172.9497 &      12.9261 \\
+       & std &       11.4490 &       5.2717 &      10.6649 &       1.8045 \\
+       & min &       57.4400 &     123.5934 &     147.1000 &       9.2700 \\
+       & 25\% &       78.3725 &     139.5444 &     164.6825 &      11.2589 \\
+       & 50\% &       84.4625 &     142.1893 &     173.3464 &      13.1050 \\
+       & 75\% &       94.7925 &     144.0306 &     182.2375 &      14.2800 \\
+       & max &       99.4590 &     148.5531 &     195.8250 &      16.1800 \\
+Low & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
+       & mean &       82.7644 &     137.7310 &     168.8698 &      12.7556 \\
+       & std &       11.4891 &       5.4720 &      10.3637 &       1.8032 \\
+       & min &       56.4000 &     119.9184 &     144.5810 &       9.0500 \\
+       & 25\% &       76.6675 &     136.2402 &     160.5650 &      11.0476 \\
+       & 50\% &       82.6550 &     139.2077 &     169.4100 &      12.8400 \\
+       & 75\% &       92.7575 &     141.2427 &     176.5900 &      14.1275 \\
+       & max &       97.6100 &     145.7801 &     186.4200 &      16.0500 \\
+Close & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
+       & mean &       83.6483 &     139.1895 &     170.8772 &      12.8366 \\
+       & std &       11.4663 &       5.4726 &      10.5099 &       1.8054 \\
+       & min &       57.2800 &     120.0682 &     145.2500 &       9.1400 \\
+       & 25\% &       77.3650 &     137.8033 &     162.8950 &      11.1625 \\
+       & 50\% &       83.4700 &     140.6691 &     171.2800 &      12.9750 \\
+       & 75\% &       93.4025 &     142.6030 &     178.9275 &      14.2174 \\
+       & max &       99.1800 &     148.1741 &     192.9100 &      16.1300 \\
+Volume & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
+       & mean &  8236266.1966 & 2473996.9831 & 1276613.7528 &  169367.5056 \\
+       & std &  5413813.4429 & 1073436.8484 &  669500.1064 &  278989.7716 \\
+       & min &  2596873.0000 & 1016396.0000 &  559480.0000 &   16495.0000 \\
+       & 25\% &  5105944.5000 & 1766566.2500 &  876545.7500 &   46863.2500 \\
+       & 50\% &  6667305.0000 & 2181122.5000 & 1095232.0000 &   69654.5000 \\
+       & 75\% &  9477788.5000 & 2854991.5000 & 1422011.2500 &  148630.0000 \\
+       & max & 43753567.0000 & 8344344.0000 & 5935523.0000 & 1833827.0000 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -160,7 +160,9 @@ Volume & count &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 &  7.570000e+02 \
 \clearpage
 
 \subsection{Text Data}
-Due to the inclusion of sentiment analysis in our study, the source of textual data sourcing had to be chosen. Due to the fact that we have chosen in the study only the companies from the gaming industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps us to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. For our study, we chose the r/Games subreddit. This is the largest forum on this site dealing with the subject of games. There are more than 3.1 million users on it. Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned below. 
+As it was mentioned before sentiment analysis is the part of the research. Due to the fact that we considered in the study only the companies from the gaming industry, we decided to use data coming from the reddit.com portal, which is one of the largest forums in the world. It also has a feature that helps to obtain data for our study - it is divided into parts, the so-called subreddits, which gather people interested in a particular topic. In the study the r/Games subreddit is chosen as a main source of text data. This forum has 3.1 milion users and has milions of comments about games. 
+
+Next, for each company selected by us, keywords were chosen to retrieve the data. The keywords were the names of the most popular game series of a particular publisher and the publisher's name itself. Next, using the psaw library for python, we found all the comments that had been posted over a predefined period of time on the r/Games subreddit containing the keywords mentioned below. 
 
 \begin{table}[hbt!]
 \centering
@@ -526,6 +528,12 @@ Another problem is the different results with the same parameters. Neural networ
 The investment strategy also needs further analysis. In our study, a very simple method was used, which involves trading the entire funds on each trade. In order to minimise the risk of loss in the event of a sudden fluctuation, the system could be changed in the future to dose the amount of funds allocated to buy or sell transactions depending on the model's confidence in the price change. 
 
 \begin{thebibliography}{9}
+\bibitem{ml-in-stock}
+A. Prasad, A. Seetharaman, Importance of Machine Learning in Making Investment Decision in Stock Market, 2021
+\bibitem{ml-compute}
+M. Vijh et al, Stock Closing Price Prediction using Machine Learning Techniques, 2020
+\bibitem{ml-studies}
+T. Strader, Machine Learning Stock Market Prediction Studies: Review and Research Directions, 2020
 \bibitem{gru1}
 J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
 \bibitem{gru2}
