@@ -849,7 +849,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=15.375000in,y=8.883333in,,base]{\color{textcolor}\rmfamily\fontsize{25.000000}{30.000000}\selectfont ATVI actual price vs predicted price}%
+\pgftext[x=15.375000in,y=8.883333in,,base]{\color{textcolor}\rmfamily\fontsize{25.000000}{30.000000}\selectfont }%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%

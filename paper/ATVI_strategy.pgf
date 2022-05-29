@@ -1039,7 +1039,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=15.375000in,y=8.883333in,,base]{\color{textcolor}\rmfamily\fontsize{30.000000}{36.000000}\selectfont ATVI proposed strategy with diffrent parameters vs Buy and Hold}%
+\pgftext[x=15.375000in,y=8.883333in,,base]{\color{textcolor}\rmfamily\fontsize{30.000000}{36.000000}\selectfont }%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
