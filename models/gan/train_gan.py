@@ -5,7 +5,7 @@ import os
 import numpy as np
 
 if __name__ == "__main__":
-    TICKER = "EA"
+    TICKER = "UBSFY"
     MODEL_VERSION = "0.2"
     load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
     save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
