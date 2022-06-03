@@ -45,7 +45,7 @@
 \usepackage{sectsty}
 \allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
 % (This matches ConTeXt defaults)
-
+\usepackage{color, colortbl}
 %%% ToC (table of contents) APPEARANCE
 \usepackage[nottoc,notlof,notlot]{tocbibind} % Put the bibliography in the ToC
 \usepackage[titles,subfigure]{tocloft} % Alter the style of the Table of Contents
@@ -85,13 +85,13 @@ Jiang (2021) has proposed a novel GAN architecture. It is called SF-GAN and cons
 State Frequency Memory Neural Network (SFM) as a generator and CNN as a discriminator. 
 He was able to achieve a significant improvement in the trend prediction of a financial instrument and minimise the prediction error.  Lin (2021) has proposed two versions of GAN for time series. First one was similar to Sonkiya's S-GAN with GRU as generator and CNN as discriminator. They have extended this idea and included WGAN-GP, a Wasserstein GAN with Gradient Penalty. Compared with GAN, WGAN-GP doesn't have a sigmoid function and it outputs a scalar value instead of probability. 
 
-Analysing the results of aforementioned researches, it may be stated that GAN algorithms give very promising results. For example Sonkiya's (2021) S-GAN model managed to get RMSE 62 $\% $ smaller then LSTM, getting for S-GAN and LSTM RMSE equal to 1.827 and 2.939 respectively. Therefore we would like to apply GAN in predicting stocks. The main aim of the research is to build a model for predicting asset prices, based on GAN. Even though in previous papers main measure for performance of the models were forecast error measures, in the study it was decided to incluce an investment strategy in order to prove the real application of the model. Based on comparison of the prediction of the closing price for the next day and closing price of today the proposed system makes a decision to sell, buy or hold the asset.
+Analysing the results of aforementioned researches, it may be stated that GAN algorithms give very promising results. For example Sonkiya's (2021) S-GAN model managed to get RMSE 62$\% $ smaller then LSTM, getting for S-GAN and LSTM RMSE equal to 1.827 and 2.939 respectively. Therefore we would like to apply GAN in predicting stocks. The main aim of the research is to build a model for predicting asset prices, based on GAN. Even though in previous papers main measure for performance of the models were forecast error measures, in the study it was decided to incluce an investment strategy. This was done in order to prove the real application of the model. Based on comparison of the prediction of the closing price for the next day and closing price of today the proposed system makes a decision to sell, buy or hold the asset. The system is then evaluated and compared with Buy and Hold strategy.
 
 In order to train GAN algorithms for predicting prices, two sources of data would be considered. First, downloaded stock market data from yahoo finance. Then, selected indicators are used to predict the explanatory variable, which in this case is the closing price of a given candlestick. This data is also used to calculate technical analysis indicators: simple moving average (SMA), exponential moving average (EMA), weighted moving average (WMA), bollinger bands (BB) and moving average convergence divergence (MACD). 
 
 Another source of information will be retrived from sentiment analysis. Sentiment analysis is method of gauging people's feelings about a company or its products, it should be considered as important in the game industry, because the opinion of players expressed by posts at forums and the decision to buy a particular game may significantly affect the finance results of the company. Sentiment analysis will be performed on text data from Reddit portal - one of the largest Internet forums of this kind. Reddit has subforums that allow aggregation of information by topic. This will allow to download comments on selected keywords from a site dedicated only to games. These keywords will be the names of companies and their most popular games. Google's BERT model will be used to analyse sentiment. It is a model pre-trained on millions of texts and considered as state-of-the-art model in the field of NLP (Devlin, 2019) (Sonkiya, 2021). 
 
-Afterwards, stock market data, technical analysis indicators and sentiment analysis wille be used to predict the one day ahead closing price of a given company. As of features, variables from the previous 30 days will be used. Based on the model's predictions, an investment strategy will be pepared. Buy, hold and sell decisions are deducted from comparison of next day's prediction and current price. The strategy is evaluated and compared to the Buy and Hold strategy. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. 
+Afterwards, stock market data, technical analysis indicators and sentiment analysis wille be used to predict the one day ahead closing price of a given company. As of features, variables from the previous 30 days will be used. Based on the model's predictions, an investment strategy will be pepared. Buy, hold and sell decisions are deducted from comparison of next day's prediction and current price. We have taken into account transaction costs, the different cut-off points required for a trade and the possibility of potential short selling. An $\alpha$ parameter has been included, ensuring that a buy/sell signal is generated when the price prediction of the next day and the previous day price differs by $\alpha$. The strategy is evaluated and compared to the Buy and Hold strategy.
 
 In order to find the best solution we have decided to verify which assumption should be confirmed. Fot this purphose, the following hypothesis has been stated: 
 
@@ -112,6 +112,11 @@ Moreover, the investment strategy has been thoroughly examined. Our aim was to s
 
 \section{Proposed framework}
 A framework of the approach is shown in Figures 1 and 2. It consists of two main parts: a predictive model and an investment strategy. The model is based on GAN algorithm consisting of two competing networks, a discriminator and a generator (Godfellow 2014). The generator tries to generate a prediction as close as possible to the actual closing price, and the discriminator tries to learn to recognise the data artificially generated by the generator from the actual data. 
+
+Three different sets of inputs used for the generator were examined: Stock market data only, Stock market data with technical analysis indicators and Stock market data with technical analysis indicators and sentiment analysis results. The independent variables from the previous 30 days are used to predict dependent variable which is the closing price. Once the model is trained, the generator itself is used for the prediction. This is due to the fact that the goal of GAN during training is to generate such predictions by the generator that the discriminator is unable to distinguish between real and generated data predictions from generator.
+
+The second part is the investment strategy. The prediction of the closing price for the next day is compared with the closing price of today. Based on their difference, the proposed system makes a decision to sell, buy or hold the asset. This chapter will present the detailed components of our framework. 
+
 \begin{figure}[H]
 \caption{GAN training architecture}
 \includegraphics{rysunek1.png}
@@ -125,8 +130,6 @@ X_n & independent variables vector on day n, \\
  y_{n}     &  actual close price  in day n,\\   
 \end{conditions}
 
-Three different sets of inputs used for the generator were examined: Stock market data only, Stock market data with technical analysis indicators and Stock market data with technical analysis indicators and sentiment analysis results. The independent variables from the previous 30 days are used to predict dependent variable which is the closing price. Once the model is trained, the generator itself is used for the prediction. This is due to the fact that the goal of GAN during training is to generate such predictions by the generator that the discriminator is unable to distinguish between real and generated data predictions from generator.
-
 \begin{figure}[H]
 \caption{Investment strategy architecture}
 \includegraphics{rysunek2.png}
@@ -139,9 +142,6 @@ X_n & independent variables vector on day n, \\
  \hat{y}_{n+1}     &   predicted close price in day n+1,\\
  y_{n}     &  actual close price  in day n,\\   
 \end{conditions}
-
-
- The second part is the investment strategy. The prediction of the closing price for the next day is compared with the closing price of today. Based on their difference, the proposed system makes a decision to sell, buy or hold the asset. This chapter will present the detailed components of our framework. 
 
 \subsection{Generative adversarial network}
 
@@ -244,7 +244,7 @@ diff_{t+1} & calculated diffrence \\
 \end{conditions}
 
 \subsection{System evaluation}
-To evaluate proposed system a metric had to be chosen. This is the value of assets at the end of the test period. It is calculated as the sum of held assets multiplied by their last price and amout of cash at the end of test time peroid. It is compared with the initial budget and the result of the Buy and Hold strategy. This allows to see if the developed system performs better than holding cash or buying an asset and leaving it for the whole period of time. 
+To evaluate proposed system is analysed at the end of the test period. It is calculated as the sum of held assets multiplied by their last price and amout of cash at the end of test time peroid. The reason for this is that the system only allowes full shares to be purchased. Therefore, it was possible to have the change from the transaction in cash. It is compared with the initial budget and the result of the Buy and Hold strategy. This allows to see if the developed system performs better than holding cash or buying an asset and leaving it for the whole period of time. 
 
 \section{Data}
 \subsection{Stock Data}
@@ -255,7 +255,7 @@ In the study it was decided to train the algorithm on stocks of 4 large companie
 \caption{Descriptive statistics for chosen companies}
 \begin{tabular}{llrrrr}
 \toprule
-       & Company &          ATVI &           EA &         TTWO &        UBSFY \\
+      & Company &          ATVI &           EA &         TTWO &        UBSFY \\
 \midrule
 Open & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
        & mean &       83.8875 &     139.3584 &     170.9768 &      12.8549 \\
@@ -266,7 +266,7 @@ Open & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
        & 75\% &       93.5850 &     142.8999 &     178.8850 &      14.2100 \\
        & max &       98.8600 &     148.5431 &     192.2600 &      16.0996 \\
 High & count &      178.0000 &     178.0000 &     178.0000 &     178.0000 \\
-       & mean &       84.7118 &     140.8630 &     172.9497 &      12.9261 \\
+      & mean &       84.7118 &     140.8630 &     172.9497 &      12.9261 \\
        & std &       11.4490 &       5.2717 &      10.6649 &       1.8045 \\
        & min &       57.4400 &     123.5934 &     147.1000 &       9.2700 \\
        & 25\% &       78.3725 &     139.5444 &     164.6825 &      11.2589 \\
@@ -357,7 +357,7 @@ Q_1     &  first quantile of all sentiment values related to chosen company on d
 Q_3     &  third quantile of all sentiment values related to chosen company on day \emph{i} \\   
 \end{conditions}
 
-\subsection{Technical Analysis}
+\subsection{Technical Analysis} ,
 Technical analysis is the most commonly used method in automated trading (Stanković, 2015) . Its indicators describes behaviour of a given stock market instrument based on mathematically processed recent observations (Stanković, 2015). It is used in the analysis for several reasons. The first is the ability to obtain early convergence, thus reducing the time to train the model and the resources needed to do so. Moreover, such a wide use of these indicators among other stock exchange participants allows the system to take into account price possible behaviour caused by the results of technical indicators. In the study, the indicators described below were taken into account: 
 \begin{itemize}
 \item Moving Averages - Several types of moving averages are used. The first and simplest of them is a simple moving average (SMA) (Wong, 2003). It takes into account equally weighted observations in a given time window. For obvious reasons, one may assume that closer dates may have more significant influence on future price. Therefore, in addition to the SMA, Weighted Moving Average (WMA) (Perry, 2010) and Exponential Moving Average (EMA) (Grebenkov, 2014) were used. The WMA solves the aforementioned problem by giving more weight to more recent data. EMA works in a similar way, but the price change is not consistent but exponential.
@@ -367,33 +367,15 @@ Technical analysis is the most commonly used method in automated trading (Stanko
 \item Moving Average Convergence Divergence - Moving Average Convergence Divergence (MACD) consists of two lines (Chong, 2008). The core of the indicator is the MACD line which is the difference between the 12-period EMA and the 26-period EMA. The second line is the signal line which is a 9-period EMA. Their position relative to each other helps to determine whether the market is oversold or overbought.
 \end{itemize}
 
+In the study, two types of data were used - Stock data and text data. Technical analysis indicators were calculated on the basis of the Stock data. Sentiment analysis has been conducted on text data. In this way three sets of data were created - Stock market data only, Stock market data with technical analysis indicators and Stock market data with technical analysis indicators and sentiment analysis results. It will allow the quality of the models to be tested on different datasets and the optimal one to be selected. The results will be presented in the following chapter. 
+
 \section{Results of framework}
 
 \subsection{GAN results}
 
-The model was trained using the Python language frameworks for NN modelling - tensorflow (Abadi, 2016) and keras (Chollet, 2015) (Gulli, 2017). The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16 GB of RAM. The training was performed together with the use of CUDA cores. Each training was run with an epoch parameter of 1000. Hyper parameter optimisation was also performed,  however, due to the limitation of computing power, it could not be extensive. The behaviour of the network after removing the MLP layers from both the generator and the discriminator was checked. This did not give the desired results, therefore in the further part of the study the parameters proposed by P. Sonkiya et al. were used. The behaviour of the model with different types of input data for the generator was also checked. The vector containing sentiment statistics and/or technical analysis indicators was removed. 
+The model was trained using the Python language frameworks for NN modelling - tensorflow (Abadi, 2016) and keras (Chollet, 2015) (Gulli, 2017). The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16 GB of RAM. The training was performed together with the use of CUDA cores. Each training was run with an epoch parameter of 1000. Hyper-parameter optimisation was also performed,  however, due to the limitation of computing power, it could not be extensive. It was limited to checking the behaviour of the network after removing the MLP layers from both the generator and the discriminator. This did not give the desired results, therefore in the further part of the study the parameters proposed by Sonkiya (2021) were used. The behaviour of the model with different types of input data for the generator was also checked. Three datasets were used as an input for generator - Stock market data only, Stock market data with technical analysis indicators and Stock market data with technical analysis indicators and sentiment analysis results.
 
-\begin{table}[H]
-\centering
-\caption{Forecast error metrics for chosen companies}
-\begin{tabular}{lrrrr}
-\toprule
-{} &       ATVI &          EA &        TTWO &      UBSFY \\
-\midrule
-MAE              &   1.358500 &    1.342700 &    3.540500 &   0.257800 \\
-RMSE             &   1.886700 &    1.895600 &    4.506900 &   0.337600 \\
-Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{figure}[H]
-\caption{ATVI actual price vs predicted price}
-\begin{adjustbox}{width=1.3\textwidth,center}
-\input{ATVI_prices.pgf}
-\end{adjustbox}
-\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
-\end{figure}
+To analyze the process of training, the loss function of the best performing model for every company was inspected. In this case, all of them appeared to be trained on Stock data with technical analysis indicators. It is shown in figures 7-10. They represent the change in the value of the generator and discriminator loss functions over time. It is easy to see how they compete with each other. It can also be seen that changes in the loss functions occur simultaneously, i.e. if the generator loss changes then the discriminator loss also changes. In any case, around epochs 100-300 there is a period of strong instability, characterised by very strong changes in both loss functions. It usually lasts several tens of epochs and ends with stabilisation of both functions. In 3 out of 4 cases the period of severe instability occurs only once, the exception is UBSFY where such periods occur twice. After the initial periods of instability the loss function becomes stable, only experiencing subtle changes once in a while. Once the loss function has stabilised, such a model is ready to be used in an investment strategy. It follows that with our proposed framework it is necessary to train the model for at least 400 epochs. Once the models were trained, they were evaluated on a test sets. 
 
 \begin{figure}[H]
 \caption{ATVI generator and discriminator loss}
@@ -404,14 +386,6 @@ Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
 \end{figure}
 
 \begin{figure}[H]
-\caption{EA actual price vs predicted price}
-\begin{adjustbox}{width=1.3\textwidth,center}
-\input{EA_prices.pgf}
-\end{adjustbox}
-\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
-\end{figure}
-
-\begin{figure}[H]
 \caption{EA generator and discriminator loss}
 \begin{adjustbox}{width=1.3\textwidth,center}
 \input{EA_loss.pgf}
@@ -419,13 +393,6 @@ Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
 \caption*{\textit{Source: Based on own research.}}
 \end{figure}
 
-\begin{figure}[H]
-\caption{TTWO actual price vs predicted price}
-\begin{adjustbox}{width=1.3\textwidth,center}
-\input{TTWO_prices.pgf}
-\end{adjustbox}
-\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
-\end{figure}
 
 \begin{figure}[H]
 \caption{TTWO generator and discriminator loss}
@@ -433,14 +400,6 @@ Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
 \input{TTWO_loss.pgf}
 \end{adjustbox}
 \caption*{\textit{Source: Based on own research.}}
-\end{figure}
-
-\begin{figure}[H]
-\caption{UBSFY actual price vs predicted price}
-\begin{adjustbox}{width=1.3\textwidth,center}
-\input{UBSFY_prices.pgf}
-\end{adjustbox}
-\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
 \end{figure}
 
 \begin{figure}[H]
@@ -453,13 +412,68 @@ Close Price Mean &  83.648342 &  139.189536 &  170.877192 &  12.836576 \\
 
 
 In the Table 3. the results of forecast error metrics have been presented alongside with the mean close price of a given company in the test dataset. By far the best model was found to be the one without sentiment and with technical analysis. One reason why the use of sentiment may not be correct is the noise and data impurity from reddit. However, this topic needs further exploration with more computational resources. 
-The forecast errors are showed together with the average share price of a given company in the test dataset. The mean has been included here due to the relativity of error. For each of the companies, the MAE does not exceed 2.1 \% of the average price value over the test period. The best performer here is EA, for which this value is 0.95\%.  In the case of this company, the model performed best when the epoch parameter was changed from 1000 to 500. Another important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between predicted value and actual value. This is crucial, because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 3, 5 and 9 it can be seen that 3 of the 4 models perform well in forecasting future prices. However, forecasting TTWO prices shown in Figure 7 proved problematic, but even here, the model performs acceptably. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
+The forecast errors are showed together with the average share price of a given company in the test dataset. The mean has been included here due to the relativity of error. For each of the companies, the MAE does not exceed 2.1 \% of the average price value over the test period when using Stock data alongside with technical analysis indicators. The best performer here is the model for EA, for which this value is 0.95\%. In the case of this company, the model performed best when the epoch parameter was changed from 1000 to 500. Next, a graphical analysis of the results has been carried out for the best performing model for each of the companies.
+
+
+\begin{table}[H]
+\centering
+\caption{Forecast error metrics for chosen companies}
+\begin{tabular}{llrrrr}
+\toprule
+ Dataset & Metric &          ATVI &           EA &         TTWO &        UBSFY \\
+\midrule
+Stock data& MAE              &   7.36249 &    7.80082 &    8.96674 &  1.31115 \\
+&RMSE             &   9.53919 &    8.33803 &    10.83445 &   1.67089 \\
+Stock data with TA& MAE              &   1.35850 &    1.34270 &    3.54050 &   0.25780 \\
+&RMSE             &   1.88670 &    1.89560 &    4.50690 &   0.33760 \\
+Stock data with TA& MAE              &   7.69750 &    3.17484 &    3.67834 &   2.67735 \\
+and sentiment& RMSE              &   7.95309 &    4.14371 &    4.66893 &   3.12417 \\
+\midrule
+Close Price Mean & &  83.64834 &  139.18953 &  170.87719 &  12.83657 \\
+
+
+&               &    &     &    &    \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Comparison of predicted and actual prices is shown in Figures 3-6. An important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between predicted value and actual value. This is crucial, because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 3, 4 and 6 it can be seen that 3 of the 4 models perform well in forecasting future prices. The three charts are similar, the \textit{predicted price} and \textit{actual price} lines are very close to each other and often intersect. However, forecasting TTWO prices shown in Figure 5 proved problematic. It can be seen here that the \textit{predicted price} line deviates significantly from the \textit{actual price}. Nevertheless, the model performs acceptably even here. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
 \\
 
-The loss functions of each of the models are also worth analysing. It is shown in figures 4, 6, 8 and 10. They represent the change in the value of the generator and discriminator loss functions over time. It is easy to see how they compete with each other. It can also be seen that changes in the loss functions occur simultaneously, i.e. if the generator loss changes then the discriminator loss also changes. In any case, around epochs 100-300 there is a period of strong instability, characterised by very strong changes in both loss functions. It usually lasts several tens of epochs and ends with stabilisation of both functions. In 3 out of 4 cases the period of severe instability occurs only once, the exception is UBSFY where such periods occur twice. After the initial periods of instability the loss function becomes stable, only experiencing subtle changes once in a while. Once the loss function has stabilised, such a model is ready to be used in an investment strategy. It follows that with our proposed framework it is necessary to train the model for at least 400 epochs. 
+\begin{figure}[H]
+\caption{ATVI actual price vs predicted price}
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{ATVI_prices.pgf}
+\end{adjustbox}
+\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
+\end{figure}
+
+\begin{figure}[H]
+\caption{EA actual price vs predicted price}
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{EA_prices.pgf}
+\end{adjustbox}
+\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
+\end{figure}
+
+\begin{figure}[H]
+\caption{TTWO actual price vs predicted price}
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{TTWO_prices.pgf}
+\end{adjustbox}
+\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
+\end{figure}
+
+\begin{figure}[H]
+\caption{UBSFY actual price vs predicted price}
+\begin{adjustbox}{width=1.3\textwidth,center}
+\input{UBSFY_prices.pgf}
+\end{adjustbox}
+\caption*{\textit{Source: Based on own research and yahoo finance stock data.}}
+\end{figure}
 
 \subsection{Investment strategy results}
-Once satisfactory models were created, the results of our investment strategy were analysed. Parameters  $\alpha_{sell}$, $\alpha_{buy}$  which decide the required percentage of price change when selling and buying, and if\_short deciding whether the short selling is used were evaluated. The aim was to find parameters that maximise the return on investment.
+Once satisfactory models were created, the results of our investment strategy were analysed. Parameters  $\alpha_{sell}$, $\alpha_{buy}$  which decide the required percentage of price change when selling and buying, and \textit{if\_short} deciding whether the short selling is used were evaluated. The aim was to find parameters that maximise the return on investment.
 
 \begin{table}[H]
 \centering
@@ -510,7 +524,7 @@ To select the best possible set of parameters, hyperparameter optimisation was c
 \end{table}
 
 
-The parameters for the investment strategy found in this way are subject to some bias. It is likely that the predictions of the test set would be less precise than te train set. Therefore, an additional set of parameters was arbitrarily chosen. The parameter $\alpha_{buy}$  was set up to 2 and $\alpha_{sell}$  to 0. A short selling option has also been made available.  A high top-cut-off was chosen with a conservative approach for buying, making trades less frequent and therefore funds are not used up by transaction fees. A zero down-cut-off will instead give an instant sell if the model prediction is smaller than the previous price. This is intended to minimise losses. Since these parameters are chosen purely on the basis of researcher's judgement they may require deeper analysis. One idea is to split data into one more dataset that would be used exclusively to select parameters for a trading strategy that would be tested on a real test set that the system has not seen. 
+The parameters for the investment strategy found in this way are subject to some bias. It is likely that the predictions of the test set would be less precise than the train set. Therefore, an additional set of parameters was arbitrarily chosen. The parameter $\alpha_{buy}$  was set up to 2 and $\alpha_{sell}$  to 0. A short selling option has also been made available.  A high top-cut-off was chosen with a conservative approach for buying, making trades less frequent and therefore funds are not used up by transaction fees. A zero down-cut-off will instead give an instant sell if the model prediction is smaller than the previous price. This is intended to minimise losses. Since these parameters are chosen purely on the basis of researcher's judgement they may require deeper analysis. One idea that could be further investigated is to split data into one more dataset that would be used exclusively to select parameters for a trading strategy that would be tested on a real test set that the system has not seen. 
 
 \begin{table}[H]
 \centering
@@ -519,7 +533,7 @@ The parameters for the investment strategy found in this way are subject to some
 \toprule
  ticker &  Buy and Hold &  Proposed strategy with  &  Proposed strategy with  \\
   &        &                                        parameters found in  &                                           arbitrary chosen parameters \\
-  &        &                                         hyperparameter optymalization &                                            \\
+  &        &                                         hyperparameter optimization &                                            \\
 
  \midrule
   UBSFY &       631.839 \$&                                            878.008 \$ &                                           1258.925 \$\\
@@ -530,7 +544,7 @@ The parameters for the investment strategy found in this way are subject to some
 \end{tabular}
 \end{table}
 
-
+	 As can be seen in the Figures 11-14, in 3 out of 4 cases the presented strategy outperformed the Buy and Hold strategy. Interestingly, the arbitrarily chosen parameters for the investment strategy turned out to be better than those found by hyperparameter optimization. However, this agrees with our assumption that due to differences in model prediction on the training and test sets, these parameters may not be optimal on data that our system has not seen. This is clearly visible in the case of UBSFY and ATVI, where in both cases strategy with arbitrary chosen parameters outperforms strategy with parameters hyperparameter optimization. In the case of UBSFY, the percentage difference of the final balance between the strategies is 43\% and in the case of ATVI - 76\%. In the other two companies, EA and TTW, strategies with both sets of parameters gave similar results. The best results were achieved for UBSFY. In this case, the strategy with arbitrary chosen parameters outperformed the Buy and Hold strategy significantly, reaching 1258\$ at the end of the test period while the Buy and Hold only reached 631\$. The worst results were obtained for TTWO. However, this is understandable, because already at the level of the model itself it was clear that MAE compared to average price values is the highest there. This means that this model is not good enough and needs further research. It is important to note that each of these companies was in a downtrend. For each company, the Buy and Hold strategy proved unprofitable. In the case of UBSFY and ATVI, the Buy and Hold strategy would lose more then 30\% of inital funds. This makes it all the more optimistic that 3 of the 4 assets made significant gains. 
 
 \begin{figure}[H]
 \caption{UBSFY proposed strategy with diffrent parameters vs Buy and Hold}
@@ -565,23 +579,22 @@ The parameters for the investment strategy found in this way are subject to some
 \end{figure}
 
 
- As can be seen in the Figures 11-14, in 3 out of 4 cases the strategy  presented outperformed the Buy and Hold strategy. Interestingly, the arbitrarily chosen parameters for the investment strategy turned out to be better than those found by hyperparameter optimization. However, this agrees with our assumption that due to differences in model prediction on the training and test sets, these parameters may not be optimal on data that our system has not seen. The worst results were obtained for TTWO. However, this is understandable, because already at the level of the model itself it was clear that MAE compared to average price values is the highest there. This means that this model is not good enough and needs further research. It is important to note that each of these companies was in a downtrend. The Buy and Hold strategy has in each case recorded losses. This makes it all the more optimistic that 3 of the 4 assets made significant gains. 
 
 \section{Conclusion}
 
-The aim of the study was to test the feasibility of using the GAN network and the BERT model to predict the valuation of four listed companies. The BERT model was used to analyse the sentiment of comments about a given company and its games from the reddit.com. These data along with technical analysis indicators and stock market data were then used as explanatory variables for the GAN model. GAN models without sentiment analysis and/or technical analysis indicators were also tested. Then, using the predictions from model, a system was created to decide on a buy or sell signal. An optimisation of the hyperparameters in this system was carried out in order to find profit-optimising parameters. For 3 of the 4 companies it was possible to create a strategy that significantly outperforms the buy and hold approach. \\
+The aim of the study was to test the feasibility of using the GAN network and the BERT model to predict the prices of four companies from the game industry -  Electronic Arts, Ubisoft, Take-Two Interactive Software and Activision Blizzard. The BERT model was used to analyse the sentiment of comments about a given company and its games from the reddit.com. These data along with technical analysis indicators and stock market data were then used as explanatory variables for the GAN model. GAN models without sentiment analysis and/or technical analysis indicators were also tested. Then, using the predictions from model, an investment strategy was created. An optimisation of the hyperparameters in this system was carried out in order to find profit-optimising parameters. Stock data with technical analysis indicators turned out to be the best performing dataset. Using it, for each of the companies, the MAE does not exceed 2.1 \% of the average price value over the test period. For 3 of the 4 companies it was possible to create a strategy that significantly outperforms the buy and hold approach. \\
 
-Additionally, the study tested the hypotheses raised in the introduction. The first hypothesis \textit{(H1) Using data from sentiment analysis positively influences the behaviour of the model} has to be rejected since we haven't managed to create well performing model without throwing sentiment data away. Their use made the model performed much worse. This may have been due to flaws in the data retrieval API and noise in the text data. Another explanation may be that the valuation of these companies is not dependent on the opinion of the players. \\
+Additionally, the study tested the hypotheses raised in the introduction. The first hypothesis \textit{(H1) Using data from sentiment analysis incrase model predictions quality measured by MAE} has to be rejected since we haven't managed to create well performing model without throwing sentiment data away. Their use made the model performed much worse. This may have been due to flaws in the data retrieval API and noise in the text data. Another explanation may be that the valuation of these companies is not dependent on the opinion of the players. \\
 
-The second hypothesis\textit{ (H2) The use of data from technical analysis positively influences the behaviour of the model}, holds due to the fact that technical analysis improved every of our models. This matches our suspicion that these indicators can provide our model with additional information and accelerate its training. Moreover, this may be influenced by the fact that a large number of stock market participants use Technical Analysis.\\
+The second hypothesis\textit{ (H2) The use of technical analysis indicators incrase model predictions quality measured by MAE}, holds due to the fact that technical analysis improved every of our models. This matches our expectations that these indicators can provide the model additional information and accelerate its training. Moreover, this may be influenced by the fact that a large number of stock market participants use Technical Analysis.\\
 
-The third hypothesis\textit{H (H3) The model architecture can be successfully applied to more than one company}, holds due to the fact that we were able to apply it to 3 out of 4 tested companies. The only company where the application of our model has been only partially successful is TTWO. Nevertheless, it was proved that the model can be generalised and the it is possible to apply model architecture to more than one company.\\
+The third hypothesis\textit{ (H3) The model architecture can be successfully applied to more than one company}, holds due to the fact that we were able to apply it to 3 out of 4 tested companies with good results. The only company where the application of our model has been only partially successful is TTWO. Nevertheless, it was showed that the model can be generalised and that it is possible to apply model architecture to more than one company.\\
 
-The fourth hypothesis\textit{ (H4) The investment strategy based on the model predictions is able to outperform the Buy\&Hold strategy} holds for 3 out of 4 companies that we have tested. The reason for this is that the TTWO model was surely the worst one and it needs further research. Since we have proven that system can outperform buy and hold approach, H3 cannot be rejected.\\
+The fourth hypothesis\textit{ (H4) The investment strategy developed based on the GAN predictions is able to outperform the Buy\&Hold strategy} holds for 3 out of 4 companies that we have tested. The reason for this is that the TTWO model was surely the worst one and it needs further research. Since we have showed that system can outperform buy and hold approach, H3 cannot be rejected.\\
 
-Finally, the fifth hypothesis\textit{ (H5) Adding the possibility of short selling to the investment strategy increases the profitability of our system}, holds due to the fact that that strategies with ability to short selling performed better.  This may have been influenced by the general downward trend valuation of companies during the test period, during which it is very effective to earn on short trades.\\
+Finally, the fifth hypothesis\textit{ (H5) Adding the possibility of short selling to the investment strategy increases the profitability of the system}, holds due to the fact that that strategies with ability to short selling performed better.  This have been influenced by the general downward trend valuation of companies during the test period, during which it is very effective to earn on short trades.\\
 
-In conclusion, the main finding is the confirmation of the possibility to use GAN networks to create an effective system that allows us to outperform Buy and Hold strategy and to make profit despite the fall in the price of an asset. The study has also shown that these networks have their problems and there is a great scope for further research. The main ones are their instability during training and the unclearness of when to stop training.  Better results could also be achieved with a more sophisticated investment strategy. Nevertheless, the results are promising and proves that this system could have potential business applications.
+In conclusion, the main finding is the confirmation of the possibility to use GAN networks to create an effective system that allows us to outperform Buy and Hold strategy and to make profit despite the fall in the price of an asset. The study has also shown that these networks have their challenges and there is a great scope for further research. The main ones are their instability during training and the unclearness of when to stop training.  Better results could also be achieved with a more sophisticated investment strategy. Nevertheless, the results are promising and shows that this system could have potential business applications.
 
 \section{Intentional self-criticism}
 During the study, certain problems were encountered. In the future, these should be investigated in more detail and they should be checked
