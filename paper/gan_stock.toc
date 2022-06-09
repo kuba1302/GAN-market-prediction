@@ -1,0 +1,22 @@
+\contentsline {section}{\numberline {1}Introduction}{5}{}%
+\contentsline {section}{\numberline {2}Proposed framework}{7}{}%
+\contentsline {subsection}{\numberline {2.1}Generative adversarial network}{9}{}%
+\contentsline {subsection}{\numberline {2.2}Generator}{10}{}%
+\contentsline {subsection}{\numberline {2.3}Discriminator}{10}{}%
+\contentsline {subsection}{\numberline {2.4}Evaluation of the model}{11}{}%
+\contentsline {subsection}{\numberline {2.5}Investment Strategy}{12}{}%
+\contentsline {subsection}{\numberline {2.6}System evaluation}{13}{}%
+\contentsline {section}{\numberline {3}Data}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Stock Data}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Text Data}{16}{}%
+\contentsline {subsection}{\numberline {3.3}Sentiment Analysis}{16}{}%
+\contentsline {subsection}{\numberline {3.4}Technical Analysis}{17}{}%
+\contentsline {section}{\numberline {4}Results of framework}{18}{}%
+\contentsline {subsection}{\numberline {4.1}GAN results}{18}{}%
+\contentsline {subsection}{\numberline {4.2}Investment strategy results}{24}{}%
+\contentsline {section}{\numberline {5}Conclusion}{28}{}%
+\contentsline {section}{\numberline {6}Intentional self-criticism}{30}{}%
+\contentsline {section}{References}{31}{}%
+\contentsline {section}{\numberline {7}Szczegółowa analiza literatury}{34}{}%
+\contentsline {section}{\numberline {8}Rozszerzenie opisu zastosowanej metody}{35}{}%
+\contentsline {section}{\numberline {9}Rozszerzenie omówienia wyników}{37}{}%

@@ -171,6 +171,7 @@ class StockTimeGan:
             )
             if epochs % 10: 
                 self.checkpoint.save(file_prefix=self.checkpoint_prefix)
+                
         return train_history          
 
     def predict(self, X, *args, **kwargs): 
