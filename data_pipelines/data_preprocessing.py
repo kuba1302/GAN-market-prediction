@@ -33,7 +33,7 @@ class DataPipeline:
         self.if_ta = if_ta
         self.min_time = None
         self.max_time = None
-        self.sentiment_df = self.load_sentiment_data()
+        self.sentiment_df = self.prepare_sentiment_data()
 
     def load_sentiment_data(self):
         sentiment_df = pd.read_csv(self.sentiment_path / f"{self.ticker}.csv").drop(

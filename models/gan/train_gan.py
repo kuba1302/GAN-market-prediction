@@ -5,8 +5,8 @@ import os
 import numpy as np
 
 if __name__ == "__main__":
-    TICKER = "ATVI"
-    MODEL_VERSION = "0.1"
+    TICKER = "EA"
+    MODEL_VERSION = "0.7"
     load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
     save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
         data["X_list_train"],
         data["Y_preds_real_list_train"],
         data["Y_whole_real_list_train"],
-        epochs=1000,
+        epochs=500,
     )
     test_preds = gan.predict(data["X_list_test"])
     model_data = {
