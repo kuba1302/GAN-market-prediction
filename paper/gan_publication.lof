@@ -1,8 +1,8 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces GAN training architecture\relax }}{8}{}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Investment strategy architecture\relax }}{9}{}%
-\contentsline {figure}{\numberline {3}{\ignorespaces ATVI generator and discriminator loss\relax }}{19}{}%
+\contentsline {figure}{\numberline {1}{\ignorespaces GAN training architecture\relax }}{7}{}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Investment strategy architecture\relax }}{8}{}%
+\contentsline {figure}{\numberline {3}{\ignorespaces ATVI generator and discriminator loss\relax }}{20}{}%
 \contentsline {figure}{\numberline {4}{\ignorespaces EA generator and discriminator loss\relax }}{20}{}%
-\contentsline {figure}{\numberline {5}{\ignorespaces TTWO generator and discriminator loss\relax }}{20}{}%
+\contentsline {figure}{\numberline {5}{\ignorespaces TTWO generator and discriminator loss\relax }}{21}{}%
 \contentsline {figure}{\numberline {6}{\ignorespaces UBSFY generator and discriminator loss\relax }}{21}{}%
 \contentsline {figure}{\numberline {7}{\ignorespaces ATVI actual price vs predicted price\relax }}{23}{}%
 \contentsline {figure}{\numberline {8}{\ignorespaces EA actual price vs predicted price\relax }}{23}{}%

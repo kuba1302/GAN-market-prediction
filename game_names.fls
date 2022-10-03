@@ -1,0 +1,6 @@
+PWD /Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction
+INPUT /usr/local/texlive/2022basic/texmf.cnf
+INPUT /usr/local/texlive/2022basic/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2022basic/texmf-var/web2c/pdftex/latex.fmt
+INPUT game_names.tex
+OUTPUT game_names.log
