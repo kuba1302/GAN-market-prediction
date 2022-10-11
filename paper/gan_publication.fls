@@ -611,17 +611,6 @@ INPUT /usr/local/texlive/2022basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.st
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
-INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/cite/cite.sty
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 INPUT /usr/local/texlive/2022basic/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
@@ -884,6 +873,10 @@ INPUT ./ATVI_strategy.pgf
 INPUT ATVI_strategy.pgf
 INPUT ./ATVI_strategy.pgf
 INPUT ATVI_strategy.pgf
+INPUT ./gan_publication.bbl
+INPUT gan_publication.bbl
+INPUT ./gan_publication.bbl
+INPUT gan_publication.bbl
 INPUT ./gan_publication.lof
 INPUT gan_publication.lof
 INPUT gan_publication.lof
@@ -893,7 +886,6 @@ INPUT gan_publication.lot
 INPUT gan_publication.lot
 OUTPUT gan_publication.lot
 INPUT gan_publication.aux
-INPUT /Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm2074.600pk
 INPUT /Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm2986.600pk
 INPUT /Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm2488.600pk
 INPUT /Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk

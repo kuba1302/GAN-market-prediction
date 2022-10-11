@@ -1,4 +1,3 @@
-% !TEX TS-program = pdflatex
 % !TEX encoding = UTF-8 Unicode
 
 % This is a simple template for a LaTeX document using the "article" class.
@@ -38,7 +37,6 @@
 \edef\restoreparindent{\parindent=\the\parindent\relax}
 \usepackage{parskip}
 \restoreparindent
-\usepackage{cite}
 
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -656,91 +654,82 @@ The first of the problems posed by the existence of two loss functions is the di
 Another problem is the different results with the same parameters. Neural networks are by definition not deterministic, as stochastic gradient descent and random assignment of initial weights can affect random network behavior and different results with the same parameters. They become deterministic after they have been trained and all weights are fixed. This effect is further compounded by the fact of using two networks competing with each other and having two separate loss functions. Further analysis can focus on stabilizing our system so that in business use it is possible to retrain it on new data without the risk of breaking the whole model. 
 
 The investment strategy also needs further analysis. In our study, a very simple method was used, which involves trading the entire funds on each trade. In order to minimize the risk of loss in the event of a sudden fluctuation, the system could be changed in the future to dose the amount of funds allocated to buy or sell transactions depending on the model's confidence in the price change. 
-
 \pagebreak
+% \nocite{*}
 
-\begin{thebibliography}{9}
-\bibitem{ml-in-stock}
-A. Prasad, A. Seetharaman, Importance of Machine Learning in Making Investment Decision in Stock Market, 2021
-\bibitem{ml-compute}
-M. Vijh et al, Stock Closing Price Prediction using Machine Learning Techniques, 2020
-\bibitem{ml-studies}
-T. Strader, Machine Learning Stock Market Prediction Studies: Review and Research Directions, 2020
-\bibitem{arima}
-M K Ho, H. Darman, S. Musa,  Stock Price Prediction Using ARIMA, Neural Network and LSTM Models, 2021
-\bibitem{nn-time-series}
-A. Tealab, Time series forecasting using artificial neural networks methodologies: A systematic review, 2018
-\bibitem{bert}
-J. Devlin et al, BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, 2019
-\bibitem{gru1}
-J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
-\bibitem{gru2}
-P. Dey et al, Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
-\bibitem{gru3} 
-K. Cho et al, On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
-\bibitem{cnn1}
-L. Alzubaidi et al, Review of deep learning: concepts, CNN architectures, challenges, applications, future directions, 2021
-\bibitem{cnn2}
-R. Yamashita, Convolutional neural networks: an overview and application in radiology, 2018, 612
-\bibitem{gan1}
-J. Goodfellow et al, Generative Adversarial Nets, 2014
-\bibitem{time-gan}
-J. Yoon, D. Jarret, M. Schaar, Time-series Generative Adversarial Networks, 2019
-\bibitem{s-gan}
-P. Sonkiya, V. Bajpai, A. Bansal, Stock price prediction using BERT and GAN, 2021
-\bibitem{gan-text-image}
-Z. Wang et al, Text to Image Synthesis With Bidirectional Generative Adversarial Network, 2020
-\bibitem{gan-synth}
-B. Yilmaz, Synthetic demand data generation for individual electricity consumers : Generative Adversarial Networks (GANs), 2022
-\bibitem{gan-stock}
-A. Kumar et al, Generative Adversarial Network (GAN) and Enhanced Root Mean Square Error (ERMSE): Deep Learning for Stock Price Movement Prediction, 2021
-\bibitem{gan-stock2}
-H. Lin et al, Stock price prediction using Generative Adversarial Networks, 2021 
-\bibitem{at2}	
-J. Stanković, Investment Strategy Optimization Using Technical Analysis and Predictive Modeling in Emerging Markets, 2015
-\bibitem{lstm-btc}
-J. Michańków, P. Sakowski, R. Ślepaczuk, LSTM in Algorithmic Investment Strategies on BTC and S\&P500 Index, 2022
-\bibitem{gan-cnn}
-A. Staffini, Stock Price Forecasting by a Deep Convolutional Generative Adversarial Network, 2022
-\bibitem{gan-zhang}
-Zhang et al, Stock Market Prediction Based on Generative Adversarial Network, 2019
-\bibitem{gan-Jjang}
-J. Jiang, Stock Market Prediction Based on SF-GAN Network, 2021
-\bibitem{gan-lin}
-H. Lin et al, Stock price prediction using Generative Adversarial Networks, 2021
-\bibitem{at}
-B Huang et al, Automated trading systems statistical and machine learning methods and hardware implementation: a survey
-\bibitem{ma}
-Wing-Keung Wong, M. Manzur, Boon-Kiat Chew, How rewarding is technical analysis? Evidence from Singapore stock market 2003
-\bibitem{wma}
-M. Perry, The Weighted Moving Average Technique, 2010
-\bibitem{ema}
-S. Grebenkov, J. Serror, Following a trend with an exponential moving average: Analytical results for a Gaussian model, 2014\
-\bibitem{bb}
-C. Lento, N. Gradojevic, Investment information content in Bollinger Bands?, 2007, 
-\bibitem{macd}
-Terence Tai-Leung Chong, Wing-Kam Ng, Technical analysis and the London stock exchange: testing the MACD and RSI rules using the FT30, 2008
-\bibitem{sentiment}
-Bing Liu et al,  Sentiment analysis and subjectivity, 2010
-\bibitem{tensorflow}
-M. Abadi et al, Tensorflow: A system for large-scale machine learning, 2016
-\bibitem{keras}
-F Chollet et al, Keras, 2015
-\bibitem{keras-2}
-A. Gulli,  Deep learning with Keras, 2017
-\end{thebibliography}
+\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliography{refs}
 
-\pagebreak
-\hspace{0pt}
-\vfill
-\begin{center}
-\begin{huge}
-Suplement
-\end{huge}
-\end{center}
-\vfill
-\hspace{0pt}
-\pagebreak
+% \begin{thebibliography}{9}
+% \bibitem{ml-in-stock}
+% A. Prasad, A. Seetharaman, Importance of Machine Learning in Making Investment Decision in Stock Market, 2021
+% \bibitem{ml-compute}
+% M. Vijh et al, Stock Closing Price Prediction using Machine Learning Techniques, 2020
+% \bibitem{ml-studies}
+% T. Strader, Machine Learning Stock Market Prediction Studies: Review and Research Directions, 2020
+% \bibitem{arima}
+% M K Ho, H. Darman, S. Musa,  Stock Price Prediction Using ARIMA, Neural Network and LSTM Models, 2021
+% \bibitem{nn-time-series}
+% A. Tealab, Time series forecasting using artificial neural networks methodologies: A systematic review, 2018
+% \bibitem{bert}
+% J. Devlin et al, BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, 2019
+% \bibitem{gru1}
+% J. Chung, C. Gulcehre, K. Cho, Y. Bengio, Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling, 2014
+% \bibitem{gru2}
+% P. Dey et al, Comparative Analysis of Recurrent Neural Networks in Stock Price Prediction for Different Frequency Domains, 2021 
+% \bibitem{gru3} 
+% K. Cho et al, On the Properties of Neural Machine Translation: Encoder-Decoder Approaches, 2014
+% \bibitem{cnn1}
+% L. Alzubaidi et al, Review of deep learning: concepts, CNN architectures, challenges, applications, future directions, 2021
+% \bibitem{cnn2}
+% R. Yamashita, Convolutional neural networks: an overview and application in radiology, 2018, 612
+% \bibitem{gan1}
+% J. Goodfellow et al, Generative Adversarial Nets, 2014
+% \bibitem{time-gan}
+% J. Yoon, D. Jarret, M. Schaar, Time-series Generative Adversarial Networks, 2019
+% \bibitem{s-gan}
+% P. Sonkiya, V. Bajpai, A. Bansal, Stock price prediction using BERT and GAN, 2021
+% \bibitem{gan-text-image}
+% Z. Wang et al, Text to Image Synthesis With Bidirectional Generative Adversarial Network, 2020
+% \bibitem{gan-synth}
+% B. Yilmaz, Synthetic demand data generation for individual electricity consumers : Generative Adversarial Networks (GANs), 2022
+% \bibitem{gan-stock}
+% A. Kumar et al, Generative Adversarial Network (GAN) and Enhanced Root Mean Square Error (ERMSE): Deep Learning for Stock Price Movement Prediction, 2021
+% \bibitem{gan-stock2}
+% H. Lin et al, Stock price prediction using Generative Adversarial Networks, 2021 
+% \bibitem{at2}	
+% J. Stanković, Investment Strategy Optimization Using Technical Analysis and Predictive Modeling in Emerging Markets, 2015
+% \bibitem{lstm-btc}
+% J. Michańków, P. Sakowski, R. Ślepaczuk, LSTM in Algorithmic Investment Strategies on BTC and S\&P500 Index, 2022
+% \bibitem{gan-cnn}
+% A. Staffini, Stock Price Forecasting by a Deep Convolutional Generative Adversarial Network, 2022
+% \bibitem{gan-zhang}
+% Zhang et al, Stock Market Prediction Based on Generative Adversarial Network, 2019
+% \bibitem{gan-Jjang}
+% J. Jiang, Stock Market Prediction Based on SF-GAN Network, 2021
+% \bibitem{gan-lin}
+% H. Lin et al, Stock price prediction using Generative Adversarial Networks, 2021
+% \bibitem{at}
+% B Huang et al, Automated trading systems statistical and machine learning methods and hardware implementation: a survey
+% \bibitem{ma}
+% Wing-Keung Wong, M. Manzur, Boon-Kiat Chew, How rewarding is technical analysis? Evidence from Singapore stock market 2003
+% \bibitem{wma}
+% M. Perry, The Weighted Moving Average Technique, 2010
+% \bibitem{ema}
+% S. Grebenkov, J. Serror, Following a trend with an exponential moving average: Analytical results for a Gaussian model, 2014\
+% \bibitem{bb}
+% C. Lento, N. Gradojevic, Investment information content in Bollinger Bands?, 2007, 
+% \bibitem{macd}
+% Terence Tai-Leung Chong, Wing-Kam Ng, Technical analysis and the London stock exchange: testing the MACD and RSI rules using the FT30, 2008
+% \bibitem{sentiment}
+% Bing Liu et al,  Sentiment analysis and subjectivity, 2010
+% \bibitem{tensorflow}
+% M. Abadi et al, Tensorflow: A system for large-scale machine learning, 2016
+% \bibitem{keras}
+% F Chollet et al, Keras, 2015
+% \bibitem{keras-2}
+% \end{thebibliography}
+
 
 \listoffigures
 \listoftables
