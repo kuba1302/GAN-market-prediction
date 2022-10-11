@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1664832285 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1664832287
+["pdflatex"] 1665506686 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1665506687
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk" 1664829934 25396 c09383d2a7da0707f6c3eced5cefd2f7 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk" 1664829933 14860 525befdbc7dd4740d1b9dc4433db6485 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk" 1664829933 16976 6f44dee17e3ce4c98a5f9b6908890e1f ""
@@ -16,7 +16,7 @@
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk" 1664829934 31872 28838a8a223c87f939a224dca322f901 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk" 1664831143 15172 493350937df6452c9d66da6a23e3a548 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1664829932 11524 a7106f446ea6f0acc1cc0f0c91df9b00 ""
-  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1664832285 78824 767bc618152a69ad9cad543d2033cdc5 ""
+  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1665506685 61928 b14e7cd1d35a297b2c274d8c45ad1a34 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -203,12 +203,12 @@
   "UBSFY_loss.pgf" 1664819551 75807 ba674404527480835500e47a615d865e ""
   "UBSFY_prices.pgf" 1664819551 42756 4d074213788764f6cbf82f364bc22d8e ""
   "UBSFY_strategy.pgf" 1664819551 49393 a24c02f4e7fdcbec6dc650b8e24392cf ""
-  "gan_publication.aux" 1664832286 6828 f25d1ef13b1ff94f983379b1a4703c13 "pdflatex"
-  "gan_publication.lof" 1664832286 1581 5ea6a5e8b614bbecb1bfd344057a10ba "pdflatex"
-  "gan_publication.lot" 1664832286 655 4916fa87fbba6ecbdad25cc74f0469d1 "pdflatex"
+  "gan_publication.aux" 1665506687 6459 c5c8eafadbef24d04c686748a5879c6a "pdflatex"
+  "gan_publication.lof" 1665506687 1581 5ea6a5e8b614bbecb1bfd344057a10ba "pdflatex"
+  "gan_publication.lot" 1665506687 655 4916fa87fbba6ecbdad25cc74f0469d1 "pdflatex"
   "gan_publication.spl" 0 -1 0 "pdflatex"
-  "gan_publication.tex" 1664832285 78824 767bc618152a69ad9cad543d2033cdc5 ""
-  "gan_publication.toc" 1664832286 1505 08731197bd703a0bb0d0e00a90cbee59 "pdflatex"
+  "gan_publication.tex" 1665506685 61928 b14e7cd1d35a297b2c274d8c45ad1a34 ""
+  "gan_publication.toc" 1665506687 1259 c33df27f7779aa3e6c5c5cec2757366e "pdflatex"
   "rysunek1.png" 1664819551 61351 29d7004938ad8cbbb1caf4e7ded75df3 ""
   "rysunek2.png" 1664819551 51892 02cbe18591aebc07e853e4c07912c5a7 ""
   (generated)

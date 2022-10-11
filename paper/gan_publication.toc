@@ -17,6 +17,3 @@
 \contentsline {section}{\numberline {5}Conclusion}{28}{}%
 \contentsline {section}{\numberline {6}Intentional self-criticism}{30}{}%
 \contentsline {section}{Bibliography}{32}{}%
-\contentsline {section}{\numberline {7}Szczegółowa analiza literatury}{36}{}%
-\contentsline {section}{\numberline {8}Rozszerzenie opisu zastosowanej metody}{38}{}%
-\contentsline {section}{\numberline {9}Rozszerzenie omówienia wyników}{39}{}%
