@@ -1,3 +1,191 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{https://doi.org/10.48550/arxiv.1605.08695}
+Martín Abadi, Paul Barham, Jianmin Chen, Zhifeng Chen, Andy Davis, Jeffrey
+  Dean, Matthieu Devin, Sanjay Ghemawat, Geoffrey Irving, Michael Isard,
+  Manjunath Kudlur, Josh Levenberg, Rajat Monga, Sherry Moore, Derek~G. Murray,
+  Benoit Steiner, Paul Tucker, Vijay Vasudevan, Pete Warden, Martin Wicke, Yuan
+  Yu, and Xiaoqiang Zheng.
+\newblock Tensorflow: A system for large-scale machine learning, 2016.
+
+\bibitem{alzubaidi2021review}
+Laith Alzubaidi, Jinglan Zhang, Amjad~J Humaidi, Ayad Al-Dujaili, Ye~Duan,
+  Omran Al-Shamma, Jos{\'e} Santamar{\'\i}a, Mohammed~A Fadhel, Muthana
+  Al-Amidie, and Laith Farhan.
+\newblock Review of deep learning: Concepts, cnn architectures, challenges,
+  applications, future directions.
+\newblock {\em Journal of big Data}, 8(1):1--74, 2021.
+
+\bibitem{cho2014on}
+Kyunghyun Cho, Bart van Merrienboer, Dzmitry Bahdanau, and Yoshua Bengio.
+\newblock On the properties of neural machine translation: Encoder-decoder
+  approaches, 2014.
+
+\bibitem{chollet2015keras}
+Francois Chollet et~al.
+\newblock Keras, 2015.
+
+\bibitem{doi:10.1080/13504850600993598}
+Terence Tai-Leung Chong and Wing-Kam Ng.
+\newblock Technical analysis and the london stock exchange: testing the macd
+  and rsi rules using the ft30.
+\newblock {\em Applied Economics Letters}, 15(14):1111--1114, 2008.
+
+\bibitem{chung2014empirical}
+Junyoung Chung, Caglar Gulcehre, KyungHyun Cho, and Yoshua Bengio.
+\newblock Empirical evaluation of gated recurrent neural networks on sequence
+  modeling, 2014.
+
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding, 2018.
+
+\bibitem{dey2021comperative}
+Polash Dey, Emam Hossain, Md~Hossain, Mohammed Chowdhury, Md~Alam, Mohammad
+  Hossain, and Karl Andersson.
+\newblock Comparative analysis of recurrent neural networks in stock price
+  prediction for different frequency domains.
+\newblock {\em Algorithms}, 14:251, 08 2021.
+
+\bibitem{godfellow2014generative}
+Ian~J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David
+  Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio.
+\newblock Generative adversarial networks, 2014.
+
+\bibitem{gradojevic2007investment}
+Nikola Gradojevic, Camillo Lento, and Chris Wright.
+\newblock Investment information content in bollinger bands?
+\newblock {\em Applied Financial Economics Letters}, 3:263--267, 07 2007.
+
+\bibitem{Grebenkov2014following}
+Denis~S. Grebenkov and Jeremy Serror.
+\newblock Following a trend with an exponential moving average: Analytical
+  results for a gaussian model.
+\newblock {\em Physica A: Statistical Mechanics and its Applications},
+  394:288--303, 01 2014.
+
+\bibitem{ho2021stock}
+M~Ho, Hazlina Darman, and Sarah Musa.
+\newblock Stock price prediction using arima, neural network and lstm models.
+\newblock {\em Journal of Physics: Conference Series}, 1988:012041, 07 2021.
+
+\bibitem{huang2019automated}
+Boming Huang, Yuxiang Huan, Li~Da Xu, Lirong Zheng, and Zhuo Zou.
+\newblock Automated trading systems statistical and machine learning methods
+  and hardware implementation: a survey.
+\newblock {\em Enterprise Information Systems}, 13(1):132--144, 2019.
+
+\bibitem{jiang2021stock}
+Jie Jiang.
+\newblock Stock market prediction based on sf-gan network.
+\newblock pages 97--101, 06 2021.
+
+\bibitem{kumar2022generative}
+Ashish Kumar, Abeer Alsadoon, PWC Prasad, Salma Abdullah, Tarik~A Rashid, Duong
+  Thu~Hang Pham, and Tran Quoc~Vinh Nguyen.
+\newblock Generative adversarial network (gan) and enhanced root mean square
+  error (ermse): deep learning for stock price movement prediction.
+\newblock {\em Multimedia Tools and Applications}, 81(3):3995--4013, 2022.
+
+\bibitem{lin2021stock}
+HungChun Lin, Chen Chen, GaoFeng Huang, and Amir Jafari.
+\newblock Stock price prediction using generative adversarial networks.
+\newblock {\em Journal of Computer Science}, 17(3):188--196, Apr 2021.
+
+\bibitem{liu2010sentiment}
+Bing Liu et~al.
+\newblock Sentiment analysis and subjectivity.
+\newblock {\em Handbook of natural language processing}, 2(2010):627--666,
+  2010.
+
+\bibitem{michankow2022lstm}
+Jakub Micha{\'n}k{\'o}w, Pawe{\l} Sakowski, and Robert {\'S}lepaczuk.
+\newblock Lstm in algorithmic investment strategies on btc and s\&p500 index.
+\newblock {\em Sensors}, 22(3):917, 2022.
+
+\bibitem{perry2010weighted}
+Marcus Perry.
+\newblock {\em The Weighted Moving Average Technique}.
+\newblock 06 2010.
+
+\bibitem{ahilesh2021importance}
+Akhilesh Prasad and Arumugam Seetharaman.
+\newblock Importance of machine learning in making investment decision in stock
+  market.
+\newblock {\em Vikalpa}, 46(4):209--222, 2021.
+
+\bibitem{sonkiya2021stock}
+Priyank Sonkiya, Vikas Bajpai, and Anukriti Bansal.
+\newblock Stock price prediction using bert and gan, 2021.
+
+\bibitem{staffini2022stock}
+Alessio Staffini.
+\newblock Stock price forecasting by a deep convolutional generative
+  adversarial network.
+\newblock {\em Frontiers in Artificial Intelligence}, 5, 2022.
+
+\bibitem{stankovic2015investment}
+Jelena Stanković, Ivana Marković, and Miloš Stojanović.
+\newblock Investment strategy optimization using technical analysis and
+  predictive modeling in emerging markets.
+\newblock {\em Procedia Economics and Finance}, 19:51--62, 2015.
+\newblock The Economies of Balkan and Eastern Europe Countries in the Changed
+  World (EBEEC 2014).
+
+\bibitem{strader2020machine}
+Troy~J Strader, John~J Rozycki, Thomas~H Root, and Yu-Hsiang~John Huang.
+\newblock Machine learning stock market prediction studies: Review and research
+  directions.
+\newblock {\em Journal of International Technology and Information Management},
+  28(4):63--83, 2020.
+
+\bibitem{tealab2018time}
+Ahmed Tealab.
+\newblock Time series forecasting using artificial neural networks
+  methodologies: A systematic review.
+\newblock {\em Future Computing and Informatics Journal}, 3(2):334--340, 2018.
+
+\bibitem{vijh2020stock}
+Mehar Vijh, Deeksha Chandola, Vinay~Anand Tikkiwal, and Arun Kumar.
+\newblock Stock closing price prediction using machine learning techniques.
+\newblock {\em Procedia computer science}, 167:599--606, 2020.
+
+\bibitem{wang2020text}
+Zixu Wang, Zhe Quan, Zhi-Jie Wang, Xinjian Hu, and Yangyang Chen.
+\newblock Text to image synthesis with bidirectional generative adversarial
+  network.
+\newblock In {\em 2020 IEEE International Conference on Multimedia and Expo
+  (ICME)}, pages 1--6, 2020.
+
+\bibitem{wong2003how}
+Wing-Keung Wong, Meher Manzur, and Boon-Kiat Chew.
+\newblock How rewarding is technical analysis? evidence from singapore stock
+  market.
+\newblock {\em Applied Financial Economics}, 13:543--551, 02 2003.
+
+\bibitem{yamashita2018convolutional}
+Rikiya Yamashita, Mizuho Nishio, Richard Kinh~Gian Do, and Kaori Togashi.
+\newblock Convolutional neural networks: an overview and application in
+  radiology.
+\newblock {\em Insights into imaging}, 9(4):611--629, 2018.
+
+\bibitem{bilgi2022syntetic}
+Bilgi Yilmaz and Ralf Korn.
+\newblock Synthetic demand data generation for individual electricity consumers
+  : Generative adversarial networks (gans).
+\newblock {\em Energy and AI}, 9:100161, 2022.
+
+\bibitem{wallach2019advances}
+Jinsung Yoon, Daniel Jarrett, and Mihaela van~der Schaar.
+\newblock Time-series generative adversarial networks.
+\newblock In H.~Wallach, H.~Larochelle, A.~Beygelzimer, F.~d\textquotesingle
+  Alch\'{e}-Buc, E.~Fox, and R.~Garnett, editors, {\em Advances in Neural
+  Information Processing Systems}, volume~32. Curran Associates, Inc., 2019.
+
+\bibitem{zhang2019stock}
+Kang Zhang, Guoqiang Zhong, Junyu Dong, Shengke Wang, and Yong Wang.
+\newblock Stock market prediction based on generative adversarial network.
+\newblock {\em Procedia Computer Science}, 147:400--406, 01 2019.
 
 \end{thebibliography}

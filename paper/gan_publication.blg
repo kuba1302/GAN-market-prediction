@@ -2,47 +2,51 @@ This is BibTeX, Version 0.99d (TeX Live 2022)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: gan_publication.aux
 The style file: plain.bst
-I found no \citation commands---while reading file gan_publication.aux
 Database file #1: refs.bib
-You've used 0 entries,
+Warning--entry type for "chollet2015keras" isn't style-file defined
+--line 428 of file refs.bib
+Warning--empty booktitle in jiang2021stock
+Warning--empty chapter and pages in perry2010weighted
+Warning--empty publisher in perry2010weighted
+You've used 32 entries,
             2118 wiz_defined-function locations,
-            497 strings with 4007 characters,
-and the built_in function-call counts, 18 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 2
-:= -- 7
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
+            688 strings with 10602 characters,
+and the built_in function-call counts, 11852 in all, are:
+= -- 1070
+> -- 782
+< -- 3
++ -- 307
+- -- 274
+* -- 958
+:= -- 2045
+add.period$ -- 91
+call.type$ -- 32
+change.case$ -- 227
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+cite$ -- 35
+duplicate$ -- 345
+empty$ -- 816
+format.name$ -- 274
+if$ -- 2378
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 3
-num.names$ -- 0
-pop$ -- 0
+int.to.str$ -- 32
+missing$ -- 26
+newline$ -- 157
+num.names$ -- 66
+pop$ -- 236
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 196
 quote$ -- 0
-skip$ -- 1
+skip$ -- 254
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 605
+swap$ -- 47
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 2
-(There was 1 error message)
+type$ -- 126
+warning$ -- 3
+while$ -- 96
+width$ -- 34
+write$ -- 333
+(There were 4 warnings)

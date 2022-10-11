@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex gan_publication"] 1665515961 "gan_publication.aux" "gan_publication.bbl" "gan_publication" 1665516085
+["bibtex gan_publication"] 1665517420 "gan_publication.aux" "gan_publication.bbl" "gan_publication" 1665517421
   "/usr/local/texlive/2022basic/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "gan_publication.aux" 1665516085 5305 586a79c13521f6b41691cb7602371a04 "pdflatex"
-  "refs.bib" 1665516084 18534 0470b3dbd9b2dc869a0c292447a39665 ""
+  "gan_publication.aux" 1665517421 6805 7ff42c489fd92ed95ee5152136ade940 "pdflatex"
+  "refs.bib" 1665517419 20699 8110e8270cd0d98a44818975fb754c19 ""
   (generated)
   "gan_publication.bbl"
   "gan_publication.blg"
-["pdflatex"] 1665516084 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1665516085
+["pdflatex"] 1665517420 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1665517421
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk" 1664829934 25396 c09383d2a7da0707f6c3eced5cefd2f7 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk" 1664829933 14860 525befdbc7dd4740d1b9dc4433db6485 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk" 1664829933 16976 6f44dee17e3ce4c98a5f9b6908890e1f ""
@@ -22,7 +22,7 @@
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1000.600pk" 1664829934 31872 28838a8a223c87f939a224dca322f901 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt0800.600pk" 1664831143 15172 493350937df6452c9d66da6a23e3a548 ""
   "/Users/jakubwujec/Library/texlive/2022basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1664829932 11524 a7106f446ea6f0acc1cc0f0c91df9b00 ""
-  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1665516083 61952 116e0858cfa963e0a742b7263b7a6141 ""
+  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1665517147 61950 b0fea2004db70299c48776bfd3412623 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -208,13 +208,13 @@
   "UBSFY_loss.pgf" 1664819551 75807 ba674404527480835500e47a615d865e ""
   "UBSFY_prices.pgf" 1664819551 42756 4d074213788764f6cbf82f364bc22d8e ""
   "UBSFY_strategy.pgf" 1664819551 49393 a24c02f4e7fdcbec6dc650b8e24392cf ""
-  "gan_publication.aux" 1665516085 5305 586a79c13521f6b41691cb7602371a04 "pdflatex"
-  "gan_publication.bbl" 1665515961 49 0eba253fc001332e731e8aba3f23127b "bibtex gan_publication"
-  "gan_publication.lof" 1665516085 1581 5ea6a5e8b614bbecb1bfd344057a10ba "pdflatex"
-  "gan_publication.lot" 1665516085 655 4916fa87fbba6ecbdad25cc74f0469d1 "pdflatex"
+  "gan_publication.aux" 1665517421 6805 7ff42c489fd92ed95ee5152136ade940 "pdflatex"
+  "gan_publication.bbl" 1665517420 7839 20eb4638a32a9e350a6fc29efbe7d292 "bibtex gan_publication"
+  "gan_publication.lof" 1665517421 1581 5ea6a5e8b614bbecb1bfd344057a10ba "pdflatex"
+  "gan_publication.lot" 1665517421 655 4916fa87fbba6ecbdad25cc74f0469d1 "pdflatex"
   "gan_publication.spl" 0 -1 0 "pdflatex"
-  "gan_publication.tex" 1665516083 61952 116e0858cfa963e0a742b7263b7a6141 ""
-  "gan_publication.toc" 1665516085 1259 c33df27f7779aa3e6c5c5cec2757366e "pdflatex"
+  "gan_publication.tex" 1665517147 61950 b0fea2004db70299c48776bfd3412623 ""
+  "gan_publication.toc" 1665517421 1259 c33df27f7779aa3e6c5c5cec2757366e "pdflatex"
   "rysunek1.png" 1664819551 61351 29d7004938ad8cbbb1caf4e7ded75df3 ""
   "rysunek2.png" 1664819551 51892 02cbe18591aebc07e853e4c07912c5a7 ""
   (generated)
