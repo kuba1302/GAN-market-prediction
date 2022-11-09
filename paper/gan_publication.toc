@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{}%
+\contentsline {section}{\numberline {2}Proposed framework}{6}{}%
+\contentsline {subsection}{\numberline {2.1}Generative adversarial network}{8}{}%
+\contentsline {subsection}{\numberline {2.2}Generator}{9}{}%
+\contentsline {subsection}{\numberline {2.3}Discriminator}{10}{}%
+\contentsline {subsection}{\numberline {2.4}Evaluation of the model}{11}{}%
+\contentsline {subsection}{\numberline {2.5}Investment Strategy}{11}{}%
+\contentsline {subsection}{\numberline {2.6}System evaluation}{13}{}%
+\contentsline {section}{\numberline {3}Data}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Stock Data}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Text Data}{16}{}%
+\contentsline {subsection}{\numberline {3.3}Sentiment Analysis}{17}{}%
+\contentsline {subsection}{\numberline {3.4}Technical Analysis}{18}{}%
+\contentsline {section}{\numberline {4}Results of framework}{19}{}%
+\contentsline {subsection}{\numberline {4.1}GAN results}{19}{}%
+\contentsline {subsection}{\numberline {4.2}Investment strategy results}{24}{}%
+\contentsline {section}{\numberline {5}Conclusion}{28}{}%
+\contentsline {section}{Bibliography}{31}{}%

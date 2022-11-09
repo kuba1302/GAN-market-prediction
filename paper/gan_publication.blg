@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: gan_publication.aux
+The style file: plain.bst
+Database file #1: refs.bib
+Warning--entry type for "chollet2015keras" isn't style-file defined
+--line 428 of file refs.bib
+Warning--empty booktitle in jiang2021stock
+Warning--empty chapter and pages in perry2010weighted
+Warning--empty publisher in perry2010weighted
+You've used 32 entries,
+            2118 wiz_defined-function locations,
+            688 strings with 10602 characters,
+and the built_in function-call counts, 11852 in all, are:
+= -- 1070
+> -- 782
+< -- 3
++ -- 307
+- -- 274
+* -- 958
+:= -- 2045
+add.period$ -- 91
+call.type$ -- 32
+change.case$ -- 227
+chr.to.int$ -- 0
+cite$ -- 35
+duplicate$ -- 345
+empty$ -- 816
+format.name$ -- 274
+if$ -- 2378
+int.to.chr$ -- 0
+int.to.str$ -- 32
+missing$ -- 26
+newline$ -- 157
+num.names$ -- 66
+pop$ -- 236
+preamble$ -- 1
+purify$ -- 196
+quote$ -- 0
+skip$ -- 254
+stack$ -- 0
+substring$ -- 605
+swap$ -- 47
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 126
+warning$ -- 3
+while$ -- 96
+width$ -- 34
+write$ -- 333
+(There were 4 warnings)
