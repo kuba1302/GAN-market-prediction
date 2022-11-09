@@ -16,4 +16,4 @@ the Buy and Hold strategy and make a profit despite the fall in the price of an 
 ### Most important files
 - Implementation of GAN is located [here](https://github.com/kuba1302/GAN-market-prediction/blob/main/models/gan/gan.py) 
 - Paper is located [here](https://github.com/kuba1302/GAN-market-prediction/blob/main/paper/gan_stock.pdf)
-- Data preprocessing is located [aere](https://github.com/kuba1302/GAN-market-prediction/blob/main/data_pipelines/data_preprocessing.py)
+- Data preprocessing is located [here](https://github.com/kuba1302/GAN-market-prediction/blob/main/data_pipelines/data_preprocessing.py)
