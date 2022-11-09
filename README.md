@@ -1,11 +1,11 @@
 # Stock price prediction using GAN and BERT
 ### Description of the project
-In this project the use of the Generative adversarial networks (GAN) model to predict
-stock market behavior has been proposed. Additionally, an investment strategy that uses
+In this project the use of the **Generative adversarial networks** (GAN) model to predict
+**stock market behavior** has been proposed. Additionally, an **investment strategy** that uses
 predictions from the model has been created.
 The Technical Analysis and Sentiment Analysis indicators are used as explanatory variables for the model. The study was conducted on four companies from the game industry - Electronic Arts, Ubisoft, TakeTwo Interactive Software and Activision Blizzard. This industry was chosen because of the potential impact of a company’s customer reviews on its valuation. The impact
 is investigated by analyzing the sentiment of selected comments containing prepared
-keywords. The sentiment is calculated using created by Google NLP model - BERT.
+keywords. The sentiment is calculated using created by Google NLP model - **BERT**.
 GAN tries to predict the future valuation of a given company based on the aforementioned
 predictors. The price forecast is then used to provide buy or sell signals. In the study, for
 3 out of 4 companies it was possible to create a strategy that significantly outperforms
