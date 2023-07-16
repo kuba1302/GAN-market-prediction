@@ -6,10 +6,11 @@ from numpy import single
 def plot_all_prices(
     data_dict, x_col, y_col, one_figsize: list, minticks=20, maxticks=30
 ):
-
     number_of_plots = len(data_dict)
     _, axes = plt.subplots(
-        number_of_plots, 1, figsize=(one_figsize[0], one_figsize[1] * number_of_plots)
+        number_of_plots,
+        1,
+        figsize=(one_figsize[0], one_figsize[1] * number_of_plots),
     )
 
     for ax, (company, data) in zip(axes, data_dict.items()):
@@ -18,7 +19,8 @@ def plot_all_prices(
             mdates.AutoDateLocator(minticks=minticks, maxticks=maxticks)
         )
         ax.set_title(
-            f"{company.capitalize()} close stock price in past 3 years.", size=25
+            f"{company.capitalize()} close stock price in past 3 years.",
+            size=25,
         )
         ax.set_xlabel("Time", size=15)
         ax.set_ylabel("Price in $", size=15)

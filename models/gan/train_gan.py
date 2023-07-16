@@ -1,26 +1,36 @@
-import pickle
-from models.gan.gan import generator, discriminator, StockTimeGan
-from pathlib import Path
 import os
+import pickle
+from pathlib import Path
+
 import numpy as np
+
+from models.gan.gan import StockTimeGan, discriminator, generator
 
 if __name__ == "__main__":
     TICKER = "EA"
     MODEL_VERSION = "0.7"
     load_path = Path(os.path.abspath("")).parents[0] / "data" / "scaled_data"
-    save_path = Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
+    save_path = (
+        Path(os.path.abspath("")).parents[0] / "models" / "gan" / "versions"
+    )
 
     with open(load_path / f"data_{TICKER}.pickle", "rb") as test:
         data = pickle.load(test)
     print(
-        '---------------------------- '
+        "---------------------------- "
         f'TRAIN DATA SHAPE: {data["X_list_train"].shape}'
-        ' ----------------------------'
+        " ----------------------------"
     )
-    generator = generator(data["X_list_train"].shape[1], data["X_list_train"].shape[2])
-    discriminator = discriminator((31, data["Y_preds_real_list_train"].shape[1]))
+    generator = generator(
+        data["X_list_train"].shape[1], data["X_list_train"].shape[2]
+    )
+    discriminator = discriminator(
+        (31, data["Y_preds_real_list_train"].shape[1])
+    )
     gan = StockTimeGan(
-        generator=generator, discriminator=discriminator, checkpoint_directory=save_path
+        generator=generator,
+        discriminator=discriminator,
+        checkpoint_directory=save_path,
     )
     train_history = gan.train(
         data["X_list_train"],
@@ -35,5 +45,7 @@ if __name__ == "__main__":
         "actual_values": np.array(data["Y_preds_real_list_test"]),
     }
     gan.save_generator(save_path / f"model_{MODEL_VERSION}_{TICKER}class")
-    with open(save_path / f"model_{MODEL_VERSION}_{TICKER}.pickle", "wb") as handle:
+    with open(
+        save_path / f"model_{MODEL_VERSION}_{TICKER}.pickle", "wb"
+    ) as handle:
         pickle.dump(model_data, handle, protocol=pickle.HIGHEST_PROTOCOL)

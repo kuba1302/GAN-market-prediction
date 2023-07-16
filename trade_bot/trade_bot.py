@@ -1,14 +1,16 @@
-import numpy as np
+import logging
 import os
 import pickle
-from utils.log import prepare_logger
-import logging
 from pathlib import Path
-from tensorflow import keras
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_absolute_error
+import numpy as np
 import pandas as pd
+from sklearn.metrics import mean_absolute_error
+from tensorflow import keras
+
+from utils.log import prepare_logger
 
 mpl.use("pgf")
 plt.rcParams.update(
@@ -34,10 +36,10 @@ class BackTest:
         model_path: Path,
         asset_count: int = 0,
         verbose: bool = True,
-        test_dates_path: Path = Path(os.path.abspath("")).parents[0]
+        test_dates_path: Path = Path(__file__).parents[1]
         / "data"
         / "test_dates.csv",
-        save_fig_path: Path = Path(os.path.abspath("")).parents[0] / "paper",
+        save_fig_path: Path = Path(__file__).parents[1] / "paper",
         save_plot: bool = False,
     ):
         self.currency_count = currency_count
@@ -80,7 +82,9 @@ class BackTest:
         return pd.to_datetime(dates_df["dates"]).values
 
     def calculate_balance(self):
-        return self.currency_count + self.asset_count * self.current_asset_price
+        return (
+            self.currency_count + self.asset_count * self.current_asset_price
+        )
 
     def predict_price(self, X):
         return self.model.predict(X)
@@ -93,10 +97,12 @@ class BackTest:
             self.total_balance_history.append(self.calculate_balance())
         elif i == 2:
             self.total_balance_history_2.append(self.calculate_balance())
-        else: 
-            raise ValueError('Wrong i value!')
+        else:
+            raise ValueError("Wrong i value!")
 
-    def calculate_asset_amount_by_price(self, price: float, curr_amount: float):
+    def calculate_asset_amount_by_price(
+        self, price: float, curr_amount: float
+    ):
         buy_amount = round(curr_amount / price)
         if buy_amount * price > self.currency_count:
             buy_amount -= 1
@@ -198,8 +204,8 @@ class BackTest:
         y: np.array,
         top_cut_off: float,
         down_cut_off: float,
-        if_short: bool, 
-        i: int
+        if_short: bool,
+        i: int,
     ):
         preds = self.inverse_scale(data=self.predict_price(X), data_type="y")
         y = self.inverse_scale(data=y, data_type="y")
@@ -225,10 +231,14 @@ class BackTest:
         self.currency_count = self.initial_curr_count
         self.asset_count = 0
         logger.info(f"B&H Strategy result: {self.buy_and_hold(y)[-1]}")
-        if i == 1 : 
-            logger.info(f"Our Strategy result: {self.total_balance_history[-1]}")
+        if i == 1:
+            logger.info(
+                f"Our Strategy result: {self.total_balance_history[-1]}"
+            )
         elif i == 2:
-            logger.info(f"Our Strategy result: {self.total_balance_history_2[-1]}")
+            logger.info(
+                f"Our Strategy result: {self.total_balance_history_2[-1]}"
+            )
         return end_balance
 
     def simulate_2(
@@ -248,7 +258,7 @@ class BackTest:
             top_cut_off=top_cut_off,
             down_cut_off=down_cut_off,
             if_short=if_short,
-            i=1
+            i=1,
         )
         end_balance_2 = self.simulate(
             X=X,
@@ -256,32 +266,42 @@ class BackTest:
             top_cut_off=top_cut_off_2,
             down_cut_off=down_cut_off_2,
             if_short=if_short_2,
-            i=2
+            i=2,
         )
         if self.save_plot:
-            self.plot_results(y=y)
-        logger.info(f"END BALANCE1: {end_balance_1} - END BALANCE2: {end_balance_2}")
+            return self.plot_results(y=y) # temp solution
+        logger.info(
+            f"END BALANCE1: {end_balance_1} - END BALANCE2: {end_balance_2}"
+        )
         return end_balance_1, end_balance_2, self.buy_and_hold(y)[-1]
+
+    @staticmethod
+    def calculate_max_drawdown(portfolio_value):
+        running_max = np.maximum.accumulate(portfolio_value)
+        running_max[running_max < 1] = 1
+        drawdown = (running_max - portfolio_value) / running_max
+        return np.round(np.max(drawdown), 2)
 
     def plot_results(self, y):
         logger.info("Saving plot - start")
+        buy_and_hold_results = self.buy_and_hold(y)
         plt.plot(
             self.test_dates,
             self.total_balance_history,
             color="blue",
-            label="Proposed strategy with parameters found in training set hyperparameter optymalization",
+            label=f"Proposed strategy with parameters found in training set hyperparameter optymalization.",
         )
         plt.plot(
             self.test_dates,
             self.total_balance_history_2,
             color="green",
-            label="Proposed strategy with arbitrary chosen parameters",
+            label=f"Proposed strategy with arbitrary chosen parameters.",
         )
         plt.plot(
             self.test_dates,
-            self.buy_and_hold(y),
+            buy_and_hold_results,
             color="red",
-            label="Buy and Hold",
+            label=f"Buy and Hold.",
         )
         plt.title(
             f"{self.ticker} proposed strategy with diffrent parameters vs Buy and Hold",
@@ -294,3 +314,8 @@ class BackTest:
         plt.legend(fontsize=25)
         plt.savefig(self.save_fig_path / f"{self.ticker}_strategy.pgf")
         logger.info("Saving plot - finished")
+        return {
+            "hyperopt_params": self.calculate_max_drawdown(self.total_balance_history),
+            "arbitrary_params": self.calculate_max_drawdown(self.total_balance_history_2),
+            "buy_and_hold": self.calculate_max_drawdown(buy_and_hold_results)
+        } # temporary solution

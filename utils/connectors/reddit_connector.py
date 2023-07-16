@@ -1,8 +1,9 @@
-import pandas as pd
-from psaw import PushshiftAPI
-import praw
-from datetime import datetime
 import logging
+from datetime import datetime
+
+import pandas as pd
+import praw
+from psaw import PushshiftAPI
 
 
 class RedditPsawConnector:
@@ -16,7 +17,6 @@ class RedditPsawConnector:
         start_date="2018-12",
         end_date="2021-12",
     ):
-
         self.subreddit = subreddit
         self.api = PushshiftAPI()
         self.game_names = game_names
@@ -31,19 +31,30 @@ class RedditPsawConnector:
     @staticmethod
     def prepare_empty_df():
         return pd.DataFrame(
-            columns=["author", "body", "created_utc", "score", "created", "game_name"]
+            columns=[
+                "author",
+                "body",
+                "created_utc",
+                "score",
+                "created",
+                "game_name",
+            ]
         )
 
     @staticmethod
     def prepare_date_pairs(start_date, end_date):
         dates = (
-            pd.date_range(start_date, end_date, freq="MS").strftime("%Y-%m").tolist()
+            pd.date_range(start_date, end_date, freq="MS")
+            .strftime("%Y-%m")
+            .tolist()
         )
 
         return [list(map(lambda x: int(x), date.split("-"))) for date in dates]
 
     def save_df_to_csv(self, df, mode="a"):
-        df.to_csv(self.save_path, mode=mode, header=False if mode == "a" else True)
+        df.to_csv(
+            self.save_path, mode=mode, header=False if mode == "a" else True
+        )
 
     def search_comments(self, query, after, before, limit):
         filter = ["author", "date", "title", "body", "score"]
@@ -71,7 +82,9 @@ class RedditPsawConnector:
             for game_name in self.game_names:
                 df = self.search_comments(
                     query=game_name,
-                    after=int(datetime(start_year, start_month, 10).timestamp()),
+                    after=int(
+                        datetime(start_year, start_month, 10).timestamp()
+                    ),
                     before=int(datetime(end_year, end_month, 10).timestamp()),
                     limit=2000,
                 )
