@@ -15,4 +15,4 @@
 \contentsline {subsection}{\numberline {4.1}GAN results}{19}{}%
 \contentsline {subsection}{\numberline {4.2}Investment strategy results}{25}{}%
 \contentsline {section}{\numberline {5}Conclusion}{30}{}%
-\contentsline {section}{Bibliography}{32}{}%
+\contentsline {section}{Bibliography}{33}{}%

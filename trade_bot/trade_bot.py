@@ -2,6 +2,7 @@ import logging
 import os
 import pickle
 from pathlib import Path
+import pprint
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -268,6 +269,7 @@ class BackTest:
             if_short=if_short_2,
             i=2,
         )
+        y = self.inverse_scale(data=y, data_type="y")
         if self.save_plot:
             return self.plot_results(y=y) # temp solution
         logger.info(
@@ -278,9 +280,19 @@ class BackTest:
     @staticmethod
     def calculate_max_drawdown(portfolio_value):
         running_max = np.maximum.accumulate(portfolio_value)
-        running_max[running_max < 1] = 1
+        print("MAX", running_max)
         drawdown = (running_max - portfolio_value) / running_max
+        print("DRAWDOWN", drawdown)
         return np.round(np.max(drawdown), 2)
+    
+    @staticmethod
+    def mdd_percentage(prices: list):
+        max_dif = 0
+        start = prices[0]
+        for i in range(len(prices)):
+            max_dif = min(max_dif, (prices[i] - start) / start)
+            start = max(prices[i], start)
+        return -max_dif 
 
     def plot_results(self, y):
         logger.info("Saving plot - start")
@@ -314,8 +326,14 @@ class BackTest:
         plt.legend(fontsize=25)
         plt.savefig(self.save_fig_path / f"{self.ticker}_strategy.pgf")
         logger.info("Saving plot - finished")
+        # print("#" * 5, self.ticker, "#" * 5)
+        print({
+            "hyperopt_params": self.total_balance_history,
+            "arbitrary_params": self.total_balance_history_2,
+            "buy_and_hold": buy_and_hold_results,
+        })
         return {
-            "hyperopt_params": self.calculate_max_drawdown(self.total_balance_history),
-            "arbitrary_params": self.calculate_max_drawdown(self.total_balance_history_2),
-            "buy_and_hold": self.calculate_max_drawdown(buy_and_hold_results)
+            "hyperopt_params": self.mdd_percentage(self.total_balance_history),
+            "arbitrary_params": self.mdd_percentage(self.total_balance_history_2),
+            "buy_and_hold": self.mdd_percentage(buy_and_hold_results)
         } # temporary solution

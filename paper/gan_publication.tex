@@ -520,7 +520,7 @@ Taking all of that into consideration, GAN trained on dataset consisting of stoc
        
 
 
-A comparison of predicted and actual prices for the best performing model is shown in Figures 3-6. An important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between the predicted value and actual value. This is crucial because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 3, 4, and 6 it can be seen that 3 of the 4 models perform well in forecasting future prices. The three charts are similar, the \textit{predicted price} and \textit{actual price} lines are very close to each other and often intersect. However, forecasting TTWO prices shown in Figure 5 proved problematic. It can be seen here that the \textit{predicted price} line deviates significantly from the \textit{actual price}. Nevertheless, the model performs acceptably even here. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
+A comparison of predicted and actual prices for the best performing model is shown in Figures 3-6. An important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between the predicted value and actual value. This is crucial because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 7, 8, and 10 it can be seen that 3 of the 4 models perform well in forecasting future prices. The three charts are similar, the \textit{predicted price} and \textit{actual price} lines are very close to each other and often intersect. However, forecasting TTWO prices shown in Figure 9 proved problematic. It can be seen here that the \textit{predicted price} line deviates significantly from the \textit{actual price}. Nevertheless, the model performs acceptably even here. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
 \\
 
 \begin{figure}[H]
@@ -663,18 +663,19 @@ The parameters for the investment strategy found in this way are subject to some
 
 \begin{table}[H]
        \centering
-       \caption{Maximum drop back comparison}
+       \caption{Maximum drawdown comparison}
        \begin{tabular}{lrrrr}
        \toprule
         Strategy &  ATVI &   EA &   TTWO &   UBSFY \\
        \midrule
-       Optimized Parameters & 42\% & 18\% & 20\% & 30\% \\
+       Optimized Parameters & 42\% & 18\% & 23\% & 21\% \\
        Arbitrary Parameters & 8\% & 12\% & 23\% & 15\% \\
-       Buy and Hold & 70\% & 40\% & 41\% & 100\% \\
+       Buy and Hold & 39\% & 18\% & 20\% & 43\% \\
        \bottomrule
        \end{tabular}
        \end{table}
        
+       Table 10. shows the maximum drop back for the different investment strategies for each of the companies analysed. It confirms the previous results, the algorithm with the parameters we arbitrarily selected is superior and provides a much lower risk of capital loss than the buy and hold strategy. Interestingly, for this metric, the strategy with the parameters found as a result of the hyperparameter optimisation performs similarly to the buy and hold strategy.
 
 \section{Conclusion}
 
