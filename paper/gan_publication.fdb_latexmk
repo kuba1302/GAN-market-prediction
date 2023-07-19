@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex gan_publication"] 1689621636 "gan_publication.aux" "gan_publication.bbl" "gan_publication" 1689621647
+["bibtex gan_publication"] 1689621636 "gan_publication.aux" "gan_publication.bbl" "gan_publication" 1689786111
   "/usr/local/texlive/2022basic/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "gan_publication.aux" 1689621647 7342 8ab283b243df8353f5a93449e5576337 "pdflatex"
+  "gan_publication.aux" 1689786110 7342 8ab283b243df8353f5a93449e5576337 "pdflatex"
   "refs.bib" 1689023988 20946 42247ee43374fb4fd307b190505996aa ""
   (generated)
   "gan_publication.bbl"
   "gan_publication.blg"
-["pdflatex"] 1689621646 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1689621647
-  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1689621646 59041 347c8f3b9f8067f7a20b174309dccb6c ""
+["pdflatex"] 1689786109 "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" "gan_publication.pdf" "gan_publication" 1689786111
+  "/Users/jakubwujec/projects/gan_market_prediction/GAN-market-prediction/paper/gan_publication.tex" 1689786109 59101 f696898839443935d4ce76b202662e0f ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1136768653 3584 2d666ecf6d466d8b007246bc2f94d9da ""
@@ -209,13 +209,13 @@
   "UBSFY_loss.pgf" 1664819551 75807 ba674404527480835500e47a615d865e ""
   "UBSFY_prices.pgf" 1664819551 42756 4d074213788764f6cbf82f364bc22d8e ""
   "UBSFY_strategy.pgf" 1689620589 49393 a24c02f4e7fdcbec6dc650b8e24392cf ""
-  "gan_publication.aux" 1689621647 7342 8ab283b243df8353f5a93449e5576337 "pdflatex"
+  "gan_publication.aux" 1689786110 7342 8ab283b243df8353f5a93449e5576337 "pdflatex"
   "gan_publication.bbl" 1689621636 8064 3e1f28bbab217463eca48eaac4e797f7 "bibtex gan_publication"
-  "gan_publication.lof" 1689621647 1581 48e72d04d661acd96c3609b71a47b8f3 "pdflatex"
-  "gan_publication.lot" 1689621647 1094 2400d8c56b106a306b452a282e50074d "pdflatex"
-  "gan_publication.spl" 1689621647 60 51897fd3944f049a90fe98cad40772ab "pdflatex"
-  "gan_publication.tex" 1689621646 59041 347c8f3b9f8067f7a20b174309dccb6c ""
-  "gan_publication.toc" 1689621647 1185 4d53131d49e2aae7a5447d6034df7cc9 "pdflatex"
+  "gan_publication.lof" 1689786110 1581 48e72d04d661acd96c3609b71a47b8f3 "pdflatex"
+  "gan_publication.lot" 1689786110 1094 2400d8c56b106a306b452a282e50074d "pdflatex"
+  "gan_publication.spl" 1689786110 60 51897fd3944f049a90fe98cad40772ab "pdflatex"
+  "gan_publication.tex" 1689786109 59101 f696898839443935d4ce76b202662e0f ""
+  "gan_publication.toc" 1689786110 1185 4d53131d49e2aae7a5447d6034df7cc9 "pdflatex"
   "rysunek1.png" 1664819551 61351 29d7004938ad8cbbb1caf4e7ded75df3 ""
   "rysunek2.png" 1664819551 51892 02cbe18591aebc07e853e4c07912c5a7 ""
   (generated)
