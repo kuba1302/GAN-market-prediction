@@ -1,23 +1,28 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import time
-from utils.log import prepare_logger
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-from pathlib import Path
 import os
 import sys
+import time
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 from tqdm import tqdm
 
-cuda_path = Path("C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin")
+from utils.log import prepare_logger
+
+cuda_path = Path(
+    "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.2/bin"
+)
 os.add_dll_directory(str(cuda_path))
 
 import tensorflow as tf
 from tensorflow.keras import Sequential
-from tensorflow.keras.layers import GRU, Flatten, Dense, Conv1D, LeakyReLU
+from tensorflow.keras.layers import GRU, Conv1D, Dense, Flatten, LeakyReLU
 
 LOG_LEVEL = "INFO"
 logger = prepare_logger(LOG_LEVEL)
+
 
 def generator(input_dim, feature_size, output_dim=1):
     model = Sequential()
@@ -76,7 +81,13 @@ def discriminator(input_shape):
 
 
 class StockTimeGan:
-    def __init__(self, generator, discriminator, checkpoint_directory, learning_rate=0.0016):
+    def __init__(
+        self,
+        generator,
+        discriminator,
+        checkpoint_directory,
+        learning_rate=0.0016,
+    ):
         self.learning_rate = learning_rate
         self.generator = generator
         self.generator_optimizer = tf.keras.optimizers.Adam(
@@ -110,7 +121,8 @@ class StockTimeGan:
         with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
             generated_data = self.generator(real_x, training=True)
             generated_data_reshape = tf.reshape(
-                generated_data, [generated_data.shape[0], generated_data.shape[1], 1]
+                generated_data,
+                [generated_data.shape[0], generated_data.shape[1], 1],
             )
             real_to_pred_y_reshape = tf.reshape(
                 real_to_pred_y,
@@ -120,7 +132,10 @@ class StockTimeGan:
                 real_whole_y, [real_whole_y.shape[0], real_whole_y.shape[1], 1]
             )
             d_fake_input = tf.concat(
-                [real_whole_y_reshape, tf.cast(generated_data_reshape, tf.float64)],
+                [
+                    real_whole_y_reshape,
+                    tf.cast(generated_data_reshape, tf.float64),
+                ],
                 axis=1,
             )
             d_real_input = tf.concat(
@@ -142,7 +157,10 @@ class StockTimeGan:
             zip(gradients_of_generator, self.generator.trainable_variables)
         )
         self.discriminator_optimizer.apply_gradients(
-            zip(gradients_of_discriminator, self.discriminator.trainable_variables)
+            zip(
+                gradients_of_discriminator,
+                self.discriminator.trainable_variables,
+            )
         )
         return real_to_pred_y, generated_data, disc_loss, gen_loss
 
@@ -153,7 +171,7 @@ class StockTimeGan:
         train_history["real_y"] = []
         train_history["pred_y"] = []
 
-        for i in tqdm(range(epochs), desc='GAN TRAINING EPOCHS'):
+        for i in tqdm(range(epochs), desc="GAN TRAINING EPOCHS"):
             start_time = time.time()
             realy_y, generated_data, disc_loss, gen_loss = self.train_step(
                 real_x, real_to_pred_y, real_whole_y
@@ -169,14 +187,13 @@ class StockTimeGan:
             logger.info(
                 f"Epoch: {i + 1} - RMSE: {rmse} MAE : {mae} - Epoch time: {epoch_time} - Discriminator Loss: {disc_loss} - Generator Loss: {gen_loss}"
             )
-            if epochs % 10: 
+            if epochs % 10:
                 self.checkpoint.save(file_prefix=self.checkpoint_prefix)
-                
-        return train_history          
 
-    def predict(self, X, *args, **kwargs): 
+        return train_history
+
+    def predict(self, X, *args, **kwargs):
         return self.generator.predict(X, args, kwargs)
-    
+
     def save_generator(self, save_path):
         self.generator.save(save_path)
-        

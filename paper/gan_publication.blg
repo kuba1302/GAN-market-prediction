@@ -8,45 +8,45 @@ Warning--entry type for "chollet2015keras" isn't style-file defined
 Warning--empty booktitle in jiang2021stock
 Warning--empty chapter and pages in perry2010weighted
 Warning--empty publisher in perry2010weighted
-You've used 32 entries,
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            688 strings with 10602 characters,
-and the built_in function-call counts, 11852 in all, are:
-= -- 1070
-> -- 782
-< -- 3
-+ -- 307
-- -- 274
-* -- 958
-:= -- 2045
-add.period$ -- 91
-call.type$ -- 32
-change.case$ -- 227
+            694 strings with 10774 characters,
+and the built_in function-call counts, 12159 in all, are:
+= -- 1100
+> -- 795
+< -- 4
++ -- 313
+- -- 278
+* -- 973
+:= -- 2095
+add.period$ -- 94
+call.type$ -- 33
+change.case$ -- 232
 chr.to.int$ -- 0
-cite$ -- 35
-duplicate$ -- 345
-empty$ -- 816
-format.name$ -- 274
-if$ -- 2378
+cite$ -- 36
+duplicate$ -- 361
+empty$ -- 838
+format.name$ -- 278
+if$ -- 2446
 int.to.chr$ -- 0
-int.to.str$ -- 32
-missing$ -- 26
-newline$ -- 157
-num.names$ -- 66
-pop$ -- 236
+int.to.str$ -- 33
+missing$ -- 27
+newline$ -- 162
+num.names$ -- 68
+pop$ -- 242
 preamble$ -- 1
-purify$ -- 196
+purify$ -- 200
 quote$ -- 0
-skip$ -- 254
+skip$ -- 267
 stack$ -- 0
-substring$ -- 605
-swap$ -- 47
-text.length$ -- 3
+substring$ -- 615
+swap$ -- 53
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 126
+type$ -- 130
 warning$ -- 3
-while$ -- 96
-width$ -- 34
-write$ -- 333
+while$ -- 99
+width$ -- 35
+write$ -- 344
 (There were 4 warnings)

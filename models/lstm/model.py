@@ -1,12 +1,13 @@
 from gc import callbacks
 
-
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 
 
-def lstm_nn(input_dim, feature_size, output_dim=1, optimizer="Adam", loss="rmse"):
+def lstm_nn(
+    input_dim, feature_size, output_dim=1, optimizer="Adam", loss="rmse"
+):
     model = Sequential()
     model.add(
         LSTM(

@@ -22,8 +22,8 @@
 \usepackage{amsfonts}
 % \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
 \usepackage{pgf}
+\usepackage{booktabs}
 %%% PACKAGES
-\usepackage{booktabs} % for much better looking tables
 \usepackage{array} % for better arrays (eg matrices) in maths
 \usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
@@ -138,15 +138,9 @@ In order to find the best solution, we have decided to verify which assumption s
 
 \textbf{Hypothesis 2 (H2)} \textit{The use of technical analysis indicators increase model predictions quality measured by MAE.}
 
-One of the objectives of the paper is to confirm that the GAN architecture is applicable to more than one company. This will show its potential generalisability and increase the range of practical applications. Therefore following hypotheses were stated:
+\textbf{Hypothesis 3 (H3)} \textit{The investment strategy developed based on the GAN predictions is able to outperform the Buy\&Hold strategy.} 
 
-\textbf{Hypothesis 3 (H3)} \textit{The model architecture can be successfully applied to more than one company.}
-
-Moreover, the investment strategy has been thoroughly examined. Our aim was to show that it can outperform the simplest market strategy - Buy \& Hold. Moreover, different variants of the strategy have been tested, including those containing the possibility of short selling. 
-
-\textbf{Hypothesis 4 (H4)} \textit{The investment strategy developed based on the GAN predictions is able to outperform the Buy\&Hold strategy.} 
-
-\textbf{Hypothesis 5 (H5)} \textit{Adding the possibility of short selling to the investment strategy increases the profitability of the system.}
+\textbf{Hypothesis 4 (H4)} \textit{Adding the possibility of short selling to the investment strategy increases the profitability of the system.}
 
 The article is structured as follows: in the next section there is a proposed framework. Chapter three contains detailed data description. Chapter presents results of the study. Finally, there is a conclusion and intentional self-criticism.
 
@@ -297,7 +291,7 @@ To evaluate the proposed system, results are analysed at the end of the test per
 
 \section{Data}
 \subsection{Stock Data}
-In the study it was decided to train the algorithm on stocks of 4 large companies from the gaming industry: Electronic Arts, Ubisoft, Take-Two Interactive Software, and Activision Blizzard, called in the later part of the paper by their stock tickers: EA, UBSFY, TTWO, ATVI. This gaming sector was chosen due to the fact that the study investigates the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on the valuations of a given company in the gaming industry.  The selection of more than one company was intended to show that the algorithm is reproducible and universal. These companies are among the leaders in the gaming industry. The choice of only U.S. companies was caused by a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals, limitations of Reddit's API (Application Programming Interface) and limitations of computing power, the analysis was conducted only over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. In Table 1. descriptive statistics for each of the previously mentioned companies have been presented. 
+In the study it was decided to train the algorithm on stocks of 4 large companies from the gaming industry: Electronic Arts, Ubisoft, Take-Two Interactive Software, and Activision Blizzard, called in the later part of the paper by their stock tickers: EA, UBSFY, TTWO, ATVI. This gaming sector was chosen due to the fact that the study investigates the influence of sentiment analysis - one of our hypotheses is that the opinions of Reddit users have a particularly significant impact on the valuations of a given company in the gaming industry. What's more, in this industry, online reviews has significant influence on the purchase decision (Feng 2006). The selection of more than one company was intended to show that the algorithm is reproducible and universal. These companies are among the leaders in the gaming industry. The choice of only U.S. companies was caused by a possible language barrier when analyzing the sentiment of companies that produce games primarily for the Asian market. Due to the use of one-day intervals, limitations of Reddit's API (Application Programming Interface) and limitations of computing power, the analysis was conducted only over a nearly three-year period: from 01/01/2019 to 31/10/2021. Data is analyzed in 1 day periods. The data comes from the US NASDAQ stock market and was retrieved using the yahoo finance library for the python language. In Table 1. descriptive statistics for each of the previously mentioned companies have been presented. 
 
 \begin{table}[hbt!]
 \centering
@@ -422,9 +416,9 @@ In the study, two types of data were used - stock data and text data. Technical 
 
 \subsection{GAN results}
 
-The proposed GAN model was trained using the Python language frameworks for NN modeling - TensorFlow (Abadi, 2016) and Keras (Chollet, 2015; Gulli, 2017). The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16 GB of RAM. The training was performed together with the use of CUDA cores. Each training was run with an epoch parameter of 1000. Hyper-parameter optimization was also performed,  however, due to the limitation of computing power, it could not be extensive. It was limited to checking the behavior of the network after removing the MLP layers from both the generator and the discriminator. This did not give the desired results, therefore in the further part of the study, the parameters proposed by Sonkiya (2021) were used. The behavior of the model with different types of input data for the generator was also checked. Three datasets were used as an input for the generator - stock market data only, stock market data with technical analysis indicators, and stock market data with technical analysis indicators and sentiment analysis results.
+The proposed GAN model was trained using the Python language frameworks for NN modeling - TensorFlow (Abadi, 2016) and Keras (Chollet, 2015; Gulli, 2017). The hardware used for training consisted of an Nvidia GeForce GTX 1070 graphics card, an Intel i5-6600 processor, and 16 GB of RAM. The training was performed together with the use of CUDA cores. Each training was run with an epoch parameter of 1000. Hyper-parameter optimization was also performed, however, due to the limitation of computing power, it could not be extensive. It was limited to checking the behavior of the network after removing the MLP layers from both the generator and the discriminator. This did not give the desired results, therefore in the further part of the study, the parameters proposed by Sonkiya (2021) were used. The behavior of the model with different types of input data for the generator was also checked. Three datasets were used as an input for the generator - stock market data only, stock market data with technical analysis indicators, and stock market data with technical analysis indicators and sentiment analysis results. For each dataset, GAN was compared with LSTM model.
 
-To analyze the process of training, the loss function of the best-performing model for every company was inspected. For all 4 companies, the best models were trained on stock data with technical analysis indicators. It is shown in Figures 7-10. They represent the change in the value of the generator and discriminator loss functions over time. It is easy to see how they compete with each other. It can also be seen that changes in the loss functions occur simultaneously, i.e. if the generator loss changes then the discriminator loss also changes. In any case, around epochs 100-300 there is a period of strong instability, characterized by very strong changes in both loss functions. It usually lasts several tens of epochs and ends with stabilization of both functions. In 3 out of 4 cases the period of severe instability occurs only once, the exception is UBSFY where such periods occur twice. After the initial periods of instability, the loss function becomes stable, only experiencing subtle changes once in a while. Once the loss function has stabilized, such a model is ready to be used in an investment strategy. It follows that with our proposed framework it is necessary to train the model for at least 400 epochs. Once the models were trained, they were evaluated on test sets. 
+To analyze the process of training, the loss function of the best-performing GAN model for every company was inspected. For all 4 companies, the best models were trained on stock data with technical analysis indicators. It is shown in Figures 7-10. They represent the change in the value of the generator and discriminator loss functions over time. It is easy to see how they compete with each other. It can also be seen that changes in the loss functions occur simultaneously, i.e. if the generator loss changes then the discriminator loss also changes. In any case, around epochs 100-300 there is a period of strong instability, characterized by very strong changes in both loss functions. It usually lasts several tens of epochs and ends with stabilization of both functions. In 3 out of 4 cases the period of severe instability occurs only once, the exception is UBSFY where such periods occur twice. After the initial periods of instability, the loss function becomes stable, only experiencing subtle changes once in a while. Once the loss function has stabilized, such a model is ready to be used in an investment strategy. It follows that with our proposed framework it is necessary to train the model for at least 400 epochs. Once the models were trained, they were evaluated on test sets. 
 
 \begin{figure}[H]
 \caption{ATVI generator and discriminator loss}
@@ -460,33 +454,73 @@ To analyze the process of training, the loss function of the best-performing mod
 \end{figure}
 
 
-In Table 3. the results of forecast error metrics have been presented alongside the mean close price of a given company in the test dataset. By far the best model was found to be the one without sentiment and with technical analysis. One reason why the use of sentiment may not be correct is the noise and data impurity from Reddit. However, this topic needs further exploration with more computational resources. 
-The forecast errors are shown together with the average share price of a given company in the test dataset. The mean has been included here due to the relativity of error. For each of the companies, the MAE does not exceed 2.1 \% of the average price value over the test period when using stock data alongside technical analysis indicators. The best performer here is the model for EA, for which this value is 1.25\%. In case of this company, the model performed best when the epoch parameter was changed from 1000 to 500.
+In Tables 3-5 the results of forecast error metrics have been presented alongside the mean close price of a given company in the test dataset. To compare GAN to other state-of-the-art algorithms, LSTM was trained for each of the datasets.
+By far the best model was found to be the GAN without sentiment and with technical analysis. One reason why the use of sentiment may not be correct is the noise and data impurity from Reddit. However, this topic needs further exploration with more computational resources. 
+Surprisingly, in the case of the LSTM model, it is not possible to say unequivocally which dataset returns the best results. This is interesting because in the case of the GAN model, the stock dataset with technical analysis was unquestionably the best. This is an interesting phenomenon worth analysing in future work.
+The forecast errors are shown together with the average share price of a given company in the test dataset. The mean has been included here due to the relativity of error. When it comes to GAN trained on a dataset with stock data alongside technical analysis indicators., for each of the companies, the MAE does not exceed 2.1 \% of the average price value over the test period. The best performer here is the model for EA, for which this value is 1.25\%. 
+
+Taking all of that into consideration, GAN trained on dataset consisting of stock data with TA will be used in the further investment strategy evaluation.
+
 
 \begin{table}[H]
-\centering
-\caption{Forecast error metrics for chosen companies}
-\begin{tabular}{llrrrr}
-\toprule
- Dataset & Metric &          ATVI &           EA &         TTWO &        UBSFY \\
-\midrule
-Stock data& MAE              &   7.36249 &    7.80082 &    8.96674 &  1.31115 \\
-&RMSE             &   9.53919 &    8.33803 &    10.83445 &   1.67089 \\
-Stock data with TA& MAE              &   1.35850 &    1.73361 &    3.54050 &   0.25780 \\
-&RMSE             &   1.88670 &    2.32343 &    4.50690 &   0.33760 \\
-Stock data with TA& MAE              &   7.69750 &    3.17484 &    3.67834 &   2.67735 \\
-and sentiment& RMSE              &   7.95309 &    4.14371 &    4.66893 &   3.12417 \\
-\midrule
-Close Price Mean & &  83.64834 &  139.18953 &  170.87719 &  12.83657 \\
+       \centering
+       \caption{Forecast error metrics for stock data}
+       \begin{tabular}{lrrrrrrrr}
+       \toprule
+       Metric & \multicolumn{2}{c}{ATVI} & \multicolumn{2}{c}{EA} & \multicolumn{2}{c}{TTWO} & \multicolumn{2}{c}{UBSFY} \\
+       & GAN & LSTM & GAN & LSTM & GAN & LSTM & GAN & LSTM \\
+       \midrule
+       MAE & 7.36249 & 4.20400 & 7.80082 & 4.63257 & 8.96674 & 6.13436 & 1.31115 & 0.72113 \\
+       RMSE & 9.53919 & 5.44774 & 8.33803 & 5.72681 & 10.83445 & 7.98238 & 1.67089 & 1.01486 \\
+       \bottomrule
+       \end{tabular}
+       \end{table}
+       
+       \begin{table}[H]
+       \centering
+       \caption{Forecast error metrics for stock data with TA}
+       \begin{tabular}{lrrrrrrrr}
+       \toprule
+       Metric & \multicolumn{2}{c}{ATVI} & \multicolumn{2}{c}{EA} & \multicolumn{2}{c}{TTWO} & \multicolumn{2}{c}{UBSFY} \\
+       & GAN & LSTM & GAN & LSTM & GAN & LSTM & GAN & LSTM \\
+       \midrule
+       MAE & 1.35850 & 4.44099 & 1.73361 & 6.42729 & 3.54050 & 6.38801 & 0.25780 & 0.85480 \\
+       RMSE & 1.88670 & 5.53388 & 2.32343 & 7.45741 & 4.50690 & 8.00065 & 0.33760 & 1.07474 \\
+       \bottomrule
+       \end{tabular}
+       \end{table}
+       
+       \begin{table}[H]
+       \centering
+       \caption{Forecast error metrics for stock data with TA and sentiment}
+       \begin{tabular}{lrrrrrrrr}
+       \toprule
+       Metric & \multicolumn{2}{c}{ATVI} & \multicolumn{2}{c}{EA} & \multicolumn{2}{c}{TTWO} & \multicolumn{2}{c}{UBSFY} \\
+       & GAN & LSTM & GAN & LSTM & GAN & LSTM & GAN & LSTM \\
+       \midrule
+       MAE & 7.69750 & 4.95860 & 3.17484 & 6.38427 & 3.67834 & 8.79627 & 2.67735 & 0.77215 \\
+       RMSE & 7.95309 & 6.81221 & 4.14371 & 7.38359 & 4.66893 & 10.50384 & 3.12417 & 0.97648 \\
+       \bottomrule
+       \end{tabular}
+       \end{table}
+       
+       \begin{table}[H]
+       \centering
+       \caption{Close price mean for chosen companies}
+       \begin{tabular}{lrrrr}
+       \toprule
+        & ATVI & EA & TTWO & UBSFY \\
+       \midrule
+       Close Price Mean & 83.64834 & 139.18953 & 170.87719 & 12.83657 \\
+       \bottomrule
+       \end{tabular}
+       \end{table}
+       
+       
+       
 
 
-&               &    &     &    &    \\
-\bottomrule
-\end{tabular}
-\caption*{\textit{Source: Based on own calculations.}}
-\end{table}
-
-A comparison of predicted and actual prices is shown in Figures 3-6. An important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between the predicted value and actual value. This is crucial because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 3, 4, and 6 it can be seen that 3 of the 4 models perform well in forecasting future prices. The three charts are similar, the \textit{predicted price} and \textit{actual price} lines are very close to each other and often intersect. However, forecasting TTWO prices shown in Figure 5 proved problematic. It can be seen here that the \textit{predicted price} line deviates significantly from the \textit{actual price}. Nevertheless, the model performs acceptably even here. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
+A comparison of predicted and actual prices for the best performing GAN model is shown in Figures 7-10. An important fact is the crossing of the prediction and actual price lines on each of the graphs showing the differences between the predicted value and actual value. This is crucial because if these lines did not intersect, it would mean that the model constantly predicts too high or too low value. In Figures 7, 8, and 10 it can be seen that 3 of the 4 models perform well in forecasting future prices. The three charts are similar, the \textit{predicted price} and \textit{actual price} lines are very close to each other and often intersect. However, forecasting TTWO prices shown in Figure 9 proved problematic. It can be seen here that the \textit{predicted price} line deviates significantly from the \textit{actual price}. Nevertheless, the model performs acceptably even here. The graphical analysis is confirmed by the ratio of MAE to average price, which in the case of TTWO looks the worst, but does not exceed the aforementioned 2.1 \%.
 \\
 
 \begin{figure}[H]
@@ -555,7 +589,7 @@ Once satisfactory models were created, the results of our investment strategy we
 \end{tabular}
 \end{table}
 
-To select the best possible set of parameters, hyperparameter optimization was carried out. In order to avoid matching the strategy with the test results, this was performed on the training data. Using the parameters shown in Table 4, all their possible permutations were created. The algorithm for Backtesting was then run with each possible permutation and the set of parameters maximizing the balance at the end of the training period was found. The selected parameters for each company are presented in Table 5. 
+To select the best possible set of parameters, hyperparameter optimization was carried out. In order to avoid matching the strategy with the test results, this was performed on the training data. Using the parameters shown in Table 7, all their possible permutations were created. The algorithm for Backtesting was then run with each possible permutation and the set of parameters maximizing the balance at the end of the training period was found. The selected parameters for each company are presented in Table 8. 
 
 \begin{table}[H]
 \centering
@@ -627,21 +661,39 @@ The parameters for the investment strategy found in this way are subject to some
 \caption*{\textit{Source: Based on own calculations and yahoo finance stock data.}}
 \end{figure}
 
-
+\begin{table}[H]
+       \centering
+       \caption{Maximum drawdown comparison}
+       \begin{tabular}{lrrrr}
+       \toprule
+        Strategy &  ATVI &   EA &   TTWO &   UBSFY \\
+       \midrule
+       Optimized Parameters & 42\% & 18\% & 23\% & 21\% \\
+       Arbitrary Parameters & 8\% & 12\% & 23\% & 15\% \\
+       Buy and Hold & 39\% & 18\% & 20\% & 43\% \\
+       \bottomrule
+       \end{tabular}
+       \end{table}
+       
+       Table 10. shows the maximum drop back for the different investment strategies for each of the companies analysed. It confirms the previous results, the algorithm with the parameters we arbitrarily selected is superior and provides a much lower risk of capital loss than the buy and hold strategy. Interestingly, for this metric, the strategy with the parameters found as a result of the hyperparameter optimisation performs similarly to the buy and hold strategy.
 
 \section{Conclusion}
 
-The aim of the study was to test the feasibility of using the GAN network and the BERT model to predict the prices of four companies from the game industry -  Electronic Arts, Ubisoft, Take-Two Interactive Software and Activision Blizzard. The BERT model was used to analyze the sentiment of comments about a given company and its games from reddit.com. These data along with technical analysis indicators and stock market data were then used as explanatory variables for the GAN model. GAN models without sentiment analysis and/or technical analysis indicators were also tested. Then, using the predictions from the model, an investment strategy was created. Optimization of the hyperparameters in this system was carried out in order to find profit-optimizing parameters. Stock data with technical analysis indicators turned out to be the best performing dataset. Using it, for each of the companies, the MAE does not exceed 2.1\% of the average price value over the test period. For 3 of the 4 companies, it was possible to create a strategy that significantly outperforms the buy and hold approach. \\
+The aim of the study was to test the feasibility of using the GAN network and the BERT model to predict the prices of four companies from the game industry -  Electronic Arts, Ubisoft, Take-Two Interactive Software and Activision Blizzard. The BERT model was used to analyze the sentiment of comments about a given company and its games from reddit.com. These data along with technical analysis indicators and stock market data were then used as explanatory variables for the GAN model. GAN models without sentiment analysis and/or technical analysis indicators were also tested. For all dataset's, GAN model has been compared with baseline model - LSTM. Then, using the predictions from the model, an investment strategy was created. Optimization of the hyperparameters in this system was carried out in order to find profit-optimizing parameters. Stock data with technical analysis indicators turned out to be the best performing dataset. Using it, for each of the companies, the MAE does not exceed 2.1\% of the average price value over the test period. 
+For 3 of the 4 companies, it was possible to create a strategy that significantly outperforms the buy and hold approach.  \\
+
+In our work, the baseline version of GAN was tested. In future research, it is worth checking the use of other versions of GANs. There are many different promising architectures. For example, the Wasserstein GAN is designed to reduce learning instability and provide a better learning signal to the discriminator. In addition to this, the Time-Series GAN (TGAN), which was developed specifically for time series modelling, may be a promising approach.
+Conditional GAN, which allows additional information (e.g. class labels) to be fed to the network, may also be worth checking.
+Each of these networks has its own advantages and disadvantages. In future research, it would be worthwhile to see how each would work in this particular case. \\
+What's more, in future studies this system can be compared with several other trading strategies to provide an even more accurate comparison. In addition to this, the effectiveness of the GAN model we have created can be tested in systems, that use other investment strategies. \\
 
 Additionally, the study tested the hypotheses raised in the introduction. The first hypothesis \textit{(H1) Using data from sentiment analysis increase model predictions quality measured by MAE} has to be rejected since we haven't managed to create a well-performing model without throwing sentiment data away. Their use made the model perform much worse. This may have been due to flaws in the data retrieval API and noise in the text data. Another explanation may be that the valuation of these companies is not dependent on the opinion of the players. \\
 
 The second hypothesis\textit{ (H2) The use of technical analysis indicators increase model predictions quality measured by MAE}, holds due to the fact that technical analysis improved each of our models. This matches our expectations that these indicators can provide the model with additional information and accelerate its training. Moreover, this may be influenced by the fact that a large number of stock market participants use Technical Analysis.\\
 
-The third hypothesis\textit{ (H3) The model architecture can be successfully applied to more than one company}, holds due to the fact that we were able to apply it to 3 out of 4 tested companies with good results. The only company where the application of our model has been only partially successful is TTWO. Nevertheless, it was shown that the model can be generalized and that it is possible to apply model architecture to more than one company.\\
+The third hypothesis\textit{ (H3) The investment strategy developed based on the GAN predictions is able to outperform the Buy\&Hold strategy} holds for 3 out of 4 companies that we have tested. The reason for this is that the TTWO model was surely the worst one and it needs further research. Since we have shown that the system can outperform the buy and hold approach, H4 cannot be rejected.\\
 
-The fourth hypothesis\textit{ (H4) The investment strategy developed based on the GAN predictions is able to outperform the Buy\&Hold strategy} holds for 3 out of 4 companies that we have tested. The reason for this is that the TTWO model was surely the worst one and it needs further research. Since we have shown that the system can outperform the buy and hold approach, H4 cannot be rejected.\\
-
-Finally, the fifth hypothesis\textit{ (H5) Adding the possibility of short selling to the investment strategy increases the profitability of the system}, holds due to the fact that strategies with the ability to short selling performed better.  This has been influenced by the general downward trend valuation of companies during the test period, during which it is very effective to earn on short trades.\\
+Finally, the fourth hypothesis\textit{ (H4) Adding the possibility of short selling to the investment strategy increases the profitability of the system}, holds due to the fact that strategies with the ability to short selling performed better.  This has been influenced by the general downward trend valuation of companies during the test period, during which it is very effective to earn on short trades.\\
 
 In conclusion, the main finding is the confirmation of the possibility to use GAN networks to create an effective system that allows us to outperform the Buy and Hold strategy and make a profit despite the fall in the price of an asset. The study has also shown that these networks have their challenges and there is a great scope for further research. The main ones are their instability during training and the unclearness of when to stop training.  Better results could also be achieved with a more sophisticated investment strategy. Nevertheless, the results are promising and show that this system could have potential business applications.
 

@@ -13,6 +13,6 @@
 \contentsline {subsection}{\numberline {3.4}Technical Analysis}{18}{}%
 \contentsline {section}{\numberline {4}Results of framework}{19}{}%
 \contentsline {subsection}{\numberline {4.1}GAN results}{19}{}%
-\contentsline {subsection}{\numberline {4.2}Investment strategy results}{24}{}%
-\contentsline {section}{\numberline {5}Conclusion}{28}{}%
-\contentsline {section}{Bibliography}{31}{}%
+\contentsline {subsection}{\numberline {4.2}Investment strategy results}{25}{}%
+\contentsline {section}{\numberline {5}Conclusion}{30}{}%
+\contentsline {section}{Bibliography}{33}{}%

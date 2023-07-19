@@ -1,14 +1,9 @@
-from transformers import (
-    AutoTokenizer,
-    AutoModelForSequenceClassification,
-)
-
 import tensorflow as tf
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 
 class BertBase:
     def __init__(self):
-
         self.tokenizer = AutoTokenizer.from_pretrained(
             "distilbert-base-uncased-finetuned-sst-2-english"
         )

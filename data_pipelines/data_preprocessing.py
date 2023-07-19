@@ -6,6 +6,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+
 from utils.quantiles import q_at
 
 # data_path = Path(os.path.abspath("")) / "data"
@@ -36,14 +37,20 @@ class DataPipeline:
         self.sentiment_df = self.prepare_sentiment_data()
 
     def load_sentiment_data(self):
-        sentiment_df = pd.read_csv(self.sentiment_path / f"{self.ticker}.csv").drop(
-            columns=["Unnamed: 0", "Unnamed: 0.1"]
-        )
-        sentiment_df = sentiment_df[sentiment_df["created_utc"] != "created_utc"]
+        sentiment_df = pd.read_csv(
+            self.sentiment_path / f"{self.ticker}.csv"
+        ).drop(columns=["Unnamed: 0", "Unnamed: 0.1"])
+        sentiment_df = sentiment_df[
+            sentiment_df["created_utc"] != "created_utc"
+        ]
         sentiment_df["Date"] = (
             sentiment_df["created_utc"]
             .astype(int)
-            .apply(lambda x: datetime.datetime.fromtimestamp(x).strftime("%Y-%d-%m"))
+            .apply(
+                lambda x: datetime.datetime.fromtimestamp(x).strftime(
+                    "%Y-%d-%m"
+                )
+            )
         )
         self.min_time = sentiment_df["Date"].min()
         self.max_time = sentiment_df["Date"].max()
@@ -56,7 +63,14 @@ class DataPipeline:
 
     def prepare_sentiment_data(self):
         AGGREGATIONS = {
-            "sentiment": ["count", "mean", "std", "median", q_at(0.25), q_at(0.75)]
+            "sentiment": [
+                "count",
+                "mean",
+                "std",
+                "median",
+                q_at(0.25),
+                q_at(0.75),
+            ]
         }
         sentiment_df = self.load_sentiment_data()
         sentiment_df["sentiment"] = sentiment_df["sentiment"].astype(float)
@@ -71,16 +85,26 @@ class DataPipeline:
     ):
         X_scaler = MinMaxScaler()
         y_scaler = MinMaxScaler()
-        X_df = pd.DataFrame(X_scaler.fit_transform(X.loc[:, X_cols]), columns=X_cols)
-        y_series = y_scaler.fit_transform(X.loc[:, y_col].values.reshape(-1, 1))
+        X_df = pd.DataFrame(
+            X_scaler.fit_transform(X.loc[:, X_cols]), columns=X_cols
+        )
+        y_series = y_scaler.fit_transform(
+            X.loc[:, y_col].values.reshape(-1, 1)
+        )
         X_df[y_col] = y_series
         scalers = {"X_scaler": X_scaler, "y_scaler": y_scaler}
-        with open(save_scaler_path / f"scalers_{self.ticker}.pickle", "wb") as handle:
+        with open(
+            save_scaler_path / f"scalers_{self.ticker}.pickle", "wb"
+        ) as handle:
             pickle.dump(scalers, handle, protocol=pickle.HIGHEST_PROTOCOL)
         return X_df
 
     def split_data(
-        self, X: pd.DataFrame, step_train: int, step_predict: int, y_col: str = "Close"
+        self,
+        X: pd.DataFrame,
+        step_train: int,
+        step_predict: int,
+        y_col: str = "Close",
     ):
         data_len = X.shape[0]
         X_list = []
@@ -88,13 +112,16 @@ class DataPipeline:
         Y_whole_real_list = []
         for i in range(data_len):
             X_step = X.loc[
-                i : i + step_train - 1, [col for col in X.columns if col != y_col]
+                i : i + step_train - 1,
+                [col for col in X.columns if col != y_col],
             ]
             Y_pred_real = X.loc[
                 i + step_train : i + step_train + step_predict - 1, y_col
             ]
             Y_whole_real = X.loc[i : i + step_train - 1, y_col]
-            if (len(X_step) == step_train) & (len(Y_pred_real) == step_predict):
+            if (len(X_step) == step_train) & (
+                len(Y_pred_real) == step_predict
+            ):
                 X_list.append(X_step)
                 Y_preds_real_list.append(Y_pred_real)
                 Y_whole_real_list.append(Y_whole_real)
@@ -131,7 +158,9 @@ class DataPipeline:
                 .drop(columns="Date")
                 .interpolate(method="time")
             )
-        x_cols = [col for col in final_data.columns if col not in ["Close", "Date"]]
+        x_cols = [
+            col for col in final_data.columns if col not in ["Close", "Date"]
+        ]
         scaled_data = self.prepare_data(
             X=final_data, X_cols=x_cols, save_scaler_path=self.save_path
         )
@@ -153,7 +182,9 @@ class DataPipeline:
             save_data[f"{name}_train"] = train
             save_data[f"{name}_test"] = test
 
-        with open(self.save_path / f"data_{self.ticker}.pickle", "wb") as handle:
+        with open(
+            self.save_path / f"data_{self.ticker}.pickle", "wb"
+        ) as handle:
             pickle.dump(save_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def get_moving_averages(self, X, peroid_list=[5, 10, 20, 50, 100]):
@@ -166,10 +197,15 @@ class DataPipeline:
             df[f"wma_{peroid}"] = (
                 df["Close"]
                 .rolling(window=peroid)
-                .apply(lambda prices: np.dot(prices, weights) / weights.sum(), raw=True)
+                .apply(
+                    lambda prices: np.dot(prices, weights) / weights.sum(),
+                    raw=True,
+                )
             )
 
-            bollinger_up, bollinger_down = self.get_bollinger_bands(df["Close"], peroid)
+            bollinger_up, bollinger_down = self.get_bollinger_bands(
+                df["Close"], peroid
+            )
             df[f"bb_{peroid}_up"] = bollinger_up
             df[f"bb_{peroid}_down"] = bollinger_down
         return df
